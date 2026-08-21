@@ -1,0 +1,19 @@
+# pii_scrub.py literal-value list.
+#
+# One exact string per line, case-insensitive whole-string match.
+# Lines starting with # are ignored.
+#
+# Copy this file to pii_literals.txt (already gitignored) and fill in your
+# own real values — every name variant that might appear, your SSN in
+# whatever formats show up in the record, your home address, phone
+# numbers, EDIPI if it ever appears unlabeled elsewhere, etc. This file
+# never gets committed and this script never needs you to show these
+# values to anyone else to use it.
+#
+# Example format (these are placeholders, not real data):
+Doe, John A
+John A Doe
+John Doe
+123-45-6789
+123 Example Street, Anytown, ST 00000
+555-123-4567
