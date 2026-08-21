@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% set active_step = 'upload' %}
+{% block content %}
+<h1>Your records</h1>
+<p class="lede">Drop in your health record exports. Everything is processed on
+this computer — nothing is sent anywhere.</p>
+
+{% if error %}<div class="errors">{{ error }}</div>{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+  <div class="drop">
+    <input type="file" name="records" id="records" accept="application/pdf" multiple>
+    <p class="help">MHS Genesis exports, scanned AF forms, or legacy STRs. PDF only.</p>
+  </div>
+
+  <div class="field checkbox">
+    <label>
+      <input type="checkbox" name="run_ocr" {{ 'checked' if ocr_ok else 'disabled' }}>
+      Run OCR on scanned files that have no readable text
+    </label>
+    <p class="help">
+      {% if ocr_ok %}
+        Recovers duty-limitation reports and profiles that a text-only read
+        misses entirely. Adds roughly 2–3 seconds per page.
+      {% else %}
+        Unavailable on this system — OCR currently requires macOS.
+      {% endif %}
+    </p>
+  </div>
+
+  <button type="submit">Process records →</button>
+  <p class="help">Large exports with OCR can take several minutes. This page will
+     stay put until it's done.</p>
+</form>
+
+{% if demo_ok %}
+<h2>No records handy?</h2>
+<p class="help">Try the whole flow with a de-identified sample record — real
+structure, real conditions, no one's personal information. Useful for seeing what
+the tool does before you feed it your own file.</p>
+<form method="post" action="{{ url_for('upload_demo') }}">
+  <button type="submit" class="secondary">Use the demo record →</button>
+</form>
+{% endif %}
+{% endblock %}

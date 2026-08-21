@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% set active_step = 'review' %}
+{% block content %}
+{% if state.demo %}
+<div class="demo-banner">Demo mode — this is a de-identified sample record, not your own.</div>
+{% endif %}
+<h1>Review each proposed answer</h1>
+<p class="lede">Each of these is a <em>proposal</em> drawn from your records — not
+an answer yet. Nothing is written to a form until you confirm it here.</p>
+
+<div class="notice warn">
+  <strong>Read these carefully.</strong>
+  <p>DD Form 2807-1 is an official statement carrying federal penalties for a
+  false statement (up to 5 years confinement or a $10,000 fine). Your records may
+  contain entries you've never seen. Confirm only what you know to be true.</p>
+</div>
+
+<h2>What was read from your files</h2>
+<table class="files">
+  <tr><th>File</th><th>Pages</th><th>Extraction</th><th>Found</th></tr>
+  {% for f in state.per_file %}
+  <tr>
+    <td>{{ f.name }}</td>
+    <td>{{ f.pages }}</td>
+    <td><span class="tier {{ f.tier }}">{{ f.tier }}</span></td>
+    <td>
+      {{ f.diagnoses }} diagnoses, {{ f.problems }} problem-list entries
+      {% if f.warning %}<p class="warnmsg">{{ f.warning }}</p>{% endif %}
+      {% if f.ocr %}
+        <p class="help">OCR: {{ f.ocr.medium }} of {{ f.ocr.pages }} pages readable.
+        {% if f.ocr.low %}Pages {{ f.ocr.low|join(', ') }} could not be read
+        (handwriting, stamps, or blank) — review those by hand.{% endif %}</p>
+      {% endif %}
+      {% if f.ocr_unavailable %}<p class="help">OCR skipped: {{ f.ocr_unavailable }}</p>{% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% if findings %}
+<h2>Cross-source flags</h2>
+<div class="notice warn">
+  <p>Scanned evidence that appears to <strong>predate</strong> the earliest coded
+  date for the same body system. These are keyword-and-date matches from OCR, not
+  confirmed links — open the cited page and judge for yourself. If a documented
+  limitation predates your coded record, that gap matters to your VSO.</p>
+</div>
+{% for f in findings %}
+<div class="finding">
+  <strong>{{ f.condition }} ({{ f.icd10 }})</strong> — coded first seen {{ f.structured_first_seen }}
+  <ul>
+  {% for e in f.ocr_evidence %}
+    <li>Scanned page {{ e.page }} suggests <strong>{{ e.earliest_predating_date }}</strong>
+        ({{ e.years_earlier }} years earlier) — matched: {{ e.matched_keywords|join(', ') }}
+        <span class="conf {{ e.confidence }}">{{ e.confidence }} OCR confidence</span></li>
+  {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>Proposed answers ({{ proposals|length }})</h2>
+<form method="post">
+{% for p in proposals %}
+<div class="proposal">
+  <div class="phead">
+    <span class="form-tag">{{ p.target_form }}</span>
+    <span class="conf {{ p.confidence }}">{{ p.confidence }} confidence</span>
+    <span class="method">{{ p.extraction_method }}</span>
+  </div>
+  <p class="qtext">{{ p.rationale }}</p>
+  <p class="cite">Source: {{ p.source_document }}{% if p.source_page %}, page {{ p.source_page }}{% endif %}</p>
+  <p class="fieldname">{{ p.target_field }}</p>
+  <div class="choices">
+    <label><input type="radio" name="decision_{{ p.id }}" value="confirm" checked>
+      Confirm “{{ p.proposed_value }}”</label>
+    <label><input type="radio" name="decision_{{ p.id }}" value="edit">
+      Change to <input type="text" name="value_{{ p.id }}" value="No" size="6"></label>
+    <label><input type="radio" name="decision_{{ p.id }}" value="reject">
+      Leave blank</label>
+  </div>
+</div>
+{% endfor %}
+
+{% if unmapped %}
+<h2>Found in your records, but not matched to any form question</h2>
+<p class="help">No box is checked for these. The tool only proposes an answer when
+the match to a specific question is unambiguous. Raise them with your VSO directly —
+they'll be listed in your package.</p>
+<ul class="unmapped">
+{% for c in unmapped %}<li>{{ c.condition }} ({{ c.icd10 or 'uncoded' }})</li>{% endfor %}
+</ul>
+{% endif %}
+
+<button type="submit">Save decisions →</button>
+</form>
+{% endblock %}

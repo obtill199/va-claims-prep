@@ -97,6 +97,31 @@ def scrub_literals(text, literals):
     return text, count
 
 
+def scrub_paged(text, page_starts, literals_path=None):
+    """Scrub page-by-page and recompute page offsets.
+
+    Redactions change text length, so scrubbing the whole document at once
+    invalidates ingest.py's .pages.json offsets and every page citation
+    derived from them. Scrubbing each page's slice independently keeps the
+    page boundaries meaningful, which matters because the demo record has
+    to exercise the same citation path the real one does.
+    """
+    counts_total = {}
+    out_parts, new_starts, offset = [], [], 0
+
+    bounds = list(page_starts) + [len(text)]
+    for i in range(len(page_starts)):
+        page_text = text[bounds[i]:bounds[i + 1]]
+        scrubbed, counts = scrub(page_text, literals_path)
+        for key, n in counts.items():
+            counts_total[key] = counts_total.get(key, 0) + n
+        new_starts.append(offset)
+        out_parts.append(scrubbed)
+        offset += len(scrubbed)
+
+    return "".join(out_parts), new_starts, counts_total
+
+
 def scrub(text, literals_path=None):
     text, counts = scrub_generic(text)
     if literals_path:

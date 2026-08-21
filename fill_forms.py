@@ -23,6 +23,7 @@ import os
 import re
 
 from pypdf import PdfReader, PdfWriter
+from pypdf.generic import BooleanObject, NameObject
 
 from pdf_io import decrypted_bytes
 from schema import proposals_from_json
@@ -77,6 +78,15 @@ def fill_form(blank_path, updates, output_path):
 
     writer = PdfWriter()
     writer.append(reader)
+
+    # Text fields (identity from intake.py, explanations from explanations.py)
+    # carry a viewer-generated appearance. pypdf writes one, but viewers vary
+    # in whether they trust it — NeedAppearances tells them to regenerate.
+    # Verified either way on the real DD 2807-1 by rendering the filled page
+    # and OCRing it back, but this is the safer default across viewers.
+    acroform = writer.root_object.get("/AcroForm")
+    if acroform is not None:
+        acroform.get_object()[NameObject("/NeedAppearances")] = BooleanObject(True)
     for page in writer.pages:
         writer.update_page_form_field_values(page, updates, auto_regenerate=False)
 
@@ -93,6 +103,47 @@ def fill_form(blank_path, updates, output_path):
     with open(output_path, "wb") as fh:
         writer.write(fh)
     return len(updates)
+
+
+def assert_all_confirmed(props, source_label):
+    """The gate. Nothing reaches a PDF that a human didn't confirm."""
+    not_confirmed = [p for p in props if p.status not in ("confirmed", "edited")]
+    if not_confirmed:
+        raise ValueError(
+            f"{source_label} contains {len(not_confirmed)} entries that were "
+            f"never confirmed — this should only ever contain "
+            f"schema.confirmed_only() output")
+
+
+def fill_both(confirmed_props, dd2807_blank, sha_blank, out_dir,
+              dd_extra=None, sha_extra=None):
+    """Write both forms from confirmed proposals plus optional extra text
+    updates (identity from intake.py, explanations from explanations.py).
+
+    Extra updates are kept separate from `confirmed_props` on purpose:
+    proposals are record-derived and gated by review, whereas intake answers
+    are the member's own direct self-report and explanation drafts are
+    confirmed on the review screen before they get here. Merging them into
+    one list would blur which gate each value passed.
+    """
+    assert_all_confirmed(confirmed_props, "confirmed proposals")
+    written = {}
+
+    dd_updates = dict(dd_extra or {})
+    dd_updates.update(_dd2807_updates(
+        [p for p in confirmed_props if p.target_form == "DD2807-1"]))
+    if dd_updates:
+        path = os.path.join(out_dir, "dd2807-1_FILLED.pdf")
+        written["DD2807-1"] = (fill_form(dd2807_blank, dd_updates, path), path)
+
+    sha_updates_ = dict(sha_extra or {})
+    sha_updates_.update(_sha_updates(
+        [p for p in confirmed_props if p.target_form == "SHA_PART_A"]))
+    if sha_updates_:
+        path = os.path.join(out_dir, "sha_part_a_FILLED.pdf")
+        written["SHA_PART_A"] = (fill_form(sha_blank, sha_updates_, path), path)
+
+    return written
 
 
 def main():

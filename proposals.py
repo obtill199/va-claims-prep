@@ -19,8 +19,16 @@ from field_map import build_mapping
 from schema import Proposal, proposals_to_json
 
 
-def _stable_id(condition_ref, target_form, target_field):
-    raw = f"{condition_ref}|{target_form}|{target_field}"
+def _stable_id(condition_ref, condition_name, target_form, target_field):
+    """Includes the condition *name*, not just its code.
+
+    Distinct conditions can share an ICD-10 code — the real record has two
+    J01.91 sinusitis entries with different names and dates — and
+    condition_ref is that code. Keying on the code alone gave both the same
+    id, which collapsed them into one radio-button group in the review UI
+    and made a single click silently decide both.
+    """
+    raw = f"{condition_ref}|{condition_name}|{target_form}|{target_field}"
     return hashlib.sha256(raw.encode()).hexdigest()[:12]
 
 
@@ -47,7 +55,8 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
         condition_ref = cond["icd10"] or cond["condition"]
         for target in m["targets"]:
             proposals.append(Proposal(
-                id=_stable_id(condition_ref, target["target_form"], target["target_field"]),
+                id=_stable_id(condition_ref, cond["condition"],
+                              target["target_form"], target["target_field"]),
                 condition_ref=condition_ref,
                 target_form=target["target_form"],
                 target_field=target["target_field"],

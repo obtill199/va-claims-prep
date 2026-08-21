@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% set active_step = 'intake' %}
+{% block content %}
+<h1>About you</h1>
+<p class="lede">These are the things your medical records can't tell us. They go
+straight onto both forms — you're the source, so there's nothing to review later.</p>
+
+<div class="notice">
+  <strong>Social Security Number and DoD ID are not collected.</strong>
+  <p>{{ blank_reason }}</p>
+</div>
+
+{% if errors %}
+<div class="errors"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>
+{% endif %}
+
+<form method="post">
+  {% for key, label, kind, options, help in questions %}
+  <div class="field">
+    <label for="{{ key }}">{{ label }}{% if key in required %} <span class="req">required</span>{% endif %}</label>
+    {% if kind == 'choice' %}
+      <select name="{{ key }}" id="{{ key }}">
+        <option value="">— select —</option>
+        {% for opt in options %}
+        <option value="{{ opt }}" {{ 'selected' if answers.get(key) == opt }}>{{ opt }}</option>
+        {% endfor %}
+      </select>
+    {% elif kind == 'textarea' %}
+      <textarea name="{{ key }}" id="{{ key }}" rows="3">{{ answers.get(key, '') }}</textarea>
+    {% elif kind == 'date' %}
+      <input type="date" name="{{ key }}" id="{{ key }}" value="{{ answers.get(key, '') }}">
+    {% else %}
+      <input type="text" name="{{ key }}" id="{{ key }}" value="{{ answers.get(key, '') }}">
+    {% endif %}
+    {% if help %}<p class="help">{{ help }}</p>{% endif %}
+  </div>
+  {% endfor %}
+  <button type="submit">Continue to your records →</button>
+</form>
+{% endblock %}

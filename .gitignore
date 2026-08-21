@@ -33,3 +33,8 @@ ocr_output.json
 
 # Reconciliation output -- cites real conditions and record pages
 reconciliation.json
+
+# De-identified demo record — regenerate locally with pii_scrub.py.
+# Scrubbing is regex-based and carries false-negative risk, so the derived
+# sample is not committed until a human has read it end to end.
+demo/

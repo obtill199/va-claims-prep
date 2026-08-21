@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}VA Claims Prep{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="brand">VA Claims Prep</span>
+    <span class="local-badge" title="Nothing is uploaded. All processing happens on this computer.">Local only — nothing is uploaded</span>
+  </div>
+</header>
+
+<nav class="steps">
+  <div class="wrap">
+    {% set step = self._TemplateReference__context.get('active_step', '') %}
+    <ol>
+      <li class="{{ 'on' if active_step == 'intake' }}">1. About you</li>
+      <li class="{{ 'on' if active_step == 'upload' }}">2. Your records</li>
+      <li class="{{ 'on' if active_step == 'review' }}">3. Review</li>
+      <li class="{{ 'on' if active_step == 'explain' }}">4. Explanations</li>
+      <li class="{{ 'on' if active_step == 'package' }}">5. Package</li>
+    </ol>
+  </div>
+</nav>
+
+<main class="wrap">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="wrap">
+  <p>This tool organizes your own records. It does not file anything with VA
+     and does not advise on what to claim — take the package to an accredited VSO.</p>
+</footer>
+</body>
+</html>

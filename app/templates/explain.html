@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% set active_step = 'explain' %}
+{% block content %}
+<h1>Explain your “Yes” answers</h1>
+<p class="lede">DD Form 2807-1 requires every “Yes” to be explained in Item 29, and
+SHA Part A has an explanation box for each one. These drafts state only what your
+records document — edit them freely, in your own words.</p>
+
+<div class="notice">
+  <p>These were generated from your records, so read them before they go on the
+  form. They deliberately don't characterize severity, cause, or service
+  connection — that's your and your VSO's judgment, not this tool's.</p>
+</div>
+
+<form method="post">
+  <h2>DD 2807-1 — Item 29</h2>
+  <textarea name="item29" rows="16" class="wide">{{ item29 }}</textarea>
+
+  {% if sha_explanations %}
+  <h2>SHA Part A — per-question explanations</h2>
+  {% for field, text in sha_explanations.items() %}
+  <div class="field">
+    <label>{{ sha_labels.get(field, field) }}</label>
+    <textarea name="sha_{{ field }}" rows="3" class="wide">{{ text }}</textarea>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <button type="submit">Continue to your package →</button>
+</form>
+{% endblock %}

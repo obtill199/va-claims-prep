@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% set active_step = 'package' %}
+{% block content %}
+<h1>Your VSO package</h1>
+<p class="lede">{{ confirmed|length }} confirmed answer{{ '' if confirmed|length == 1 else 's' }}
+will be written to your forms. Everything else is left blank.</p>
+
+<div class="notice warn">
+  <strong>Two things to do by hand before you hand this over.</strong>
+  <p>{{ blank_reason }}</p>
+  <p>Both forms are also <strong>unsigned by design</strong> — sign and date them yourself.</p>
+</div>
+
+<h2>What's in the download</h2>
+<ul class="contents">
+  <li><strong>dd2807-1_FILLED.pdf</strong> — Report of Medical History, prefilled</li>
+  <li><strong>sha_part_a_FILLED.pdf</strong> — Separation Health Assessment Part A, prefilled</li>
+  <li><strong>conditions_worksheet.md</strong> — every condition found, with citations</li>
+  <li><strong>evidence_index.md</strong> — where each condition came from, page by page</li>
+  <li><strong>buddy_letters/</strong> — an editable template per condition, plus a general one</li>
+  <li><strong>README.txt</strong> — what this package is, and what it isn't</li>
+</ul>
+
+<a class="button" href="{{ url_for('download') }}">Download package (.zip)</a>
+
+<p class="help">Generating the package builds both PDFs and the letters; it takes a
+few seconds. The file is written to a temporary folder on this computer and removed
+when you close the app.</p>
+
+<h2>Then what?</h2>
+<p>Take this package to an accredited Veterans Service Officer. They're free, and
+they're accredited to advise on what to claim — this tool isn't and doesn't.
+VA's directory: <span class="mono">va.gov/get-help-from-accredited-representative</span></p>
+{% endblock %}
