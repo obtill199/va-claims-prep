@@ -30,3 +30,6 @@ demo_record.txt
 
 # Raw OCR output -- full recognized text from the scanned record
 ocr_output.json
+
+# Reconciliation output -- cites real conditions and record pages
+reconciliation.json
