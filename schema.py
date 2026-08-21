@@ -56,5 +56,8 @@ def proposals_from_json(path):
 
 
 def confirmed_only(proposals):
-    """The only view fill_forms.py is allowed to consume."""
-    return [p for p in proposals if p.status == "confirmed"]
+    """The only view fill_forms.py is allowed to consume. "edited" counts as
+    confirmed too — the member corrected the value and approved that
+    correction, which is still an explicit confirm, just not of the value
+    extract_conditions.py originally proposed."""
+    return [p for p in proposals if p.status in ("confirmed", "edited")]

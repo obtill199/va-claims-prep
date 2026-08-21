@@ -12,7 +12,9 @@ Usage:
 
 import re
 import json
+import os
 import argparse
+import bisect
 from collections import defaultdict
 from datetime import datetime
 
@@ -63,8 +65,21 @@ def _norm_date(s):
     return datetime.strptime(s, "%m/%d/%Y").date().isoformat()
 
 
-def parse_diagnoses(text):
-    """Yield one dict per Clinical Diagnoses entry."""
+def _page_for(pos, page_starts):
+    """1-indexed page number containing character offset `pos`, or None if
+    no page-offset map was supplied (e.g. a bare .txt with no PDF sidecar)."""
+    if not page_starts:
+        return None
+    return bisect.bisect_right(page_starts, pos)
+
+
+def parse_diagnoses(text, page_starts=None, source_document=None):
+    """Yield one dict per Clinical Diagnoses entry.
+
+    page_starts/source_document (from ingest.py's <file>.pages.json sidecar)
+    are optional — every Proposal needs a source citation
+    (BUILD_BRIEF.md section 4, decision 1), but this function still works
+    standalone (e.g. against a plain .txt with no PDF behind it)."""
     for m in DIAG_RE.finditer(text):
         # Look a few lines past the match for the Code: line
         tail = text[m.end(): m.end() + 400]
@@ -80,6 +95,8 @@ def parse_diagnoses(text):
             "provider": (
                 re.sub(r"\s+", " ", prov_m.group("prov")).strip() if prov_m else None
             ),
+            "page": _page_for(m.start(), page_starts),
+            "source_document": source_document,
         }
 
 
@@ -165,6 +182,10 @@ def aggregate(diagnoses, problems):
             "providers": providers,
             "administrative": is_administrative(
                 code if code != "NOCODE" else "", name),
+            # Citation for the earliest (first_seen) occurrence — what a
+            # Proposal built from this condition points a reviewer at.
+            "source_document": entries[0].get("source_document"),
+            "source_page": entries[0].get("page"),
         })
 
     out.sort(key=lambda r: (r["administrative"], not r["active"],
@@ -184,7 +205,17 @@ def main():
     for path in args.inputs:
         with open(path, encoding="utf-8", errors="replace") as fh:
             text = fh.read()
-        d = list(parse_diagnoses(text))
+
+        # ingest.py's sidecar, if this .txt came from a PDF via ingest.py.
+        page_starts, source_document = None, os.path.basename(path)
+        pages_path = path + ".pages.json"
+        if os.path.exists(pages_path):
+            with open(pages_path) as fh:
+                sidecar = json.load(fh)
+            page_starts = sidecar["page_starts"]
+            source_document = sidecar["source_document"]
+
+        d = list(parse_diagnoses(text, page_starts, source_document))
         p = list(parse_problems(text))
         print(f"{path}: {len(d)} diagnosis entries, {len(p)} problem entries")
         all_diag += d

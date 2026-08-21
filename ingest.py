@@ -18,15 +18,27 @@ Usage:
 """
 
 import argparse
+import json
+import os
 
-from pdf_io import extract_text
+from pdf_io import extract_text_with_page_offsets
 
 
 def ingest(pdf_path, output_path):
-    text = extract_text(pdf_path)
+    text, page_starts = extract_text_with_page_offsets(pdf_path)
     with open(output_path, "w", encoding="utf-8") as fh:
         fh.write(text)
-    return len(text)
+
+    # Sidecar, not a second copy of the PHI itself — just character offsets,
+    # so extract_conditions.py can turn a match position into a page number.
+    pages_path = output_path + ".pages.json"
+    with open(pages_path, "w") as fh:
+        json.dump({
+            "source_document": os.path.basename(pdf_path),
+            "page_starts": page_starts,
+        }, fh, indent=2)
+
+    return len(text), len(page_starts)
 
 
 def main():
@@ -35,8 +47,8 @@ def main():
     ap.add_argument("-o", "--output", required=True)
     args = ap.parse_args()
 
-    n_chars = ingest(args.pdf, args.output)
-    print(f"{args.pdf}: {n_chars} chars -> {args.output}")
+    n_chars, n_pages = ingest(args.pdf, args.output)
+    print(f"{args.pdf}: {n_chars} chars, {n_pages} pages -> {args.output} (+.pages.json)")
 
 
 if __name__ == "__main__":

@@ -14,3 +14,12 @@ venv/
 
 # Real extracted output — contains actual condition/diagnosis data
 conditions_worksheet.md
+
+# Page-offset sidecars — filename embeds the source document name (which
+# embeds the member's name), so gitignored alongside the records themselves
+*.pages.json
+
+# Pipeline outputs derived from real conditions/PHI
+proposals.json
+confirmed.json
+*_FILLED.pdf
