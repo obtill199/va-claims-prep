@@ -27,3 +27,6 @@ confirmed.json
 # Your real literal PII values for pii_scrub.py -- never commit this
 pii_literals.txt
 demo_record.txt
+
+# Raw OCR output -- full recognized text from the scanned record
+ocr_output.json
