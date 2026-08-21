@@ -1,0 +1,16 @@
+# Real records / PHI — never commit
+*.pdf
+*.txt
+conditions.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# Real extracted output — contains actual condition/diagnosis data
+conditions_worksheet.md
