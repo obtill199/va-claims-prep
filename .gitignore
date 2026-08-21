@@ -23,3 +23,7 @@ conditions_worksheet.md
 proposals.json
 confirmed.json
 *_FILLED.pdf
+
+# Your real literal PII values for pii_scrub.py -- never commit this
+pii_literals.txt
+demo_record.txt
