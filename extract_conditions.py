@@ -19,19 +19,43 @@ from datetime import datetime
 # ---------------------------------------------------------------- parsing
 
 DIAG_RE = re.compile(
-    r"Diagnosis:\s*(?P<name>.+?)\s*\n"
-    r"(?P<body>(?:.*?\n){0,6}?)"
+    # Short names sit inline after "Diagnosis:"; long ones wrap to an
+    # indented line below it instead, leaving the inline spot blank — same
+    # pdfplumber column-layout behavior as PROBLEM_RE's name field below.
+    # Capture both candidate lines; parse_diagnoses() picks whichever is
+    # non-blank.
+    r"Diagnosis:(?P<line1>[^\n]*)\n(?P<line2>[^\n]*)\n"
+    # Originally a 0-6 line lookahead (`(?:.*?\n){0,6}?`), which assumed
+    # "Diagnosis Date:" always starts at column 0 of its own line. True for
+    # poppler's `pdftotext -layout`, not for pdfplumber's layout mode (used
+    # here since poppler isn't installable on this machine — see
+    # BUILD_BRIEF.md section 6 / pdf_io.py) — pdfplumber left-pads that
+    # label with spaces to preserve its table column position, so it never
+    # sits at a true line start and the old pattern silently matched zero
+    # entries. A bounded DOTALL scan finds it regardless of indentation,
+    # capped so a body can't accidentally swallow past its own diagnosis
+    # into the next one's date. Only the body crosses newlines (re.DOTALL
+    # applies pattern-wide, but `line1`/`line2` are deliberately kept to
+    # `[^\n]` so they can't also expand across lines — an earlier version
+    # with a newline-crossing lazy name group back to back with the body
+    # scan caused catastrophic backtracking on the ~6 "Diagnosis:"
+    # occurrences that have no nearby "Diagnosis Date:" to terminate on).
+    r"(?P<body>.{0,3000}?)"
     r"Diagnosis Date:\s*(?P<date>\d{1,2}/\d{1,2}/\d{4})\s+Status:\s*(?P<status>\w+)",
-    re.MULTILINE,
+    re.DOTALL,
 )
 
 CODE_RE = re.compile(r"Code:\s*(?P<code>[A-Z0-9.]+)\s*\((?P<system>[^)]+)\)")
 PROV_RE = re.compile(r"Responsible Provider:\s*(?P<prov>.+?)\s*$", re.MULTILINE)
 
 PROBLEM_RE = re.compile(
-    r"Problem Name:\s*(?P<name>.+?)\s*\n"
+    # Short names sit inline after "Problem Name:"; long ones wrap to an
+    # indented line below it (pdfplumber column layout again), leaving the
+    # inline spot blank. Capture the whole span and pick out the real text
+    # in parse_problems() instead of assuming a fixed line position.
+    r"Problem Name:(?P<name_block>.{0,300}?)"
     r"Life Cycle Status:\s*(?P<status>\w+)",
-    re.MULTILINE,
+    re.DOTALL,
 )
 
 
@@ -46,8 +70,9 @@ def parse_diagnoses(text):
         tail = text[m.end(): m.end() + 400]
         code_m = CODE_RE.search(tail)
         prov_m = PROV_RE.search(m.group("body"))
+        name = m.group("line1").strip() or m.group("line2").strip()
         yield {
-            "name": re.sub(r"\s+", " ", m.group("name")).strip(),
+            "name": re.sub(r"\s+", " ", name).strip(),
             "date": _norm_date(m.group("date")),
             "status": m.group("status"),
             "code": code_m.group("code") if code_m else None,
@@ -61,8 +86,11 @@ def parse_diagnoses(text):
 def parse_problems(text):
     """Yield one dict per Problems-list entry (the clinician-curated list)."""
     for m in PROBLEM_RE.finditer(text):
+        name = " ".join(
+            line.strip() for line in m.group("name_block").split("\n") if line.strip()
+        )
         yield {
-            "name": re.sub(r"\s+", " ", m.group("name")).strip(),
+            "name": name,
             "status": m.group("status"),
         }
 
