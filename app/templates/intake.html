@@ -35,6 +35,91 @@ straight onto both forms — you're the source, so there's nothing to review lat
     {% if help %}<p class="help">{{ help }}</p>{% endif %}
   </div>
   {% endfor %}
-  <button type="submit">Continue to your records →</button>
+  <div class="draftbar">
+    <button type="submit">Continue to your records →</button>
+    <span id="draftstatus" class="draftstatus" aria-live="polite"></span>
+    <button type="button" id="cleardraft" class="linkbtn" hidden>Clear saved answers</button>
+  </div>
 </form>
+
+<p class="help" id="draftnote" hidden>
+  Your answers are saved in this browser as you type, so you can close the tab and
+  pick up where you left off. They stay on this computer — nothing is sent anywhere.
+  On a shared or public computer, clear them when you're done.
+</p>
+
+<script>
+(function () {
+  var KEY = 'va-claims-prep:intake:v1';
+  var form = document.querySelector('form[method=post]');
+  if (!form || !window.localStorage) return;
+
+  var fields = Array.prototype.slice.call(
+    form.querySelectorAll('input[name], select[name], textarea[name]'));
+  var status = document.getElementById('draftstatus');
+  var clearBtn = document.getElementById('cleardraft');
+  var note = document.getElementById('draftnote');
+
+  function read() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+
+  function show(saved) {
+    var has = saved && Object.keys(saved).some(function (k) { return saved[k]; });
+    if (clearBtn) clearBtn.hidden = !has;
+    if (note) note.hidden = !has;
+  }
+
+  // Restore — but never clobber a value the server already rendered (that
+  // happens when a validation error bounces the form back, and the server's
+  // copy is the more recent one).
+  var saved = read();
+  var restored = 0;
+  fields.forEach(function (el) {
+    var v = saved[el.name];
+    if (v && !el.value) { el.value = v; restored++; }
+  });
+  show(saved);
+  if (restored && status) {
+    status.textContent = 'Restored ' + restored + ' saved answer' +
+      (restored === 1 ? '' : 's');
+  }
+
+  var timer = null;
+  function save() {
+    var data = {};
+    fields.forEach(function (el) { if (el.value) data[el.name] = el.value; });
+    try {
+      localStorage.setItem(KEY, JSON.stringify(data));
+      if (status) {
+        var t = new Date();
+        status.textContent = 'Saved ' +
+          t.toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+      }
+      show(data);
+    } catch (e) {
+      if (status) status.textContent = 'Could not save draft in this browser';
+    }
+  }
+
+  fields.forEach(function (el) {
+    el.addEventListener('input', function () {
+      clearTimeout(timer);
+      timer = setTimeout(save, 400);
+    });
+    el.addEventListener('change', save);
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function () {
+      if (!confirm('Clear the answers saved in this browser?')) return;
+      localStorage.removeItem(KEY);
+      fields.forEach(function (el) { el.value = ''; });
+      if (status) status.textContent = 'Cleared';
+      show({});
+    });
+  }
+})();
+</script>
 {% endblock %}
