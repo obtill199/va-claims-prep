@@ -19,7 +19,7 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
   <tr>
     <td>{{ f.name }}</td>
     <td>{{ f.pages }}</td>
-    <td><span class="tier {{ f.tier }}">{{ f.tier }}</span></td>
+    <td><span class="tier {{ f.tier }}">{{ f.tier.replace("-"," ") }}</span></td>
     <td>
       {{ f.diagnoses }} diagnoses, {{ f.problems }} problem-list entries
       {% if f.warning %}<p class="warnmsg">{{ f.warning }}</p>{% endif %}
@@ -69,6 +69,18 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
   </div>
 </div>
 {% endfor %}
+{% endif %}
+
+{% if not proposals %}
+<div class="notice warn">
+  <strong>No answers could be proposed from these files.</strong>
+  <p>The files were read — see the table above for what came out of each one —
+  but nothing in them matched a question on either form. That usually means the
+  export contains no coded diagnoses, or the file is a scan whose text could not
+  be recovered.</p>
+  <p>You can still continue: both forms will be filled with the details you
+  entered, and you can complete the medical questions by hand.</p>
+</div>
 {% endif %}
 
 <h2>Proposed answers ({{ proposals|length }})</h2>

@@ -69,7 +69,7 @@ table.files th, table.files td { border: 1px solid var(--line); padding: 8px 10p
 }
 .tier.structured, .conf.high { background: #e3f1e8; color: var(--ok); }
 .tier.ocr, .conf.medium { background: var(--warn-bg); color: #8a5a00; }
-.tier.no-text-layer, .conf.low { background: var(--err-bg); color: var(--err-line); }
+.tier.no-text-layer, .tier.unreadable, .conf.low { background: var(--err-bg); color: var(--err-line); }
 .method, .form-tag { background: #eaeef2; color: var(--muted); }
 
 .proposal { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 0 0 14px; }

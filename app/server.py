@@ -173,7 +173,13 @@ def upload():
 @app.route("/review", methods=["GET", "POST"])
 def review():
     state = current()
-    if not state["proposals"]:
+    # Bounce only when nothing has been processed at all. A file that
+    # processed fine but yielded no conditions must still land here: the
+    # "what was read from your files" table is exactly what that person
+    # needs to see. Redirecting them silently to the upload page reads as
+    # "your upload failed" and is the silent-failure mode BUILD_BRIEF 3.1
+    # exists to prevent.
+    if not state.get("per_file"):
         return redirect(url_for("upload"))
 
     if request.method == "POST":
@@ -255,6 +261,16 @@ def package():
 @app.route("/package/download")
 def download():
     state = current()
+
+    # Reachable directly -- a bookmark, a refresh, a back button, or a
+    # session that expired mid-run. Without this the route dereferenced
+    # state["conditions"] while it was still None and returned a 500 stack
+    # trace to someone who had done nothing wrong.
+    if not state.get("answers"):
+        return redirect(url_for("index"))
+    if not state.get("conditions") or not state.get("per_file"):
+        return redirect(url_for("upload"))
+
     answers = state["answers"]
     confirmed = confirmed_only(state["proposals"])
     work = state["work_dir"]

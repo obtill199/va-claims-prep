@@ -47,7 +47,28 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
         name = os.path.basename(path)
         report(f"Reading {name}...")
         txt_path = os.path.join(work_dir, name + ".txt")
-        n_chars, n_pages = ingest(path, txt_path)
+
+        # One unreadable file must not lose the whole run. Picking the wrong
+        # file, a truncated download, or a renamed non-PDF are ordinary user
+        # events, not exceptional ones -- and someone who just waited through
+        # a large upload should get the results for the files that did work.
+        try:
+            n_chars, n_pages = ingest(path, txt_path)
+        except Exception as exc:
+            report(f"{name}: could not be read")
+            per_file.append({
+                "name": name, "pages": 0, "chars": 0,
+                "diagnoses": 0, "problems": 0,
+                "tier": "unreadable", "ocr": None,
+                "warning": (
+                    "This file could not be opened as a PDF, so nothing was "
+                    "read from it. It may be corrupted, password-protected "
+                    "with a password we don't have, or not a PDF at all. "
+                    "Check the file and try again — the other files were "
+                    "still processed."),
+                "error_detail": f"{type(exc).__name__}",
+            })
+            continue
 
         with open(txt_path, encoding="utf-8", errors="replace") as fh:
             text = fh.read()
