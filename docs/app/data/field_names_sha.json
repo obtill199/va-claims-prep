@@ -1,0 +1,2982 @@
+{
+  "TI_1_1NAME": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_2_2SSNSOCIALSECURITYNUMBER": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_3_3DODIDNUMBER": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_4_4TODAYSDATESELFASSESSMENTDATEYYYYMMDD": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_5_1CURRENTADDRESS": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_6_2WORKTELEPHONENUMBER": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_7_3PERSONALTELEPHONENUMBER": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_8_4GOVERNMENTEMAIL": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_9_5PERSONALEMAIL": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_6Preferredmethodsofcontact_6_Preferred_method": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Mail",
+      "/Off",
+      "/Work Phone",
+      "/Personal Phone",
+      "/Government Email",
+      "/Personal Email"
+    ],
+    "parent": null
+  },
+  "TI_15_1DATEOFBIRTHDOBYYYYMMDD": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_16_2AGE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_283_3RACEANDETHNICITYMARKALLTHATAPPLY_AMERICANINDIANORALASKANATIVE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_284_3RACEANDETHNICITYMARKALLTHATAPPLY_ASIAN": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_285_3RACEANDETHNICITYMARKALLTHATAPPLY_BLACKORAFRICANAMERICAN": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_286_3RACEANDETHNICITYMARKALLTHATAPPLY_HISPANICORLATINO": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_287_3RACEANDETHNICITYMARKALLTHATAPPLY_MIDDLEEASTERNORNORTHAFRICAN": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_288_3RACEANDETHNICITYMARKALLTHATAPPLY_NATIVEHAWAIIANOROTHERPACIFICISLANDER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_289_3RACEANDETHNICITYMARKALLTHATAPPLY_WHITE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_290_3RACEANDETHNICITYMARKALLTHATAPPLY_OTHER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_291_3RACEANDETHNICITYMARKALLTHATAPPLY_CHOOSENOTTOANSWER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "RG_4BirthSexbiologicalsex_4_Birth_Sex": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Female",
+      "/Off",
+      "/Male"
+    ],
+    "parent": null
+  },
+  "RG_1Service_1_Service": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Army",
+      "/Off",
+      "/Navy",
+      "/Marine Corps",
+      "/Air Force",
+      "/Space Force",
+      "/Coast Guard",
+      "/Other"
+    ],
+    "parent": null
+  },
+  "TI_35_1SERVICE_OTHER_SPECIFY": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_2Component_2_Component": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Active Duty",
+      "/Off",
+      "/Reserve",
+      "/National Guard"
+    ],
+    "parent": null
+  },
+  "RG_3DutyStatus_3_Duty_Status": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Active Component",
+      "/Off",
+      "/Active Duty  Active Guard Reserve",
+      "/Active Duty  Non-Active Guard Reserve",
+      "/Not on active duty"
+    ],
+    "parent": null
+  },
+  "TA_44_4USUALOCCUPATIONMOSTRECENTDAYTODAYJOB": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_45_5WHATISYOURMILITARYOCCUPATIONALCODEFOREXAMPLEMOSAO": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_46_1EXAMDATEIFKNOWNYYYYMMDD": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_2PurposeofExam_2_Purpose_of_Exam": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Separation from period of active service",
+      "/Retirement",
+      "/Separation from military service",
+      "/Medical Board",
+      "/Other"
+    ],
+    "parent": null
+  },
+  "TI_52_2PURPOSEOFEXAM_OTHER_SPECIFY": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_53_3PROVIDEDATEORANTICIPATEDDATEOFRELEASEFROMACTIVEDU": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_4Doyouintendtofileaclaimorhaveyoualreadyfiledaclai_4_Do_you_intend_to_file_a_claim": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No (if no, skip to question 6)"
+    ],
+    "parent": null
+  },
+  "RG_5Selectthetypeofclaimprogramprocess_5_Select_the_type_of_claim": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/FDC (Fully Developed Claim) Program",
+      "/Off",
+      "/IDES (Integrated Disability Evaluation System) (select this option only if you have been referred to IDES by your Military Service)",
+      "/BDD (Benefits Delivery at Discharge) (select this option only if you meet the criteria for the BDD program)",
+      "/Standard Claim Process",
+      "/Not sure"
+    ],
+    "parent": null
+  },
+  "RG_6HaveyoueverfiledadisabilityclaimwiththeVA_6_Have_you_ever_filed": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "RG_7Haveyouhadaphysicalexamwithin12monthsbeforeyourse_7_Have_you_had_a_physical_exam": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure (if no or unsure, skip to Section 2)"
+    ],
+    "parent": null
+  },
+  "TI_66_7HAVEYOUHADAPHYSICALEXAMWITHIN12MONTHSBEFOREYOURSE_DATEOFEXAM": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_67_7HAVEYOUHADAPHYSICALEXAMWITHIN12MONTHSBEFOREYOURSE_TYPEOFEXAMFOREXAMPLESCHOOLFLIGHTSPECIALDUTY": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_Wouldyoulikethatexamreviewedtodetermineifitissuffi_Would_you_like_that_exam_reviewed": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "TA_70_1LISTYOURCURRENTMEDICATIONSINCLUDINGSUPPLEMENTS": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_71_2DATEOFYOURMOSTRECENTMILITARYSERVICEMEDICALASSESSM": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_Comparedtoyourlastmilitaryservicemedicalassessment_2_Compared_to_your_last_military_service": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/The same",
+      "/Better",
+      "/Worse"
+    ],
+    "parent": null
+  },
+  "TA_75_COMPAREDTOYOURLASTMILITARYSERVICEMEDICALASSESSMENT_IFBETTERORWORSEEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_3OverallhowwouldyourateyourhealthduringthePASTMONT_3_Overall": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/The same",
+      "/Better",
+      "/Worse"
+    ],
+    "parent": null
+  },
+  "TA_79_3OVERALLHOWWOULDYOURATEYOURHEALTHDURINGTHEPASTMONT_IFBETTERORWORSEEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_1_RG_4DuringthePASTMONTHdidyouhavephysicalhealthproblem_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_1_TA_3_4DURINGTHEPASTMONTHDIDYOUHAVEPHYSICALHEALTHPROBLEM_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_3_RG_5Doyoucurrentlyrequirehearingaidsspecialmedicalsup_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_3_TA_3_5DOYOUCURRENTLYREQUIREHEARINGAIDSSPECIALMEDICALSUP_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_4_RG_6Haveyouhadanysurgerysinceyourlasthealthassessment_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_4_TA_3_6HAVEYOUHADANYSURGERYSINCEYOURLASTHEALTHASSESSMENT_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_5_RG_7Sinceyourlasthealthassessmentexamhasahealthcarepr_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_5_TA_3_7SINCEYOURLASTHEALTHASSESSMENTEXAMHASAHEALTHCAREPR_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_6_RG_8Sinceyourlasthealthassessmentexamhaveyoureceivedc_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_6_TA_3_8SINCEYOURLASTHEALTHASSESSMENTEXAMHAVEYOURECEIVEDC_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_7_RG_9Haveyousufferedfromanyinjuryorillnesswhileonactiv_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_7_TA_3_9HAVEYOUSUFFEREDFROMANYINJURYORILLNESSWHILEONACTIV_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_8_RG_10Allergiesincludingenvironmentalandoccupationalal_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_8_TA_3_10ALLERGIESINCLUDINGENVIRONMENTALANDOCCUPATIONALAL_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_9_RG_11Highorbadcholesterol_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_9_TA_3_11HIGHORBADCHOLESTEROL_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_10_RG_12Tuberculosis_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_10_TA_3_12TUBERCULOSIS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_11_RG_13Coughingupblood_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_11_TA_3_13COUGHINGUPBLOOD_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_12_RG_14Asthma_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_12_TA_3_14ASTHMA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_13_RG_15Bronchitis_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_13_TA_3_15BRONCHITIS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_14_RG_16Chroniccoughorcoughatnight_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_14_TA_3_16CHRONICCOUGHORCOUGHATNIGHT_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_15_RG_17Wheezingshortnessofbreathordifficultybreathingot_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_15_TA_3_17WHEEZINGSHORTNESSOFBREATHORDIFFICULTYBREATHINGOT_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_16_RG_18OtherlungproblemsforexampleChronicObstructivePul_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_16_TA_3_18OTHERLUNGPROBLEMSFOREXAMPLECHRONICOBSTRUCTIVEPUL_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_17_RG_19Sinusitis_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_17_TA_3_19SINUSITIS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_18_RG_20Thyroidtroubleorgoiter_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_18_TA_3_20THYROIDTROUBLEORGOITER_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_19_RG_21Earnoseorthroattrouble_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_19_TA_3_21EARNOSEORTHROATTROUBLE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_20_RG_22Frequentindigestionorheartburnreflux_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_20_TA_3_22FREQUENTINDIGESTIONORHEARTBURNREFLUX_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_21_RG_23Stomachorintestinalproblemsforexampleulcer_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_21_TA_3_23STOMACHORINTESTINALPROBLEMSFOREXAMPLEULCER_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_22_RG_24Kidneyproblemsforexamplestonesinfection_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_22_TA_3_24KIDNEYPROBLEMSFOREXAMPLESTONESINFECTION_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_23_RG_25Liverproblemsforexamplehepatitiscirrhosis_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_23_TA_3_25LIVERPROBLEMSFOREXAMPLEHEPATITISCIRRHOSIS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_24_RG_26Constipationloosebowelsordiarrhea_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_24_TA_3_26CONSTIPATIONLOOSEBOWELSORDIARRHEA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_25_RG_27Gallbladdertroubleorgallstones_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_25_TA_3_27GALLBLADDERTROUBLEORGALLSTONES_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_26_RG_28Hernia_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_26_TA_3_28HERNIA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_27_RG_29Rectaldiseasehemorrhoidsorbloodfromrectum_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_27_TA_3_29RECTALDISEASEHEMORRHOIDSORBLOODFROMRECTUM_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_28_RG_30Frequentorpainfulurinationorbloodinurine_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_28_TA_3_30FREQUENTORPAINFULURINATIONORBLOODINURINE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_30_RG_31Highorlowbloodsugar_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_30_TA_3_31HIGHORLOWBLOODSUGAR_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_31_RG_32Sugarorproteininurine_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_31_TA_3_32SUGARORPROTEININURINE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_32_RG_33Diabetes_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_32_TA_3_33DIABETES_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_33_RG_34Recentunexplainedgainorlossofweight_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_33_TA_3_34RECENTUNEXPLAINEDGAINORLOSSOFWEIGHT_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_34_RG_35Aheadinjurymemorylossoramnesia_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_34_TA_3_35AHEADINJURYMEMORYLOSSORAMNESIA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_35_RG_36Recurringheadachesmigrainesfrequentorsevereheada_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_35_TA_3_36RECURRINGHEADACHESMIGRAINESFREQUENTORSEVEREHEADA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_36_RG_37Periodsofdizzinessfaintingorlossofconsciousness_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_36_TA_3_37PERIODSOFDIZZINESSFAINTINGORLOSSOFCONSCIOUSNESS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_37_RG_38MentalhealthproblemsforexampledepressionanxietyP_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_37_TA_3_38MENTALHEALTHPROBLEMSFOREXAMPLEDEPRESSIONANXIETYP_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_38_RG_39Neurologicalproblemsforexamplestrokeseizuresconv_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_38_TA_3_39NEUROLOGICALPROBLEMSFOREXAMPLESTROKESEIZURESCONV_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_39_RG_40Paralysis_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_39_TA_3_40PARALYSIS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_40_RG_41Meningitisencephalitisorotherneurologicalinfecti_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_40_TA_3_41MENINGITISENCEPHALITISOROTHERNEUROLOGICALINFECTI_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_41_RG_42Rheumaticfever_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_41_TA_3_42RHEUMATICFEVER_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_42_RG_43Prolongedbleeding_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_42_TA_3_43PROLONGEDBLEEDING_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_43_RG_44Bloodproblemsforexamplehemophiliasicklecelldisea_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_43_TA_3_44BLOODPROBLEMSFOREXAMPLEHEMOPHILIASICKLECELLDISEA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_44_RG_45ImmunesystemproblemsforexampleHIVchemotherapyrad_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_44_TA_3_45IMMUNESYSTEMPROBLEMSFOREXAMPLEHIVCHEMOTHERAPYRAD_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_45_RG_46Anginaalsocalledanginapectoris_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_45_TA_3_46ANGINAALSOCALLEDANGINAPECTORIS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_46_RG_47CongestiveHeartFailure_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_46_TA_3_47CONGESTIVEHEARTFAILURE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_47_RG_48Painpressureordiscomfortinyourchest_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_47_TA_3_48PAINPRESSUREORDISCOMFORTINYOURCHEST_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_48_RG_49Palpitationspoundingheartorabnormalheartbeat_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_48_TA_3_49PALPITATIONSPOUNDINGHEARTORABNORMALHEARTBEAT_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_50_RG_50Heartmurmurorvalveproblemforexamplemitralvalvepr_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_50_TA_3_50HEARTMURMURORVALVEPROBLEMFOREXAMPLEMITRALVALVEPR_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_51_RG_51Coronaryheartdisease_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_51_TA_3_51CORONARYHEARTDISEASE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_52_RG_52Heartattackalsocalledmyocardialinfarction_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_52_TA_3_52HEARTATTACKALSOCALLEDMYOCARDIALINFARCTION_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_53_RG_53Highbloodpressure_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_53_TA_3_53HIGHBLOODPRESSURE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_54_RG_54Lowbloodpressure_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_54_TA_3_54LOWBLOODPRESSURE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_55_RG_55Skindiseasesotherthancancer_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_55_TA_3_55SKINDISEASESOTHERTHANCANCER_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_56_RG_56Cancerotherthanskin_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_56_TA_3_56CANCEROTHERTHANSKIN_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_57_RG_57Skincancer_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_57_TA_3_57SKINCANCER_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_59_RG_1HeadandNeck_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_59_TA_3_1HEADANDNECK_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_60_RG_2BackandChest_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_60_TA_3_2BACKANDCHEST_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_61_RG_3ShoulderArm_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_61_TA_3_3SHOULDERARM_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_62_RG_4ElbowForearm_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_62_TA_3_4ELBOWFOREARM_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_63_RG_5WristHandFingers_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_63_TA_3_5WRISTHANDFINGERS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_64_RG_6HipThigh_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_64_TA_3_6HIPTHIGH_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_65_RG_7LegKnee_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_65_TA_3_7LEGKNEE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_66_RG_8AnkleFootToes_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_66_TA_3_8ANKLEFOOTTOES_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_67_RG_1Doyoucurrentlyusetobaccoproductscigarettescigarsp_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_67_TA_3_1DOYOUCURRENTLYUSETOBACCOPRODUCTSCIGARETTESCIGARSP_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_2Haveyousmokedatleast100cigarettesinyourentirelife_2_Have_you_smoked_at_least_100": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "RG_3Duringthepast12monthshaveyouevertriedtostopsmokin_3_During_the_past_12_months": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Not Applicable"
+    ],
+    "parent": null
+  },
+  "TA_279_3DURINGTHEPAST12MONTHSHAVEYOUEVERTRIEDTOSTOPSMOKIN_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_70_RG_4Haveyoueverhadaserioushealthproblemthatwascausedo_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_70_TA_3_4HAVEYOUEVERHADASERIOUSHEALTHPROBLEMTHATWASCAUSEDO_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_5Duringthepast12monthshowoftenwereyouexposedtoseco_5_During_the_past_12_months": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Daily",
+      "/Off",
+      "/Less than daily",
+      "/Not at all"
+    ],
+    "parent": null
+  },
+  "CO_72_RG_6Doyouhaveanyongoinghealthconcernswithpastuseofrec_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_72_TA_3_6DOYOUHAVEANYONGOINGHEALTHCONCERNSWITHPASTUSEOFREC_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_74_RG_1Duringqualifyingmilitaryservicehaveyoueverhadordo_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_74_TA_3_1DURINGQUALIFYINGMILITARYSERVICEHAVEYOUEVERHADORDO_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_75_RG_2Duringqualifyingmilitaryservicehaveyoueverhadordo_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_75_TA_3_2DURINGQUALIFYINGMILITARYSERVICEHAVEYOUEVERHADORDO_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_76_RG_3Doyoucurrentlyorhaveyoueverwornahearingaid_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_76_TA_3_3DOYOUCURRENTLYORHAVEYOUEVERWORNAHEARINGAID_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_77_RG_4Duringyourdeploymentorduringmilitarytrainingwerey_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_77_TA_3_4DURINGYOURDEPLOYMENTORDURINGMILITARYTRAININGWEREY_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_78_RG_1Doyouwearcorrectivelensesglassesorcontacts_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_78_TA_3_1DOYOUWEARCORRECTIVELENSESGLASSESORCONTACTS_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_79_RG_2Eyedisorderortrouble_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_79_TA_3_2EYEDISORDERORTROUBLE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_80_RG_3Surgerytocorrectvision_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_80_TA_3_3SURGERYTOCORRECTVISION_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_81_RG_4Lossofvisionineithereye_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_81_TA_3_4LOSSOFVISIONINEITHEREYE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_82_RG_5Doublevisiondiplopia_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_82_TA_3_5DOUBLEVISIONDIPLOPIA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_83_RG_6Changeinyourvisionthatimpactsyourdutyperformance_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_83_TA_3_6CHANGEINYOURVISIONTHATIMPACTSYOURDUTYPERFORMANCE_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_1Asaresultofanyinjuryoreventdidyoureceiveajoltorbl_1_As_a_result_of_any_injury_or_event": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Not Applicable"
+    ],
+    "parent": null
+  },
+  "CB_83_IFYESCHECKALLTHATAPPLY_LOSINGCONSCIOUSNESSKNOCKEDOUT": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_84_IFYESCHECKALLTHATAPPLY_LOSINGMEMORYOFEVENTSBEFOREORAFTERTHEINJURY": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_85_IFYESCHECKALLTHATAPPLY_SEEINGSTARSBECOMINGDISORIENTEDFUNCTIONINGDIFFERENT": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TI_86_2HOWMANYTOTALTIMESDIDYOURECEIVEAJOLTORBLOWTOYOURHE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_85_RG_3HaveyoueverexperiencedaheadinjuryconcussionorTrau_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_85_TA_3_3HAVEYOUEVEREXPERIENCEDAHEADINJURYCONCUSSIONORTRAU_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_Haveyouhadprolongedsymptomsthathavenotresolved_Have_you_had_prolonged_symptoms": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "TA_89_HAVEYOUHADPROLONGEDSYMPTOMSTHATHAVENOTRESOLVED_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_Areyoucurrentlyexperiencinganyprolongedsymptomstha_Are_you_currently_experiencing": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "TA_92_AREYOUCURRENTLYEXPERIENCINGANYPROLONGEDSYMPTOMSTHA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_87_RG_1Wereyoupotentiallyexposedtoanyoccupationalenviron_YesNoUnsure": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure"
+    ],
+    "parent": null
+  },
+  "CO_87_TA_4_1WEREYOUPOTENTIALLYEXPOSEDTOANYOCCUPATIONALENVIRON_YES_IFYESORUNSUREPROVIDEDETAILSHERE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_88_RG_2Haveyoubeenbasedorstationedatalocationwhereanopen_YesNoUnsure": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure"
+    ],
+    "parent": null
+  },
+  "CO_88_TA_4_2HAVEYOUBEENBASEDORSTATIONEDATALOCATIONWHEREANOPEN_YES_IFYESORUNSUREPROVIDEDETAILSHERE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_89_RG_3Haveyoubeenpotentiallyexposedtotoxicairbornechemi_YesNoUnsure": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure"
+    ],
+    "parent": null
+  },
+  "CO_89_TA_4_3HAVEYOUBEENPOTENTIALLYEXPOSEDTOTOXICAIRBORNECHEMI_YES_IFYESORUNSUREPROVIDEDETAILSHERE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_4If2or3isYesorUnsurehaveyouenrolledintheAirborneHa_4_If_2_or_3_is": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Not Applicable"
+    ],
+    "parent": null
+  },
+  "RG_Iwishto_I_wish_to": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/enroll",
+      "/opt out",
+      "/Not Applicable"
+    ],
+    "parent": null
+  },
+  "CO_90_RG_6Whiledeployedwereyoupotentiallyexposedtootherdepl_YesNoUnsure": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure"
+    ],
+    "parent": null
+  },
+  "CO_90_TA_4_6WHILEDEPLOYEDWEREYOUPOTENTIALLYEXPOSEDTOOTHERDEPL_YES_IFYESORUNSUREPROVIDEDETAILSHERE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_99_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_MEDICATIONSTOPREVENTMALARIAMALARIAPROPHYLAXISINCLU": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_100_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_AVACCINEWITHAPOSSIBLECOMPLICATION": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_101_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_FIREFIGHTINGFOAM": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_102_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_SOLVENTSOROTHERCHEMICALSTHATMAYHAVECAUSEDSKINREACT": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_103_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_FUELS": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_104_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_CONTAMINATEDWATER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_105_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_RADIATIONINCLUDEANYPOSSIBLEEXPOSURETODEPLETEDURANI": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_106_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_OTHEREXPOSURESOFPOSSIBLECONCERNNOTLISTEDHERE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_107_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_EMBEDDEDSHRAPNEL": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_108_7DURINGANYPARTOFYOURQUALIFYINGMILITARYSERVICEWEREY_UNSURE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TA_109_8IFYOUCHECKEDANYEXPOSURESINCLUDINGUNSURELISTEDINQU_PROVIDEDETAILSOFEXPOSURECONCERNSHERE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_91_RG_9Areyoucurrentlyparticipatinginanyspecialtyoccupat_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_91_TA_3_9AREYOUCURRENTLYPARTICIPATINGINANYSPECIALTYOCCUPAT_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_92_RG_10Ablastorexplosion_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_92_TA_3_10ABLASTOREXPLOSION_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_93_RG_11Avehicularaccidentcrashanyvehicleincludingaircra_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_93_TA_3_11AVEHICULARACCIDENTCRASHANYVEHICLEINCLUDINGAIRCRA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_94_RG_12Afragmentwoundorbulletwound_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_94_TA_3_12AFRAGMENTWOUNDORBULLETWOUND_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_96_RG_1Doyoucurrentlyhaveanydentalproblemsthatneedtobeev_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_96_TA_3_1DOYOUCURRENTLYHAVEANYDENTALPROBLEMSTHATNEEDTOBEEV_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_97_RG_2Haveyoueverbeendiagnosedortreatedfororalcancer_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_97_TA_3_2HAVEYOUEVERBEENDIAGNOSEDORTREATEDFORORALCANCER_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_98_RG_3AdentalexaminationwhereyouweretoldyouhadaTemporom_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_98_TA_3_3ADENTALEXAMINATIONWHEREYOUWERETOLDYOUHADATEMPOROM_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_99_RG_4Yourjawlockedopenandyoucouldnotclosethejaw_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_99_TA_3_4YOURJAWLOCKEDOPENANDYOUCOULDNOTCLOSETHEJAW_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_100_RG_5Lossofaportionoftheboneinyourupperorlowerjawdueto_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_100_TA_3_5LOSSOFAPORTIONOFTHEBONEINYOURUPPERORLOWERJAWDUETO_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_101_RG_6Lossofanyteethbecauseofservicerelatedtrauma_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_101_TA_3_6LOSSOFANYTEETHBECAUSEOFSERVICERELATEDTRAUMA_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CO_102_RG_7Physicalanatomicallossorinjurytoyourmouthlipsorto_Question_YesNo_Response": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "CO_102_TA_3_7PHYSICALANATOMICALLOSSORINJURYTOYOURMOUTHLIPSORTO_YES_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_110_9WOMENSHEALTHFEMALEREPRODUCTIVEORGANS_NOTAPPLICABLE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_125_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_ENDOMETRIOSIS": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TI_126_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_ENDOMETRIOSIS_DATEYYYYMMDD": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_Diagnosedbylaparoscopy_Diagnosed_by_laparoscopy": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure"
+    ],
+    "parent": null
+  },
+  "CB_135_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_FIBROIDSLEIOMYOMAS": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_130_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_RECTOCELEORCYSTOCELE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_131_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_POLYCYSTICOVARIANSYNDROMEPCOS": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_132_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_INFERTILITYDIFFICULTYGETTINGPREGNANT": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_133_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_RECURRENTMISCARRIAGE2ORMOREPREGNANCYLOSSES": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_134_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_OVARIANCANCER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_136_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_CERVICALCANCER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_137_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_UTERINEENDOMETRIALCANCER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_138_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_BREASTCANCER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_139_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_BONELOSSOROSTEOPOROSIS": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_140_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_FREQUENTURINARYTRACTINFECTIONS": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_141_1BEENDIAGNOSEDWITHANDORTREATEDFORANYOFTHEFOLLOWING_URINARYORFECALINCONTINENCELEAKINGURINEORSTOOL": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TA_142_2PLEASEPROVIDEADDITIONALDETAILSFORALLMARKEDDISORDE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_143_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_BREASTSURGERYORBREASTBIOPSY": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_144_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_HYSTERECTOMYUTERUSREMOVED": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_146_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_OOPHORECTOMYOVARIESREMOVED": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "RG_3Hadanyofthefollowingsurgeriesorinjuriescheckallth_Oophorectomyovariesremoved_Oophorectomy": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/One ovary",
+      "/Both ovaries"
+    ],
+    "parent": null
+  },
+  "CB_149_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_OTHERUTERINESURGERYCSECTIONDILATIONANDCURETTAGEDCE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_150_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_OTHEROVARIANSURGERY": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_151_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_REMOVALOFOVARIANCYST": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_152_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_TREATMENTOFOVARIANTORSIONTWISTING": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_153_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_TUBALSURGERYINCLUDINGTUBALLIGATION": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_154_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_SURGERYFORURINARYFECALINCONTINENCELEAKINGURINESTOO": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_155_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_LEEPORCERVICALCONEBIOPSY": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_156_3HADANYOFTHEFOLLOWINGSURGERIESORINJURIESCHECKALLTH_VAGINALVULVARSURGERYORINJURY": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TA_157_4PLEASEPROVIDEADDITIONALDETAILFORALLMARKEDSURGERIE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_159_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_DATEYYYYMMDDPREGNANCY1": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_160_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_VAGINALDELIVERYPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_161_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_CSECTIONPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_162_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_MISCARRIAGELOSSBEFORE20WEEKSPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_163_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_STILLBIRTHLOSSATORAFTER20WEEKSPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_164_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_ECTOPICTUBALPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_165_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_TERMINATIONABORTIONPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_166_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_COMPLICATIONSDEPRESSIONORANXIETYPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_167_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_OTHERPREGNANCY1": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TI_168_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_DATEYYYYMMDDPREGNANCY2": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_169_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_VAGINALDELIVERYPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_170_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_CSECTIONPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_171_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_MISCARRIAGELOSSBEFORE20WEEKSPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_172_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_STILLBIRTHLOSSATORAFTER20WEEKSPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_173_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_ECTOPICTUBALPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_174_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_TERMINATIONABORTIONPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_175_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_COMPLICATIONSDEPRESSIONORANXIETYPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_176_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_OTHERPREGNANCY2": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TI_177_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_DATEYYYYMMDDPREGNANCY3": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_178_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_VAGINALDELIVERYPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_179_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_CSECTIONPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_180_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_MISCARRIAGELOSSBEFORE20WEEKSPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_181_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_STILLBIRTHLOSSATORAFTER20WEEKSPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_182_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_ECTOPICTUBALPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_183_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_TERMINATIONABORTIONPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_184_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_COMPLICATIONSDEPRESSIONORANXIETYPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_185_5PREGNANCYLISTALLPREGNANCIESANDASSOCIATEDOUTCOMESA_OTHERPREGNANCY3": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TA_186_LISTDATESOUTCOMESTREATMENTLOCATIONANDCOMPLICATIONS": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_6Abreastcancerscreeningmammogram_6_A_breast_cancer_screening": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure (if no or unsure, skip to question 8)"
+    ],
+    "parent": null
+  },
+  "TI_191_6ABREASTCANCERSCREENINGMAMMOGRAM_YES_IFYESWHENWASYOURLASTSCREENINGYYYYMM": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_7Anabnormalmammogramresult_7_An_abnormal_mammogram_result": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure (if no or unsure, skip to question 8)"
+    ],
+    "parent": null
+  },
+  "TA_195_7ANABNORMALMAMMOGRAMRESULT_YES_IFYESWHENDIDTHEABNORMALRESULTOCCURWHATWASTHEABNORM": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TA_196_7ANABNORMALMAMMOGRAMRESULT_YES_IFAPPLICABLEWHENDIDYOURECEIVETREATMENTORFOLLOWUPCA": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_8AcervicalcancerscreeningPapandorHPVtest_8_A_cervical_cancer_screening": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure (if no or unsure, skip to question 10)"
+    ],
+    "parent": null
+  },
+  "TI_200_8ACERVICALCANCERSCREENINGPAPANDORHPVTEST_IFYESWHENWASYOURLASTSCREENINGYYYYMM": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_9Anabnormalresultshowingcancerorprecancerorapositi_9_An_abnormal_result_showing_cancer": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure (if no or unsure, skip to question 10)"
+    ],
+    "parent": null
+  },
+  "TA_204_9ANABNORMALRESULTSHOWINGCANCERORPRECANCERORAPOSITI_YES_IFYESWHENDIDTHEABNORMALRESULTOCCURWHATWASTHEABNORM": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TA_205_9ANABNORMALRESULTSHOWINGCANCERORPRECANCERORAPOSITI_YES_IFAPPLICABLEWHENDIDYOURECEIVETREATMENTORFOLLOWUPCA": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_10Stillhavingmensesperiods_10_Still_having_menses": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No",
+      "/Unsure"
+    ],
+    "parent": null
+  },
+  "TI_209_10STILLHAVINGMENSESPERIODS_YES_IFYESENTERTHEDATEOFYOURLASTMENSTRUALPERIODANDSKIPT": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_210_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_POSTMENOPAUSALNOPERIODSFOR12MONTHSORMORE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_211_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_HYSTERECTOMY": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_212_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_HORMONALSUPPRESSIONPILLSRINGPATCHSHOTIUD": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_213_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_PREGNANT": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_214_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_LACTATINGBREASTFEEDING": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_215_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_UNSURE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_216_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_OTHER": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TI_217_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_OTHER_SPECIFY": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_218_IFNOORUNSUREWHYAREYOUNOTHAVINGMENSESPERIODS_IFYOUREMEMBERWHATWASTHEDATEOFYOURLASTMENSTRUALPERI": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "CB_219_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_CURRENTORRECENTGENITALLESIONSSORESONORNEARYOURVAGI": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_220_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_PELVICINFLAMMATORYDISEASEUTERUSPROLAPSEORDISPLACEM": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_221_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_LEAKAGEOFURINEAFFECTINGWORKSOCIALACTIVITIES": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_222_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_PAINDURINGINTERCOURSE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_223_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_LOWLIBIDOREDUCEDINTERESTINSEX": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_224_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_BLEEDINGAFTERMENOPAUSE": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_225_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_PELVICPAIN": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_226_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_LEAKAGEOFSTOOL": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "CB_227_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_NO": {
+    "field_type": "/Btn",
+    "value": "/Off",
+    "states": [
+      "/Off",
+      "/Yes"
+    ],
+    "parent": null
+  },
+  "TA_228_11EXPERIENCINGANYOFTHEFOLLOWINGCHECKALLTHATAPPLY_IFYESEXPLAIN": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "RG_1Littleinterestorpleasureindoingthings_1_Little_interest_or_pleasure": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Not At All",
+      "/Off",
+      "/Several Days",
+      "/More Than Half the Days",
+      "/Nearly Every Day"
+    ],
+    "parent": null
+  },
+  "RG_2Feelingdowndepressedorhopeless_2_Feeling_down": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Not At All",
+      "/Off",
+      "/Several Days",
+      "/More Than Half the Days",
+      "/Nearly Every Day"
+    ],
+    "parent": null
+  },
+  "RG_1Howoftendidyouhaveadrinkcontainingalcoholinthepas_1_How_often_did_you_have": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Never (Proceed to signature)",
+      "/Off",
+      "/Monthly or less",
+      "/2-4 times a month",
+      "/2-3 times per week",
+      "/4 or more times a week"
+    ],
+    "parent": null
+  },
+  "RG_2Howmanydrinkscontainingalcoholdidyouhaveonatypica_2_How_many_drinks": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/1 or 2",
+      "/Off",
+      "/3 or 4",
+      "/5 or 6",
+      "/7 to 9",
+      "/10 or more"
+    ],
+    "parent": null
+  },
+  "RG_3FormenHowoftendidyouhavesixormoredrinksononeoccas_3_For_men": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Never",
+      "/Off",
+      "/Less than monthly",
+      "/Monthly",
+      "/Weekly",
+      "/Daily, or almost daily",
+      "/Not Applicable"
+    ],
+    "parent": null
+  },
+  "RG_4ForwomenHowoftendidyouhavefourormoredrinksononeoc_4_For_women": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Never",
+      "/Off",
+      "/Less than monthly",
+      "/Monthly",
+      "/Weekly",
+      "/Daily, or almost daily",
+      "/Not Applicable"
+    ],
+    "parent": null
+  },
+  "RG_Haveyoueverexperiencedthiskindofevent_Have_you_ever_experienced_this_kind_of_event": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "RG_1Hadnightmaresabouttheeventsorthoughtabouttheevent_1_Had_nightmares": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "RG_2Triedhardnottothinkabouttheeventsorwentoutofyourw_2_Tried_hard_not_to_think": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "RG_3Beenconstantlyonguardwatchfuloreasilystartled_3_Been_constantly_on_guard": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "RG_4Feltnumbordetachedfrompeopleactivitiesoryoursurro_4_Felt_numb_or_detached": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "RG_5Feltguiltyorunabletostopblamingyourselforothersfo_5_Felt_guilty_or_unable_to_stop": {
+    "field_type": "/Btn",
+    "value": "/",
+    "states": [
+      "/Off",
+      "/Yes",
+      "/No"
+    ],
+    "parent": null
+  },
+  "TA_269_SPACEFORADDITIONALRESPONSESNOTETHEQUESTIONNUMBERBE": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_270_SIGNATUREOFSERVICEMEMBER": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  },
+  "TI_271_DATEOFSIGNATUREYYYYMMDD": {
+    "field_type": "/Tx",
+    "value": "",
+    "states": null,
+    "parent": null
+  }
+}

@@ -1,0 +1,660 @@
+[
+  {
+    "item": 10,
+    "letter": "a",
+    "question_text": "Tuberculosis",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].A[0].Yes10A[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].A[0].No10A[0]"
+  },
+  {
+    "item": 10,
+    "letter": "b",
+    "question_text": "Lived with someone who had tuberculosis",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].B[0].Yes10B[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].B[0].No10B[0]"
+  },
+  {
+    "item": 10,
+    "letter": "c",
+    "question_text": "Coughed up blood",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].C[0].Yes10C[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].C[0].No10C[0]"
+  },
+  {
+    "item": 10,
+    "letter": "d",
+    "question_text": "Asthma or any breathing problems related to exercise, weather, pollens, etc.",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].D[0].Yes10D[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].D[0].No10D[0]"
+  },
+  {
+    "item": 10,
+    "letter": "e",
+    "question_text": "Shortness of breath",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].E[0].Yes10E[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].E[0].No10E[0]"
+  },
+  {
+    "item": 10,
+    "letter": "f",
+    "question_text": "Bronchitis",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].F[0].Yes10F[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].F[0].No10F[0]"
+  },
+  {
+    "item": 10,
+    "letter": "g",
+    "question_text": "Wheezing or problems with wheezing",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].G[0].Yes10G[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].G[0].No10G[0]"
+  },
+  {
+    "item": 10,
+    "letter": "h",
+    "question_text": "Been prescribed or used an inhaler",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].H[0].Yes10H[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].H[0].No10H[0]"
+  },
+  {
+    "item": 10,
+    "letter": "i",
+    "question_text": "A chronic cough or cough at night",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].I[0].Yes10I[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].I[0].No10I[0]"
+  },
+  {
+    "item": 10,
+    "letter": "j",
+    "question_text": "Sinusitis",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].J[0].Yes10J[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].J[0].No10J[0]"
+  },
+  {
+    "item": 10,
+    "letter": "k",
+    "question_text": "Hay fever",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].K[0].Yes10K[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].K[0].No10K[0]"
+  },
+  {
+    "item": 10,
+    "letter": "l",
+    "question_text": "Chronic or frequent colds",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].L[0].Yes10L[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Ten[0].L[0].No10L[0]"
+  },
+  {
+    "item": 11,
+    "letter": "a",
+    "question_text": "Severe tooth or gum trouble",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].A[0].Yes11A[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].A[0].No11A[0]"
+  },
+  {
+    "item": 11,
+    "letter": "b",
+    "question_text": "Thyroid trouble or goiter",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].B[0].Yes11B[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].B[0].No11B[0]"
+  },
+  {
+    "item": 11,
+    "letter": "c",
+    "question_text": "Eye disorder or trouble",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].C[0].Yes11C[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].C[0].No11C[0]"
+  },
+  {
+    "item": 11,
+    "letter": "d",
+    "question_text": "Ear, nose, or throat trouble",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].D[0].Yes11D[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].D[0].No11D[0]"
+  },
+  {
+    "item": 11,
+    "letter": "e",
+    "question_text": "Loss or vision in either eye",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].E[0].Yes11E[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].E[0].No11E[0]"
+  },
+  {
+    "item": 11,
+    "letter": "f",
+    "question_text": "Worn contact lenses or glasses",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].F[0].Yes11F[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].F[0].No11F[0]"
+  },
+  {
+    "item": 11,
+    "letter": "g",
+    "question_text": "A hearing loss or wear a hearing aid",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].G[0].Yes11G[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].G[0].No11G[0]"
+  },
+  {
+    "item": 11,
+    "letter": "h",
+    "question_text": "Surgery to correct vision (RK, PRK, LASIK, etc.)",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].H[0].Yes11H[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Eleven[0].H[0].No11H[0]"
+  },
+  {
+    "item": 12,
+    "letter": null,
+    "question_text": "(Continued)",
+    "yes_field": null,
+    "no_field": null
+  },
+  {
+    "item": 12,
+    "letter": "a",
+    "question_text": "Painful shoulder, elbow or wrist (e.g. pain, dislocation, etc.)",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].A[0].Yes12A[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].A[0].No12A[0]"
+  },
+  {
+    "item": 12,
+    "letter": "b",
+    "question_text": "Arthritis, rheumatism, or bursitis",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].B[0].Yes12B[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].B[0].No12B[0]"
+  },
+  {
+    "item": 12,
+    "letter": "c",
+    "question_text": "Recurrent back pain or any back problem",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].C[0].Yes12C[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].C[0].No12C[0]"
+  },
+  {
+    "item": 12,
+    "letter": "d",
+    "question_text": "Numbness or tingling",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].D[0].Yes12D[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].D[0].No12D[0]"
+  },
+  {
+    "item": 12,
+    "letter": "e",
+    "question_text": "Loss of finger or toe",
+    "yes_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].E[0].Yes12E[0]",
+    "no_field": "form1[0].Page1[0].LeftColumn[0].Twelve[0].E[0].No12E[0]"
+  },
+  {
+    "item": 12,
+    "letter": "f",
+    "question_text": "Foot trouble (e.g., pain, corns, bunions, etc.)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].F[0].Yes12F[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].F[0].No12F[0]"
+  },
+  {
+    "item": 12,
+    "letter": "g",
+    "question_text": "Impaired use of arms, legs, hands, or feet",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].G[0].Yes12G[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].G[0].No12G[0]"
+  },
+  {
+    "item": 12,
+    "letter": "h",
+    "question_text": "Swollen or painful joint(s)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].H[0].Yes12H[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].H[0].No12H[0]"
+  },
+  {
+    "item": 12,
+    "letter": "i",
+    "question_text": "Knee trouble (e.g., locking, giving out, pain or ligament injury, etc.)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].I[0].Yes12I[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].I[0].No12I[0]"
+  },
+  {
+    "item": 12,
+    "letter": "j",
+    "question_text": "Any knee or foot surgery including arthroscopy or the use of a scope to any bone or joint",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].J[0].Yes12J[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].J[0].No12J[0]"
+  },
+  {
+    "item": 12,
+    "letter": "k",
+    "question_text": "Any need to use corrective devices such as prosthetic devices, knee brace(s), back support(s), lifts, or orthotics, etc.",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].K[0].Yes12K[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].K[0].No12K[0]"
+  },
+  {
+    "item": 12,
+    "letter": "l",
+    "question_text": "Bone, joint, or other deformity",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].L[0].Yes12L[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].L[0].No12L[0]"
+  },
+  {
+    "item": 12,
+    "letter": "m",
+    "question_text": "Plate(s), screw(s), rod(s), or pin(s) in any bone",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].M[0].Yes12M[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].M[0].No12M[0]"
+  },
+  {
+    "item": 12,
+    "letter": "n",
+    "question_text": "Broken bone(s) (cracked of fractured)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].N[0].Yes12N[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Twelve[0].N[0].No12N[0]"
+  },
+  {
+    "item": 13,
+    "letter": "a",
+    "question_text": "Frequent indigestion or heartburn",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].A[0].Yes13A[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].A[0].No13A[0]"
+  },
+  {
+    "item": 13,
+    "letter": "b",
+    "question_text": "Stomach, liver, intestinal trouble, or ulcer",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].B[0].Yes13B[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].B[0].No13B[0]"
+  },
+  {
+    "item": 13,
+    "letter": "c",
+    "question_text": "Gall bladder trouble or gallstones",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].C[0].Yes13C[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].C[0].No13C[0]"
+  },
+  {
+    "item": 13,
+    "letter": "d",
+    "question_text": "Jaundice or hepatitis (liver disease)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].D[0].Yes13D[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].D[0].No13D[0]"
+  },
+  {
+    "item": 13,
+    "letter": "e",
+    "question_text": "Rupture/hernia",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].E[0].Yes13E[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].E[0].No13E[0]"
+  },
+  {
+    "item": 13,
+    "letter": "f",
+    "question_text": "Rectal disease, hemorrhoids, or blood from the rectum",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].F[0].Yes13F[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].F[0].No13F[0]"
+  },
+  {
+    "item": 13,
+    "letter": "g",
+    "question_text": "Skin diseases (e.g. acne, eczema, psoriasis, etc.)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].G[0].Yes13G[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].G[0].No13G[0]"
+  },
+  {
+    "item": 13,
+    "letter": "h",
+    "question_text": "Frequent or painful urination",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].H[0].Yes13H[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].H[0].No13H[0]"
+  },
+  {
+    "item": 13,
+    "letter": "i",
+    "question_text": "High or low blood sugar",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].I[0].Yes13I[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].I[0].No13I[0]"
+  },
+  {
+    "item": 13,
+    "letter": "j",
+    "question_text": "Kidney stone or blood in urine",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].J[0].Yes13J[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].J[0].No13J[0]"
+  },
+  {
+    "item": 13,
+    "letter": "k",
+    "question_text": "Sugar or protein in urine",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].K[0].Yes13K[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].K[0].No13K[0]"
+  },
+  {
+    "item": 13,
+    "letter": "l",
+    "question_text": "Sexually transmitted disease (syphilis, gonorrhea, chlamydia, genital warts, herpes, etc.)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].L[0].Yes13L[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Thirteen[0].L[0].No13L[0]"
+  },
+  {
+    "item": 14,
+    "letter": "a",
+    "question_text": "Adverse reaction to serum, food, insect stings, or medicine",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].A[0].Yes14A[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].A[0].No14A[0]"
+  },
+  {
+    "item": 14,
+    "letter": "b",
+    "question_text": "Recent unexplained gain or loss of weight",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].B[0].Yes14B[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].B[0].No14B[0]"
+  },
+  {
+    "item": 14,
+    "letter": "c",
+    "question_text": "Currently in good health (If no, explain in Item 29 on Page 2.)",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].C[0].Yes14C[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].C[0].No14C[0]"
+  },
+  {
+    "item": 14,
+    "letter": "d",
+    "question_text": "Tumor, growth, cyst, or cancer",
+    "yes_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].D[0].Yes14D[0]",
+    "no_field": "form1[0].Page1[0].RightColumn[0].Fourteen[0].D[0].No14D[0]"
+  },
+  {
+    "item": 15,
+    "letter": "a",
+    "question_text": "Dizziness or fainting spells",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].A[0].Yes15A[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].A[0].No15A[0]"
+  },
+  {
+    "item": 15,
+    "letter": "b",
+    "question_text": "Frequent or severe headache",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].B[0].Yes15B[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].B[0].No15B[0]"
+  },
+  {
+    "item": 15,
+    "letter": "c",
+    "question_text": "A head injury, memory loss or amnesia",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].C[0].Yes15C[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].C[0].No15C[0]"
+  },
+  {
+    "item": 15,
+    "letter": "d",
+    "question_text": "Paralysis",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].D[0].Yes15D[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].D[0].No15D[0]"
+  },
+  {
+    "item": 15,
+    "letter": "e",
+    "question_text": "Seizures, convulsions,epilepsy, or fits",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].E[0].Yes15E[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].E[0].No15E[0]"
+  },
+  {
+    "item": 15,
+    "letter": "f",
+    "question_text": "Car, train,sea,or air sickness",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].F[0].Yes15F[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].F[0].No15F[0]"
+  },
+  {
+    "item": 15,
+    "letter": "g",
+    "question_text": "A period of unconsciousness or concussion",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].G[0].Yes15G[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].G[0].No15G[0]"
+  },
+  {
+    "item": 15,
+    "letter": "h",
+    "question_text": "Meningitis, encephalitis, or other neurological problems",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].H[0].Yes15H[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Fifteen[0].H[0].No15H[0]"
+  },
+  {
+    "item": 16,
+    "letter": "a",
+    "question_text": "Rheumatic fever",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].A[0].Yes16A[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].A[0].No16A[0]"
+  },
+  {
+    "item": 16,
+    "letter": "b",
+    "question_text": "Prolonged bleeding (as after an injury or tooth extraction, etc.)",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].B[0].Yes16B[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].B[0].No16B[0]"
+  },
+  {
+    "item": 16,
+    "letter": "c",
+    "question_text": "Pain or pressure in the chest",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].C[0].Yes16C[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].C[0].No16C[0]"
+  },
+  {
+    "item": 16,
+    "letter": "d",
+    "question_text": "Palpitation, pounding heart or abnormal heartbeat",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].D[0].Yes16D[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].D[0].No16D[0]"
+  },
+  {
+    "item": 16,
+    "letter": "e",
+    "question_text": "Heart trouble or murmur",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].E[0].Yes16E[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].E[0].No16E[0]"
+  },
+  {
+    "item": 16,
+    "letter": "f",
+    "question_text": "High or low blood pressure",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].F[0].Yes16F[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Sixteen[0].F[0].No16F[0]"
+  },
+  {
+    "item": 17,
+    "letter": "a",
+    "question_text": "Nervous trouble of any sort (anxiety or panic attacks)",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].A[0].Yes17A[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].A[0].No17A[0]"
+  },
+  {
+    "item": 17,
+    "letter": "b",
+    "question_text": "Habitual stammering or stuttering",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].B[0].Yes17B[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].B[0].No17B[0]"
+  },
+  {
+    "item": 17,
+    "letter": "c",
+    "question_text": "Loss of memory or amnesia, or neurological symptoms",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].C[0].Yes17C[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].C[0].No17C[0]"
+  },
+  {
+    "item": 17,
+    "letter": "d",
+    "question_text": "Frequent trouble sleeping",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].D[0].Yes17D[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].D[0].No17D[0]"
+  },
+  {
+    "item": 17,
+    "letter": "e",
+    "question_text": "Received counseling of any type",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].E[0].Yes17E[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].E[0].No17E[0]"
+  },
+  {
+    "item": 17,
+    "letter": "f",
+    "question_text": "Depression or excessive worry",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].F[0].Yes17F[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].F[0].No17F[0]"
+  },
+  {
+    "item": 17,
+    "letter": "g",
+    "question_text": "Been evaluated or treated for a mental condition",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].G[0].Yes17G[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].G[0].No17G[0]"
+  },
+  {
+    "item": 17,
+    "letter": "h",
+    "question_text": "Attempted suicide",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].H[0].Yes17H[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].H[0].No17H[0]"
+  },
+  {
+    "item": 17,
+    "letter": "i",
+    "question_text": "Used illegal drugs or abused prescription drugs",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].I[0].Yes17I[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Seventeen[0].I[0].No17I[0]"
+  },
+  {
+    "item": 18,
+    "letter": null,
+    "question_text": "FEMALES ONLY. Have you ever had or do you now have:",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].eighteen[0].Yes18[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].eighteen[0].No18[0]"
+  },
+  {
+    "item": 18,
+    "letter": "a",
+    "question_text": "Treatment for a gynecological (female) disorder",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].A[0].Yes18A[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].A[0].No18A[0]"
+  },
+  {
+    "item": 18,
+    "letter": "b",
+    "question_text": "A change of menstrual pattern",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].B[0].Yes18B[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].B[0].No18B[0]"
+  },
+  {
+    "item": 18,
+    "letter": "c",
+    "question_text": "Any abnormal PAP smears",
+    "yes_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].C[0].Yes18C[0]",
+    "no_field": "form1[0].Page2[0].Left[0].LeftColumn[0].Eighteen[0].C[0].No18C[0]"
+  },
+  {
+    "item": 18,
+    "letter": "d",
+    "question_text": "First day of last menstrual period (YYYYMMDD)",
+    "yes_field": null,
+    "no_field": null
+  },
+  {
+    "item": 18,
+    "letter": "e",
+    "question_text": "Date of last PAP smear (YYYYMMDD)",
+    "yes_field": null,
+    "no_field": null
+  },
+  {
+    "item": 19,
+    "letter": null,
+    "question_text": "Have you been refused employment, or been unable to hold a job or stay in school because of:",
+    "yes_field": null,
+    "no_field": null
+  },
+  {
+    "item": 19,
+    "letter": "a",
+    "question_text": "Sensitivity to chemicals, dust, sunlight, etc.",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].A[0].Yes19A[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].A[0].No19A[0]"
+  },
+  {
+    "item": 19,
+    "letter": "b",
+    "question_text": "Inability to perform certain motions",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].B[0].Yes19B[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].B[0].No19B[0]"
+  },
+  {
+    "item": 19,
+    "letter": "c",
+    "question_text": "Inability to stand, sit, kneel, lie down, etc.",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].C[0].Yes19C[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].C[0].No19C[0]"
+  },
+  {
+    "item": 19,
+    "letter": "d",
+    "question_text": "Other medical reasons (If yes, give reasons.)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].D[0].Yes19D[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].Nineteen[0].D[0].No19D[0]"
+  },
+  {
+    "item": 20,
+    "letter": null,
+    "question_text": "Have you ever been treated in an Emergency Room? (If yes, for what?)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].Twenty[0].Yes20[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].Twenty[0].No20[0]"
+  },
+  {
+    "item": 21,
+    "letter": null,
+    "question_text": "Have you ever been a patient in any type of hospital? (If yes, specify when, where,why, and name of doctor and complete address of hospital.",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyOne[0].Yes21[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyOne[0].No21[0]"
+  },
+  {
+    "item": 22,
+    "letter": null,
+    "question_text": "Have you ever had, or have you been advised to have any operations or surgery? (If yes, describe and give age at which occurred.)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyTwo[0].Yes22[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyTwo[0].No22[0]"
+  },
+  {
+    "item": 23,
+    "letter": null,
+    "question_text": "Have you ever had any illness or injury other than those already noted? (If yes, specify when, where, and give details.)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyThree[0].Yes23[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyThree[0].No23[0]"
+  },
+  {
+    "item": 24,
+    "letter": null,
+    "question_text": "Have you consulted or been treated by clinics, physicians, healers, or other practitioners within the past 5 years for other than minor illnesses? (If yes, give complete address of doctor, hospital, clinic, and details.)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyFour[0].Yes24[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyFour[0].No24[0]"
+  },
+  {
+    "item": 25,
+    "letter": null,
+    "question_text": "Have you ever been rejected for military service for any reason? (If yes, give date and reason for rejection.)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyFive[0].Yes25[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyFive[0].No25[0]"
+  },
+  {
+    "item": 26,
+    "letter": null,
+    "question_text": "Have you ever been discharged from military service for any reason? (If yes, give date, reason, and type of discharge; whether honorable, other than honorable, for unfitness or unsuitability.)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentySix[0].Yes26[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentySix[0].No26[0]"
+  },
+  {
+    "item": 27,
+    "letter": null,
+    "question_text": "Have you ever received, is there pending, or have you ever applied for pension or compensation for any disability or injury? (If yes, specify what kind, granted by whom, and what amount, when , why.)",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentySeven[0].Yes27[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentySeven[0].No27[0]"
+  },
+  {
+    "item": 28,
+    "letter": null,
+    "question_text": "Have you ever been denied life insurance?",
+    "yes_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyEight[0].Yes28[0]",
+    "no_field": "form1[0].Page2[0].Right[0].RightColumn[0].TwentyEight[0].No28[0]"
+  }
+]

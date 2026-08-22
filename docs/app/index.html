@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VA Claims Prep</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--ink:#1a1d21;--muted:#5b6670;--line:#d8dee4;--bg:#f7f8fa;--panel:#fff;
+--accent:#1f4e79;--warn-bg:#fdf3e2;--warn-line:#d99b3d;--err-bg:#fdeaea;
+--err-line:#c0392b;--ok:#2c6e49}
+@media(prefers-color-scheme:dark){:root{--ink:#e6edf3;--muted:#9aa4ae;--line:#2d333b;
+--bg:#0d1117;--panel:#161b22;--accent:#316ea8;--warn-bg:#2a2113;--warn-line:#b8862f;
+--err-bg:#2b1616;--err-line:#e06c63;--ok:#4a9d6f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+header{background:var(--accent);color:#fff;padding:14px 0}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:700}
+.badge{font-size:12px;background:rgba(255,255,255,.16);padding:4px 10px;border-radius:999px}
+nav{background:var(--panel);border-bottom:1px solid var(--line)}
+nav ol{list-style:none;display:flex;gap:16px;margin:0;padding:10px 0;font-size:13px;
+color:var(--muted);flex-wrap:wrap}
+nav li.on{color:var(--accent);font-weight:600}
+main{padding:26px 20px 50px}
+h1{font-size:25px;margin:0 0 8px}h2{font-size:18px;margin:28px 0 10px}
+.lede{color:var(--muted);margin:0 0 18px}
+.help{color:var(--muted);font-size:13px;margin:6px 0 0}
+.notice{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+padding:12px 14px;border-radius:4px;margin:14px 0}
+.notice.warn{background:var(--warn-bg);border-left-color:var(--warn-line)}
+.notice p{margin:6px 0 0;font-size:14px}
+.errors{background:var(--err-bg);border-left:4px solid var(--err-line);padding:12px 14px;
+border-radius:4px;margin:14px 0;font-size:14px}
+.field{margin:0 0 15px}
+label{display:block;font-weight:600;font-size:14px;margin-bottom:5px}
+input[type=text],input[type=date],select,textarea{width:100%;padding:9px 10px;
+border:1px solid var(--line);border-radius:4px;font:inherit;background:var(--panel);color:var(--ink)}
+button{background:var(--accent);color:#fff;border:0;padding:11px 20px;border-radius:5px;
+font:inherit;font-weight:600;cursor:pointer;margin-top:10px}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.secondary{background:var(--panel);color:var(--accent);border:1px solid var(--accent)}
+.drop{border:2px dashed var(--line);background:var(--panel);border-radius:6px;padding:22px;text-align:center}
+table{width:100%;border-collapse:collapse;background:var(--panel);font-size:14px;margin:10px 0}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.tier,.conf,.method,.form-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;
+text-transform:uppercase;letter-spacing:.3px;font-weight:700}
+.tier.structured,.conf.high{background:#e3f1e8;color:var(--ok)}
+.tier.ocr,.conf.medium{background:var(--warn-bg);color:#8a5a00}
+.tier\.no-text-layer,.tier.unreadable,.conf.low{background:var(--err-bg);color:var(--err-line)}
+.method,.form-tag{background:#eaeef2;color:var(--muted)}
+@media(prefers-color-scheme:dark){.method,.form-tag{background:#222b36}
+.tier.structured,.conf.high{background:#12301f}}
+.proposal{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+padding:14px 16px;margin:0 0 13px}
+.phead{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.qtext{margin:0 0 4px;font-size:16px;font-weight:600}
+.why{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.choices{display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
+.choices label{font-weight:400;font-size:14px;display:flex;align-items:center;gap:6px;margin:0}
+.cite{margin:10px 0 0;padding-top:8px;border-top:1px solid var(--line);font-size:12px;color:#97a1aa}
+.spinner{display:inline-block;width:18px;height:18px;border-radius:50%;
+border:3px solid var(--line);border-top-color:var(--accent);animation:spin .9s linear infinite;
+vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.boot{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);
+border-radius:6px;padding:14px 16px;margin:14px 0}
+.dl{display:block;background:var(--panel);border:1px solid var(--line);border-radius:6px;
+padding:11px 14px;margin:6px 0;text-decoration:none;color:var(--accent);font-weight:600;font-size:14px}
+.dl:hover{border-color:var(--accent)}
+.dl small{display:block;color:var(--muted);font-weight:400;margin-top:2px}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 20px 40px}
+footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <span class="brand">VA Claims Prep</span>
+  <span class="badge" id="privacy-badge">Runs in your browser — nothing is uploaded</span>
+</div></header>
+
+<nav><div class="wrap"><ol>
+  <li id="nav-1" class="on">1. About you</li>
+  <li id="nav-2">2. Your records</li>
+  <li id="nav-3">3. Review</li>
+  <li id="nav-4">4. Explanations</li>
+  <li id="nav-5">5. Package</li>
+</ol></div></nav>
+
+<main class="wrap">
+
+<!-- ---------------------------------------------------------- step 1 -->
+<section id="step-1">
+  <h1>About you</h1>
+  <p class="lede">These are the things your medical records can't tell us. They go
+  straight onto both forms — you're the source, so there's nothing to review later.</p>
+
+  <div class="notice">
+    <strong>This all runs inside your browser tab.</strong>
+    <p>Your records are read on this computer and never sent anywhere — there is no
+    server to send them to. You can disconnect from the internet after this page
+    loads and the whole thing still works.</p>
+  </div>
+
+  <div class="notice">
+    <strong>Social Security Number and DoD ID are not collected.</strong>
+    <p>They are intentionally left blank on both forms. Fill them in by hand in a
+    PDF reader before you hand the package to your VSO.</p>
+  </div>
+
+  <div id="intake-errors" class="errors hidden"></div>
+  <div id="intake-fields"></div>
+  <button id="to-upload">Continue to your records →</button>
+  <span id="draftstatus" class="help" style="margin-left:10px"></span>
+  <button type="button" id="cleardraft" class="secondary hidden" style="margin-left:6px">Clear saved answers</button>
+  <p class="help" id="draftnote">Your answers are saved in this browser as you type, so you
+  can close the tab and come back. They stay on this computer. On a shared computer,
+  clear them when you're done.</p>
+</section>
+
+<!-- ---------------------------------------------------------- step 2 -->
+<section id="step-2" class="hidden">
+  <h1>Your records</h1>
+  <p class="lede">Drop in your health record PDFs. Everything is processed inside this
+  browser tab.</p>
+
+  <div id="boot" class="boot">
+    <span class="spinner"></span>
+    <div><strong>Loading the engine…</strong>
+      <p class="help" id="boot-detail">First load downloads about 15&nbsp;MB of Python
+      runtime. It is cached afterwards.</p></div>
+  </div>
+
+  <div class="notice warn">
+    <strong>Scanned records need the desktop version.</strong>
+    <p>This browser build reads PDFs that have a text layer — an MHS Genesis export
+    does. It cannot OCR a scanned AF form, because that uses a native library the
+    browser can't run. Scanned files will say so rather than silently producing
+    nothing.</p>
+  </div>
+
+  <div id="upload-errors" class="errors hidden"></div>
+  <div class="drop">
+    <input type="file" id="files" accept="application/pdf" multiple>
+    <p class="help">PDF only. Nothing leaves this page.</p>
+  </div>
+  <button id="process" disabled>Process records →</button>
+  <div id="processing" class="boot hidden">
+    <span class="spinner"></span><div><strong id="proc-msg">Working…</strong></div>
+  </div>
+</section>
+
+<!-- ---------------------------------------------------------- step 3 -->
+<section id="step-3" class="hidden">
+  <h1>Review each proposed answer</h1>
+  <p class="lede">Each of these is a <em>proposal</em> drawn from your records — not an
+  answer yet. Nothing is written to a form until you confirm it here.</p>
+
+  <div class="notice warn">
+    <strong>Read these carefully.</strong>
+    <p>DD Form 2807-1 is an official statement carrying federal penalties for a false
+    statement (up to 5 years confinement or a $10,000 fine). Your records may contain
+    entries you've never seen. Confirm only what you know to be true.</p>
+  </div>
+
+  <h2>What was read from your files</h2>
+  <div id="file-table"></div>
+
+  <h2 id="prop-heading">Proposed answers</h2>
+  <p class="help">Sorted strongest first. Items marked <span class="conf low">low</span>
+  have no diagnosis behind them — just words appearing near that question in your
+  records — so they start as <strong>Leave blank</strong>. Skipping one leaves the box
+  empty rather than making a claim.</p>
+  <div id="proposals"></div>
+  <div id="unmapped"></div>
+  <button id="to-explain">Save decisions →</button>
+</section>
+
+<!-- ---------------------------------------------------------- step 4 -->
+<section id="step-4" class="hidden">
+  <h1>Explain your “Yes” answers</h1>
+  <p class="lede">DD Form 2807-1 requires every “Yes” to be explained in Item 29, and
+  SHA Part A has an explanation box for each one. These drafts state only what your
+  records document — edit them freely, in your own words.</p>
+  <div class="notice">
+    <p>These were generated from your records, so read them before they go on the form.
+    They deliberately don't characterise severity, cause, or service connection — that's
+    your and your VSO's judgement, not this tool's.</p>
+  </div>
+  <h2>DD 2807-1 — Item 29</h2>
+  <textarea id="item29" rows="14"></textarea>
+  <div id="sha-explains"></div>
+  <button id="to-package">Continue to your package →</button>
+</section>
+
+<!-- ---------------------------------------------------------- step 5 -->
+<section id="step-5" class="hidden">
+  <h1>Your VSO package</h1>
+  <p class="lede" id="package-lede"></p>
+
+  <div class="notice warn">
+    <strong>Two things to do by hand before you hand this over.</strong>
+    <p>Social Security Number and DoD ID are intentionally left blank — fill them in
+    yourself in a PDF reader.</p>
+    <p>Both forms are also <strong>unsigned by design</strong> — sign and date them.</p>
+  </div>
+
+  <div id="building" class="boot"><span class="spinner"></span>
+    <div><strong>Building your documents…</strong></div></div>
+  <div id="downloads"></div>
+
+  <h2>Then what?</h2>
+  <p>Take this package to an accredited Veterans Service Officer. They're free, and
+  they're accredited to advise on what to claim — this tool isn't and doesn't.
+  VA's directory: <span class="help">va.gov/get-help-from-accredited-representative</span></p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>This tool organises your own records. It does not file anything with VA and does
+  not advise on what to claim — take the package to an accredited VSO.</p>
+  <p>Not affiliated with the U.S. Department of Veterans Affairs or the Department of
+  Defense. Provided as-is, without warranty.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+"use strict";
+
+// --------------------------------------------------------------- state
+const S = { answers:{}, perFile:null, conditions:null, proposals:[], unmapped:[],
+            item29:"", shaExplains:{}, shaLabels:{}, outputs:null };
+let py = null;
+
+const QUESTIONS = [
+  ["full_name","Full name (Last, First, Middle)","text",null,"As it appears in your service record.",true],
+  ["date_of_birth","Date of birth","date",null,null,false],
+  ["birth_sex","Birth sex","choice",["Male","Female"],"SHA Part A asks for this; it gates which sections apply.",false],
+  ["address","Home address","textarea",null,"Street, city, state, ZIP.",false],
+  ["phone","Phone number","text",null,null,false],
+  ["email","Personal email","text",null,null,false],
+  ["branch","Service branch","choice",["Army","Navy","Marine Corps","Air Force","Space Force","Coast Guard","USPHS","NOAA"],null,true],
+  ["component","Component","choice",["Regular","Reserve","National Guard"],null,true],
+  ["duty_status","Current duty status","choice",["Active Component","Active Duty  Active Guard Reserve","Active Duty  Non-Active Guard Reserve","Not on active duty"],"SHA Part A only.",false],
+  ["purpose","Purpose of this exam","choice",["Separation","Retirement","Medical Board","Retention"],null,true],
+  ["position","Position (title, grade, component)","text",null,null,false],
+  ["occupation","Usual occupation / day-to-day job","text",null,null,false],
+  ["exam_location","Examining location and address","textarea",null,"Leave blank if you don't know it yet.",false],
+  ["medications","Current medications","textarea",null,"Prescription and over-the-counter. Write 'None' if none.",false],
+  ["allergies","Allergies","textarea",null,"Insect bites/stings, foods, medicines. Write 'None' if none.",false],
+];
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,
+  c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function show(n){
+  for (let i=1;i<=5;i++){
+    $("step-"+i).classList.toggle("hidden", i!==n);
+    $("nav-"+i).classList.toggle("on", i===n);
+  }
+  window.scrollTo(0,0);
+}
+
+// -------------------------------------------------------------- step 1
+const DRAFT_KEY = "va-claims-prep:intake:v1";
+
+function renderIntake(){
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(DRAFT_KEY)) || {}; } catch(e){}
+  $("intake-fields").innerHTML = QUESTIONS.map(([k,label,kind,opts,help,req]) => {
+    const v = esc(saved[k] || "");
+    let input;
+    if (kind==="choice") input =
+      `<select id="f-${k}"><option value="">— select —</option>` +
+      opts.map(o=>`<option value="${esc(o)}"${saved[k]===o?" selected":""}>${esc(o)}</option>`).join("") +
+      `</select>`;
+    else if (kind==="textarea") input = `<textarea id="f-${k}" rows="3">${v}</textarea>`;
+    else if (kind==="date") input = `<input type="date" id="f-${k}" value="${v}">`;
+    else input = `<input type="text" id="f-${k}" value="${v}">`;
+    return `<div class="field"><label for="f-${k}">${esc(label)}` +
+      (req?` <span style="color:var(--err-line);font-weight:400;font-size:12px">required</span>`:"") +
+      `</label>${input}` + (help?`<p class="help">${esc(help)}</p>`:"") + `</div>`;
+  }).join("");
+
+  let t=null;
+  QUESTIONS.forEach(([k])=>{
+    const el = $("f-"+k);
+    const save = () => {
+      const d = {};
+      QUESTIONS.forEach(([kk])=>{ const v=$("f-"+kk).value; if(v) d[kk]=v; });
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+            $("draftstatus").textContent = "Saved";
+            $("cleardraft").classList.remove("hidden"); } catch(e){}
+    };
+    el.addEventListener("input", ()=>{ clearTimeout(t); t=setTimeout(save,400); });
+    el.addEventListener("change", save);
+  });
+  if (Object.keys(saved).length) {
+    $("draftstatus").textContent = "Restored your saved answers";
+    $("cleardraft").classList.remove("hidden");
+  }
+}
+
+$("cleardraft").addEventListener("click", ()=>{
+  if(!confirm("Clear the answers saved in this browser?")) return;
+  localStorage.removeItem(DRAFT_KEY);
+  QUESTIONS.forEach(([k])=>{ $("f-"+k).value=""; });
+  $("draftstatus").textContent = "Cleared";
+  $("cleardraft").classList.add("hidden");
+});
+
+$("to-upload").addEventListener("click", ()=>{
+  const a = {}; QUESTIONS.forEach(([k])=>{ a[k] = $("f-"+k).value.trim(); });
+  const missing = QUESTIONS.filter(([k,l,,,,req])=>req && !a[k]).map(([,l])=>l+" is required.");
+  const box = $("intake-errors");
+  if (missing.length){
+    box.innerHTML = "<ul>"+missing.map(m=>`<li>${esc(m)}</li>`).join("")+"</ul>";
+    box.classList.remove("hidden"); window.scrollTo(0,0); return;
+  }
+  box.classList.add("hidden");
+  S.answers = a;
+  show(2); boot();
+});
+
+// -------------------------------------------------------------- step 2
+let booting = false;
+async function boot(){
+  if (py || booting) return;
+  booting = true;
+  try {
+    $("boot-detail").textContent = "Downloading the Python runtime…";
+    py = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/" });
+    $("boot-detail").textContent = "Installing the PDF library…";
+    await py.loadPackage("micropip");
+    await py.runPythonAsync(`
+import micropip
+await micropip.install("pypdf")
+`);
+    $("boot-detail").textContent = "Loading the extraction engine…";
+    const manifest = (await (await fetch("py/MANIFEST.txt")).text())
+      .split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    for (const mod of manifest){
+      const src = await (await fetch("py/"+mod)).text();
+      py.FS.writeFile("/home/pyodide/"+mod, src);
+    }
+    for (const d of ["dd2807_crosswalk.json","field_names_sha.json"]){
+      const txt = await (await fetch("data/"+d)).text();
+      py.FS.writeFile("/home/pyodide/"+d, txt);
+    }
+    await py.runPythonAsync(`
+import sys
+sys.path.insert(0, "/home/pyodide")
+import os
+os.chdir("/home/pyodide")
+import web_pipeline
+`);
+    $("boot").classList.add("hidden");
+    $("process").disabled = false;
+  } catch (err){
+    $("boot").innerHTML =
+      `<div><strong>The engine could not load.</strong>
+       <p class="help">${esc(err.message||err)}</p>
+       <p class="help">This build needs a browser with WebAssembly. If you are offline,
+       the first load needs a connection; after that it is cached.</p></div>`;
+  } finally { booting = false; }
+}
+
+$("process").addEventListener("click", async ()=>{
+  const input = $("files");
+  const errs = $("upload-errors");
+  if (!input.files.length){
+    errs.textContent = "Choose at least one PDF."; errs.classList.remove("hidden"); return;
+  }
+  errs.classList.add("hidden");
+  $("process").disabled = true;
+  $("processing").classList.remove("hidden");
+
+  try {
+    const payload = [];
+    for (const f of input.files){
+      $("proc-msg").textContent = "Reading " + f.name + "…";
+      payload.push([f.name, new Uint8Array(await f.arrayBuffer())]);
+    }
+    py.globals.set("js_files", py.toPy(payload));
+    $("proc-msg").textContent = "Extracting conditions…";
+    const result = await py.runPythonAsync(`
+import json, web_pipeline
+files = [(n, bytes(b)) for n, b in js_files]
+per_file, conditions, corpus = web_pipeline.process_files(files)
+proposals, unmapped = web_pipeline.build_review(conditions, corpus)
+_state = {"per_file": per_file, "conditions": conditions,
+          "proposals": proposals, "unmapped": unmapped}
+json.dumps({
+  "per_file": per_file,
+  "conditions": conditions,
+  "unmapped": unmapped,
+  "proposals": [
+    {"id":p.id,"question_text":p.question_text,"rationale":p.rationale,
+     "confidence":p.confidence,"method":p.extraction_method,"form":p.target_form,
+     "value":p.proposed_value,"doc":p.source_document,"page":p.source_page}
+    for p in proposals],
+})
+`);
+    const data = JSON.parse(result);
+    S.perFile = data.per_file; S.conditions = data.conditions;
+    S.proposals = data.proposals; S.unmapped = data.unmapped;
+    renderReview();
+    show(3);
+  } catch (err){
+    errs.innerHTML = `<strong>Something went wrong reading those files.</strong>
+      <p class="help">${esc(err.message||err)}</p>`;
+    errs.classList.remove("hidden");
+  } finally {
+    $("processing").classList.add("hidden");
+    $("process").disabled = false;
+  }
+});
+
+// -------------------------------------------------------------- step 3
+function renderReview(){
+  $("file-table").innerHTML =
+    `<table><tr><th>File</th><th>Pages</th><th>Extraction</th><th>Found</th></tr>` +
+    S.perFile.map(f=>`<tr><td>${esc(f.name)}</td><td>${f.pages}</td>
+      <td><span class="tier ${esc(f.tier)}">${esc(String(f.tier).replace(/-/g," "))}</span></td>
+      <td>${f.diagnoses} diagnoses, ${f.problems} problem-list entries
+      ${f.warning?`<p class="help">${esc(f.warning)}</p>`:""}</td></tr>`).join("") +
+    `</table>`;
+
+  $("prop-heading").textContent = `Proposed answers (${S.proposals.length})`;
+  if (!S.proposals.length){
+    $("proposals").innerHTML = `<div class="notice warn">
+      <strong>No answers could be proposed from these files.</strong>
+      <p>The files were read — see the table above — but nothing in them matched a
+      question on either form. That usually means the export contains no coded
+      diagnoses, or it is a scan whose text could not be recovered. You can still
+      continue: both forms will be filled with the details you entered.</p></div>`;
+  } else {
+    $("proposals").innerHTML = S.proposals.map(p=>{
+      const low = p.confidence === "low";
+      return `<div class="proposal">
+        <div class="phead">
+          <span class="form-tag">${esc(p.form)}</span>
+          <span class="conf ${esc(p.confidence)}">${esc(p.confidence)} confidence</span>
+          <span class="method">${esc(p.method)}</span>
+        </div>
+        <p class="qtext">${esc(p.question_text)}</p>
+        <p class="why">${esc(p.rationale)}</p>
+        <div class="choices">
+          <label><input type="radio" name="d-${p.id}" value="confirm"${low?"":" checked"}>
+            Confirm “${esc(p.value)}”</label>
+          <label><input type="radio" name="d-${p.id}" value="edit">
+            Change to <input type="text" id="v-${p.id}" value="No" size="5" style="width:60px;padding:4px 6px"></label>
+          <label><input type="radio" name="d-${p.id}" value="reject"${low?" checked":""}>
+            Leave blank</label>
+        </div>
+        <p class="cite">Found in ${esc(p.doc)}${p.page?` — page ${p.page}`:""}</p>
+      </div>`;
+    }).join("");
+  }
+
+  $("unmapped").innerHTML = S.unmapped && S.unmapped.length
+    ? `<h2>Found in your records, but not matched to any form question</h2>
+       <p class="help">No box is checked for these. Raise them with your VSO directly —
+       they're listed in your package.</p><ul>` +
+      S.unmapped.map(c=>`<li>${esc(c.condition)} (${esc(c.icd10||"uncoded")})</li>`).join("") + `</ul>`
+    : "";
+}
+
+$("to-explain").addEventListener("click", async ()=>{
+  const decisions = {};
+  S.proposals.forEach(p=>{
+    const sel = document.querySelector(`input[name="d-${p.id}"]:checked`);
+    const choice = sel ? sel.value : "reject";
+    decisions[p.id] = { choice, value: choice==="edit" ? ($("v-"+p.id).value||"No") : p.value };
+  });
+  py.globals.set("js_decisions", py.toPy(decisions));
+  const out = await py.runPythonAsync(`
+import json
+for p in _state["proposals"]:
+    d = js_decisions.get(p.id)
+    if d is None:
+        p.status = "rejected"; p.confirmed_value = None; continue
+    choice = d["choice"]
+    if choice == "confirm":
+        p.status = "confirmed"; p.confirmed_value = p.proposed_value
+    elif choice == "edit":
+        p.status = "edited"; p.confirmed_value = d["value"] or p.proposed_value
+    else:
+        p.status = "rejected"; p.confirmed_value = None
+
+from schema import confirmed_only
+from explanations import (conditions_by_ref, draft_dd2807_item_29,
+                          draft_sha_explanations, sha_explain_labels)
+confirmed = confirmed_only(_state["proposals"])
+by_ref = conditions_by_ref(_state["conditions"]["clinical"])
+sha_names = list(json.load(open("field_names_sha.json")).keys())
+crosswalk = json.load(open("dd2807_crosswalk.json"))
+_state["item29"] = draft_dd2807_item_29(confirmed, by_ref, crosswalk)
+_state["sha_explanations"] = draft_sha_explanations(confirmed, by_ref, sha_names)
+json.dumps({"item29": _state["item29"],
+            "sha": _state["sha_explanations"],
+            "labels": sha_explain_labels(sha_names),
+            "confirmed": len(confirmed)})
+`);
+  const data = JSON.parse(out);
+  S.item29 = data.item29; S.shaExplains = data.sha; S.shaLabels = data.labels;
+  S.confirmedCount = data.confirmed;
+  $("item29").value = S.item29;
+  $("sha-explains").innerHTML = Object.keys(S.shaExplains).length
+    ? "<h2>SHA Part A — per-question explanations</h2>" +
+      Object.entries(S.shaExplains).map(([f,t])=>
+        `<div class="field"><label>${esc(S.shaLabels[f]||f)}</label>
+         <textarea id="sha-${esc(f)}" rows="3">${esc(t)}</textarea></div>`).join("")
+    : "";
+  show(4);
+});
+
+// -------------------------------------------------------------- step 4
+$("to-package").addEventListener("click", async ()=>{
+  S.item29 = $("item29").value;
+  Object.keys(S.shaExplains).forEach(f=>{
+    const el = $("sha-"+f); if (el) S.shaExplains[f] = el.value;
+  });
+  show(5);
+  await buildOutputs();
+});
+
+// -------------------------------------------------------------- step 5
+async function buildOutputs(){
+  $("building").classList.remove("hidden");
+  $("downloads").innerHTML = "";
+  $("package-lede").textContent =
+    `${S.confirmedCount} confirmed answer${S.confirmedCount===1?"":"s"} will be written to your forms. Everything else is left blank.`;
+  try {
+    const dd  = new Uint8Array(await (await fetch("forms/dd2807-1.pdf")).arrayBuffer());
+    const sha = new Uint8Array(await (await fetch("forms/sha_part_a.pdf")).arrayBuffer());
+    py.globals.set("js_answers", py.toPy(S.answers));
+    py.globals.set("js_item29", S.item29);
+    py.globals.set("js_sha", py.toPy(S.shaExplains));
+    py.globals.set("js_dd_blank", dd);
+    py.globals.set("js_sha_blank", sha);
+
+    const names = await py.runPythonAsync(`
+import json, web_pipeline
+_outputs = web_pipeline.build_outputs(
+    dict(js_answers), _state["proposals"], _state["conditions"],
+    _state["per_file"], js_item29, dict(js_sha),
+    bytes(js_dd_blank), bytes(js_sha_blank))
+json.dumps(sorted(_outputs.keys()))
+`);
+    const files = JSON.parse(names);
+    const links = [];
+    for (const name of files){
+      const isPdf = name.endsWith(".pdf");
+      py.globals.set("js_name", name);
+      const data = await py.runPythonAsync(`
+v = _outputs[js_name]
+v if isinstance(v, bytes) else v.encode("utf-8")
+`);
+      const bytes = data.toJs ? data.toJs() : data;
+      const blob = new Blob([bytes], {type: isPdf ? "application/pdf" : "text/plain"});
+      const url = URL.createObjectURL(blob);
+      const label = {
+        "dd2807-1_FILLED.pdf": "DD Form 2807-1 — Report of Medical History, prefilled",
+        "sha_part_a_FILLED.pdf": "SHA Part A — Separation Health Assessment, prefilled",
+        "conditions_worksheet.md": "Every condition found, with citations",
+        "evidence_index.md": "Where each condition came from, page by page",
+        "README.txt": "What this package is, and what it isn't",
+      }[name] || (name.startsWith("buddy_letters/") ? "Editable buddy-letter template" : "");
+      links.push(`<a class="dl" href="${url}" download="${esc(name.replace("buddy_letters/",""))}">
+        ${esc(name)}${label?`<small>${esc(label)}</small>`:""}</a>`);
+      if (data.destroy) data.destroy();
+    }
+    $("downloads").innerHTML =
+      `<h2>Your documents (${files.length})</h2>` + links.join("") +
+      `<p class="help">Each file downloads from this page — they were built here, in your
+       browser, and were never sent anywhere.</p>`;
+  } catch (err){
+    $("downloads").innerHTML = `<div class="errors">
+      <strong>Could not build the documents.</strong>
+      <p class="help">${esc(err.message||err)}</p></div>`;
+  } finally {
+    $("building").classList.add("hidden");
+  }
+}
+
+renderIntake();
+</script>
+</body>
+</html>

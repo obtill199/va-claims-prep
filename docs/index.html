@@ -77,8 +77,18 @@ doctor who diagnosed it, and the page it came from for every single answer.</p>
 <p>Then it asks you to confirm each one. Nothing is written to a form you haven't
 approved.</p>
 
-<a class="cta" href="https://github.com/obtill199/va-claims-prep">Get it on GitHub</a>
-<a class="cta alt" href="#install">Install instructions</a>
+<a class="cta" href="app/">Open the app →</a>
+<a class="cta alt" href="https://github.com/obtill199/va-claims-prep">Source on GitHub</a>
+
+<div class="panel">
+  <h3 style="margin-top:0">It runs in your browser</h3>
+  <p class="muted" style="margin-bottom:0">Nothing is uploaded. The whole engine —
+  PDF parsing, condition extraction, form filling — is compiled to WebAssembly and runs
+  inside your own tab. There is no server to send your records to, no account, and
+  nothing stored. You can disconnect from the internet once the page has loaded and it
+  still works. The first visit downloads about 15&nbsp;MB of runtime and is cached
+  afterwards.</p>
+</div>
 
 <h2>What it looks like</h2>
 
@@ -106,9 +116,10 @@ approved.</p>
   buddy-letter templates.</figcaption>
 </figure>
 
-<h2 id="install">Install</h2>
-<p>Requires a Mac or Linux machine with Python 3.9+. OCR of scanned records
-currently needs macOS.</p>
+<h2 id="install">Desktop version</h2>
+<p>The browser version reads PDFs that have a text layer, which an MHS Genesis export
+does. It cannot OCR a <em>scanned</em> AF form — that needs a native library a browser
+can't run. If your records are scans, use the desktop version, which does OCR them.</p>
 <pre>git clone https://github.com/obtill199/va-claims-prep.git
 cd va-claims-prep
 ./setup.sh
@@ -116,12 +127,11 @@ cd va-claims-prep
 <p>Then open <code>http://127.0.0.1:5000</code> in your browser.</p>
 
 <div class="panel">
-  <h3 style="margin-top:0">Why isn't this just a website I can use?</h3>
-  <p class="muted" style="margin-bottom:0">Because using it means handing over
-  your Social Security Number, DoD ID and complete medical history. A hosted
-  version would put all of that on somebody else's server. Running it on your own
-  machine means there is no server, no account, no upload, and nothing to breach.
-  The install is four lines; that is the trade.</p>
+  <h3 style="margin-top:0">Why isn't there a login?</h3>
+  <p class="muted" style="margin-bottom:0">Because there is no server to log in to.
+  Your records are read inside your own browser tab and never transmitted, so there is
+  no account to create, nothing stored, and nothing to breach. That is deliberate: the
+  data involved is your Social Security Number, DoD ID and complete medical history.</p>
 </div>
 
 <h2>How much does it actually fill in?</h2>
