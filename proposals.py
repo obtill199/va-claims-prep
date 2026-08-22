@@ -32,17 +32,52 @@ def _stable_id(condition_ref, condition_name, target_form, target_field):
     return hashlib.sha256(raw.encode()).hexdigest()[:12]
 
 
+def _doctors(condition):
+    """Who diagnosed it. DD 2807-1 Item 29 asks for this by name, and a
+    member reviewing a proposal should see who it came from."""
+    from explanations import provider_names
+    return provider_names(condition)
+
+
+def _fmt_date(iso):
+    try:
+        y, m, d = iso.split("-")
+        months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+                  "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
+        return f"{int(d)} {months[int(m) - 1]} {y}"
+    except Exception:
+        return iso
+
+
 def _rationale(condition):
-    bits = [
-        f"{condition['condition']} ({condition['icd10']}) in "
-        f"{condition['source_document']}",
-        f"first documented {condition['first_seen']}",
-        f"{condition['encounters']} encounter"
-        f"{'s' if condition['encounters'] != 1 else ''}",
-    ]
-    if condition["on_problem_list"]:
-        bits.append("on clinician-curated problem list")
-    return "; ".join(bits) + "."
+    """Plain English, for the person deciding.
+
+    Deliberately excludes internal identifiers (module names, rule keys,
+    AcroForm field names) and the source filename — the filename belongs to
+    the citation line at the foot of the card, not in the middle of a
+    sentence the member is trying to read.
+    """
+    icd = f" ({condition['icd10']})" if condition.get("icd10") else ""
+    bits = [f"{condition['condition']}{icd}"]
+
+    if condition["first_seen"] == condition["last_seen"]:
+        bits.append(f"documented {_fmt_date(condition['first_seen'])}")
+    else:
+        bits.append(f"documented {_fmt_date(condition['first_seen'])} "
+                    f"to {_fmt_date(condition['last_seen'])}")
+
+    encounters = condition.get("encounters", 0)
+    bits.append(f"{encounters} encounter{'s' if encounters != 1 else ''}")
+
+    if condition.get("on_problem_list"):
+        bits.append("still on your problem list")
+
+    text = ", ".join(bits) + "."
+
+    doctors = _doctors(condition)
+    if doctors:
+        text += (" Diagnosed by " + "; ".join(doctors) + ".")
+    return text
 
 
 def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
@@ -60,6 +95,8 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
                 condition_ref=condition_ref,
                 target_form=target["target_form"],
                 target_field=target["target_field"],
+                question_text=(target.get("question_text")
+                               or target["target_field"]),
                 proposed_value="Yes",
                 source_document=cond["source_document"],
                 source_page=cond["source_page"],
@@ -70,10 +107,9 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
                 confidence="medium" if target.get("inferred") else "high",
                 extraction_method="structured",
                 rationale=(
-                    f"{_rationale(cond)} Matched to "
-                    f"{target['question_text'] or target['target_field']!r} "
-                    f"via field_map.py rule for {cond['icd10']}."
-                    + (f" INFERRED, not directly coded: {target['inferred']}."
+                    _rationale(cond)
+                    + (" This one is an inference rather than something your "
+                       "records state directly: " + target["inferred"] + "."
                        if target.get("inferred") else "")
                 ),
             ))
@@ -84,15 +120,15 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
             condition_ref="RECORD-LEVEL",
             target_form=rl["target_form"],
             target_field=rl["target_field"],
+            question_text=rl["question_text"],
             proposed_value="Yes",
             source_document=(matched[0]["condition"]["source_document"]
                              if matched else "your records"),
             source_page=None,
             confidence=rl["confidence"],
             extraction_method="structured",
-            rationale=(f"Derived from your records as a whole, not one "
-                       f"diagnosis: {rl['reason']}. Matched to "
-                       f"{rl['question_text']!r}."),
+            rationale=(f"This one comes from your records as a whole rather "
+                       f"than a single diagnosis: {rl['reason']}."),
         ))
 
     return proposals, unmatched

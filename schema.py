@@ -24,12 +24,16 @@ class Proposal:
     condition_ref: str             # icd10 code, or condition name if uncoded
     target_form: str               # "DD2807-1" | "SHA_PART_A"
     target_field: str              # exact AcroForm field name (leaf, e.g. "Yes12C")
+    question_text: str             # the question as printed on the form
     proposed_value: str            # "Yes" | "No" | free text
     source_document: str           # filename the value was extracted from
     source_page: Optional[int]     # 1-indexed page in source_document; None if not page-addressable
     confidence: str                # "high" | "medium" | "low"
     extraction_method: str         # "structured" | "ocr"
-    rationale: str                 # short human-readable "why this value"
+    rationale: str                 # plain-English "why", shown to the member.
+                                   # No internal identifiers, no filenames —
+                                   # the source file has its own field below
+                                   # and renders at the foot of the card.
     status: str = "pending"        # "pending" | "confirmed" | "edited" | "rejected"
     confirmed_value: Optional[str] = None
 

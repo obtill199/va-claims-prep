@@ -180,6 +180,14 @@ def review():
             else:
                 p.status = "rejected"
                 p.confirmed_value = None
+
+        # Cross-source conflicts: the member decides which date is right.
+        # Unresolved is a real answer here, not a failure to answer — it
+        # means "I don't know yet", which is what the VSO needs to see.
+        for f in state.get("findings", []):
+            choice = request.form.get(f"finding_{f['id']}")
+            if choice in ("earlier", "coded", "unrelated"):
+                f["resolution"] = choice
         return redirect(url_for("explain"))
 
     return render_template("review.html", state=state,
@@ -214,7 +222,8 @@ def explain():
         }
         return redirect(url_for("package"))
 
-    state.setdefault("item29", draft_dd2807_item_29(confirmed, by_ref, crosswalk))
+    state.setdefault("item29", draft_dd2807_item_29(
+        confirmed, by_ref, crosswalk, state.get("findings")))
     state.setdefault("sha_explanations",
                      draft_sha_explanations(confirmed, by_ref, sha_names))
     from explanations import sha_explain_labels

@@ -47,14 +47,29 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
 </div>
 {% for f in findings %}
 <div class="finding">
-  <strong>{{ f.condition }} ({{ f.icd10 }})</strong> — coded first seen {{ f.structured_first_seen }}
+  <strong>{{ f.condition }} ({{ f.icd10 }})</strong>
+  <p class="why">Your coded record puts this first at
+    <strong>{{ f.structured_first_seen }}</strong>. Scanned pages
+    {{ f.scanned_pages|join(', ') }} appear to document the same body system as
+    early as <strong>{{ f.earliest }}</strong> — about
+    {{ f.max_years_earlier }} years earlier.</p>
   <ul>
   {% for e in f.ocr_evidence %}
-    <li>Scanned page {{ e.page }} suggests <strong>{{ e.earliest_predating_date }}</strong>
-        ({{ e.years_earlier }} years earlier) — matched: {{ e.matched_keywords|join(', ') }}
+    <li>Page {{ e.page }}: {{ e.matched_keywords|join(', ') }}
         <span class="conf {{ e.confidence }}">{{ e.confidence }} OCR confidence</span></li>
   {% endfor %}
   </ul>
+  <p class="why"><strong>Open those pages and tell us which is right:</strong></p>
+  <div class="choices">
+    <label><input type="radio" name="finding_{{ f.id }}" value="earlier">
+      The earlier date is correct — this started around {{ f.earliest }}</label>
+    <label><input type="radio" name="finding_{{ f.id }}" value="coded">
+      The coded date is correct — {{ f.structured_first_seen }}</label>
+    <label><input type="radio" name="finding_{{ f.id }}" value="unrelated">
+      Those pages are about something else — ignore this</label>
+    <label><input type="radio" name="finding_{{ f.id }}" value="unresolved" checked>
+      Not sure yet — flag it for my VSO</label>
+  </div>
 </div>
 {% endfor %}
 {% endif %}
@@ -68,9 +83,8 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
     <span class="conf {{ p.confidence }}">{{ p.confidence }} confidence</span>
     <span class="method">{{ p.extraction_method }}</span>
   </div>
-  <p class="qtext">{{ p.rationale }}</p>
-  <p class="cite">Source: {{ p.source_document }}{% if p.source_page %}, page {{ p.source_page }}{% endif %}</p>
-  <p class="fieldname">{{ p.target_field }}</p>
+  <p class="qtext">{{ p.question_text }}</p>
+  <p class="why">{{ p.rationale }}</p>
   <div class="choices">
     <label><input type="radio" name="decision_{{ p.id }}" value="confirm" checked>
       Confirm “{{ p.proposed_value }}”</label>
@@ -79,6 +93,7 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
     <label><input type="radio" name="decision_{{ p.id }}" value="reject">
       Leave blank</label>
   </div>
+  <p class="cite">Found in {{ p.source_document }}{% if p.source_page %} — page {{ p.source_page }}{% endif %}</p>
 </div>
 {% endfor %}
 

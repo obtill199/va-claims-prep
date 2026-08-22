@@ -105,9 +105,16 @@ def build_worksheet(conditions, administrative, sources, findings=None):
                    "keyword-and-date matches from OCR, not confirmed links — "
                    "each one needs a human to open the cited page and judge "
                    "whether it actually relates.\n")
+        LABEL = {
+            "earlier": "MEMBER CONFIRMED the earlier date is correct",
+            "coded": "MEMBER CONFIRMED the coded date is correct",
+            "unrelated": "Member reviewed and judged these pages unrelated",
+            "unresolved": "NOT YET RESOLVED — needs review with your VSO",
+        }
         for f in findings:
+            verdict = LABEL.get(f.get("resolution", "unresolved"))
             out.append(f"- **{f['condition']} ({f['icd10']})** — coded first "
-                       f"seen {f['structured_first_seen']}.")
+                       f"seen {f['structured_first_seen']}. _{verdict}._")
             for e in f["ocr_evidence"]:
                 out.append(f"  - Scanned p. {e['page']} suggests "
                            f"{e['earliest_predating_date']} "

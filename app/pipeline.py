@@ -188,8 +188,16 @@ def build_session_proposals(conditions, work_dir):
 def run_reconciliation(conditions, per_file):
     """Cross-source findings, when a file went through the OCR tier."""
     from reconcile import reconcile
+    import hashlib
     findings = []
     for entry in per_file:
         if entry.get("ocr_results"):
             findings += reconcile(conditions["clinical"], entry["ocr_results"])
+    for f in findings:
+        raw = f"{f['icd10']}|{f['condition']}|{f['structured_first_seen']}"
+        f["id"] = hashlib.sha256(raw.encode()).hexdigest()[:10]
+        f["earliest"] = min(e["earliest_predating_date"] for e in f["ocr_evidence"])
+        f["max_years_earlier"] = max(e["years_earlier"] for e in f["ocr_evidence"])
+        f["scanned_pages"] = sorted({e["page"] for e in f["ocr_evidence"]})
+        f["resolution"] = "unresolved"
     return findings

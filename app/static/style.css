@@ -74,8 +74,10 @@ table.files th, table.files td { border: 1px solid var(--line); padding: 8px 10p
 
 .proposal { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 0 0 14px; }
 .phead { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
-.qtext { margin: 0 0 6px; font-size: 15px; }
-.cite { margin: 0; font-size: 13px; color: var(--muted); }
+.qtext { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
+.why { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+.cite { margin: 10px 0 0; padding-top: 8px; border-top: 1px solid var(--line);
+  font-size: 12px; color: #97a1aa; }
 .fieldname { margin: 2px 0 10px; font-size: 11px; color: #97a1aa; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; }
 .choices { display: flex; gap: 18px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 10px; }
 .choices label { font-weight: 400; font-size: 14px; display: flex; align-items: center; gap: 6px; margin: 0; }

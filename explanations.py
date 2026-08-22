@@ -156,7 +156,24 @@ def draft_sha_explanations(confirmed_props, conditions_by_ref, sha_field_names):
     return drafts
 
 
-def draft_dd2807_item_29(confirmed_props, conditions_by_ref, dd_crosswalk):
+def _onset_note(cond, findings_by_ref):
+    """If the member accepted an earlier onset from a scanned document, say so.
+
+    This is the payoff for cross-source reconciliation: an in-service
+    limitation documented years before the coded record is exactly the sort
+    of thing a 2807-1 should carry, and the member has affirmed it.
+    """
+    f = findings_by_ref.get(cond.get("icd10"))
+    if not f or f.get("resolution") != "earlier":
+        return ""
+    pages = ", ".join(str(p) for p in f.get("scanned_pages", [])[:4])
+    return (f" Earlier documentation of this condition appears in scanned "
+            f"records from approximately {f['earliest']}"
+            + (f" (see scanned pages {pages})" if pages else "") + ".")
+
+
+def draft_dd2807_item_29(confirmed_props, conditions_by_ref, dd_crosswalk,
+                         findings=None):
     """One combined Item 29 block. The form has a single explanation field
     for all YES answers, so each entry is labelled with its item number."""
     field_to_item = {}
@@ -173,6 +190,8 @@ def draft_dd2807_item_29(confirmed_props, conditions_by_ref, dd_crosswalk):
         if entry:
             by_item[entry].extend(conditions_by_ref.get(p.condition_ref, []))
 
+    findings_by_ref = {f.get("icd10"): f for f in (findings or [])}
+
     if not by_item:
         return ""
 
@@ -181,7 +200,8 @@ def draft_dd2807_item_29(confirmed_props, conditions_by_ref, dd_crosswalk):
             by_item.items(), key=lambda kv: (int(re.match(r"\d+", kv[0][0]).group()), kv[0][0])):
         conds = sorted(_dedupe(conds), key=lambda c: c["first_seen"])
         header = f"Item {label}" + (f" ({question})" if question else "") + ":"
-        body = " ".join(_condition_sentence(c) for c in conds)
+        body = " ".join(_condition_sentence(c) + _onset_note(c, findings_by_ref)
+                        for c in conds)
         lines.append(f"{header} {body}")
 
     return "\n\n".join(lines)
