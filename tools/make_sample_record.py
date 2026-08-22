@@ -18,7 +18,7 @@ import json
 import os
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT_TXT = os.path.join(REPO, "demo", "sample_record.txt")
+OUT_TXT = os.path.join(REPO, "tools", "sample_record.txt")
 
 PATIENT = "SAMPLE, ALEX RIVER"
 
@@ -143,6 +143,28 @@ def build():
     return "\n".join(text_parts), page_starts
 
 
+def write_pdf(text, path):
+    """Also emit a PDF, so the sample can go through the ordinary upload path.
+
+    The app has no demo mode -- only real records go in -- so this exists
+    purely to generate documentation screenshots and to give tests a
+    realistic fixture that exercises the same code a real record does.
+    """
+    import fitz
+
+    doc = fitz.open()
+    lines = text.split("\n")
+    per_page = 46
+    for i in range(0, len(lines), per_page):
+        page = doc.new_page(width=612, height=792)
+        page.insert_text((40, 50), "\n".join(lines[i:i + per_page]),
+                         fontname="cour", fontsize=8)
+    n_pages = doc.page_count
+    doc.save(path)
+    doc.close()
+    return n_pages
+
+
 def main():
     text, page_starts = build()
     os.makedirs(os.path.dirname(OUT_TXT), exist_ok=True)
@@ -151,7 +173,10 @@ def main():
     with open(OUT_TXT + ".pages.json", "w") as fh:
         json.dump({"source_document": "SAMPLE_RECORD (fictional demo).pdf",
                    "page_starts": page_starts}, fh, indent=2)
+    pdf_path = OUT_TXT.replace(".txt", ".pdf")
+    n = write_pdf(text, pdf_path)
     print(f"{OUT_TXT}: {len(page_starts)} pages, {len(text)} chars")
+    print(f"{pdf_path}: {n} pages")
 
 
 if __name__ == "__main__":

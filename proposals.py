@@ -134,6 +134,47 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
     return proposals, unmatched
 
 
+def proposals_from_prompts(prompts):
+    """Turn keyword mentions into reviewable proposals.
+
+    These used to be a separate "check these by hand" list, which meant the
+    member had to open a PDF, find the page, decide, and mark the form
+    themselves -- for the majority of the questions they would end up
+    answering Yes. Measured against a real completed 2807-1, every one of
+    these pointed at a question the member really did answer Yes.
+
+    They are proposals now so the answer is one click instead of a manual
+    edit, but they are deliberately the weakest tier:
+      - confidence "low": a word appearing near a question is not a
+        diagnosis, and must never be presented as one;
+      - the review screen defaults them to "Leave blank", so skipping the
+        decision leaves the box empty rather than making a claim.
+    """
+    out = []
+    for pr in prompts:
+        terms = ", ".join(pr["matched_terms"][:4])
+        pages = ", ".join(str(x) for x in pr["pages"][:3])
+        out.append(Proposal(
+            id=_stable_id("MENTION", pr["item"], "DD2807-1", pr["target_field"]),
+            condition_ref="MENTION",
+            target_form="DD2807-1",
+            target_field=pr["target_field"],
+            question_text=pr["question_text"],
+            proposed_value="Yes",
+            source_document=pr.get("source_document") or "your records",
+            source_page=pr["pages"][0] if pr.get("pages") else None,
+            confidence="low",
+            extraction_method=pr.get("method", "structured"),
+            rationale=(
+                f"No diagnosis in your records is coded to this question, so "
+                f"this is not a finding — but the words \"{terms}\" do appear "
+                f"{pr['mentions']} time{'s' if pr['mentions'] != 1 else ''}"
+                + (f" (pages {pages})" if pages else "")
+                + ". Worth checking; left blank unless you say otherwise."),
+        ))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("conditions_json")

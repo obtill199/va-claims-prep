@@ -14,15 +14,15 @@ you type, so you can stop and come back.
 
 ![Intake questionnaire](docs/screenshots/1-intake.png)
 
-**2. Your records** — drop in your health record PDFs. No records handy? A
-fictional sample record is built in, so you can see the whole flow without using
-real data.
+**2. Your records** — drop in your health record PDFs. An MHS Genesis export is
+the useful one; scanned AF forms and legacy STRs work too, with OCR.
 
 ![Record upload](docs/screenshots/2-upload.png)
 
 **3. Review** — every proposed answer, with the condition behind it, the doctor
 who diagnosed it, and the page it came from. Confirm, change, or leave blank.
-Nothing reaches a form until you confirm it.
+Nothing reaches a form until you confirm it. Answers are sorted strongest first;
+weak ones start as *Leave blank*, so skipping a decision never makes a claim.
 
 ![Review screen](docs/screenshots/3-review.png)
 
@@ -79,9 +79,6 @@ else works anywhere.
 5. **Package** — download a zip with both filled forms, a conditions
    worksheet, an evidence index, and buddy-letter templates.
 
-No records? The upload screen has a demo record so you can see the whole flow
-without using real data.
-
 ## Things it deliberately leaves blank
 
 - **Social Security Number and DoD ID.** Never collected, stored, or written.
@@ -97,12 +94,26 @@ can also contain material you have never seen, including records faxed in from
 before you enlisted. A tool that silently checked boxes on your behalf would be
 putting your signature under claims you never made. So it proposes; you decide.
 
-Measured against a real completed 2807-1, the conditions it proposes have been
-correct every time — but they cover only about a third of what a member
-actually answers. Most real "Yes" answers live in narrative notes and scanned
-forms rather than in coded diagnoses. So the review screen also lists questions
-your records *mention* without proposing an answer, with page numbers, for you
-to check by hand.
+### How much it actually fills
+
+Measured against a real completed DD 2807-1 with 32 "Yes" answers:
+
+| | Count | Correct |
+|---|---|---|
+| Proposed and pre-checked (high/medium confidence) | 11 | 11 |
+| Proposed but left blank by default (low confidence) | 21 | 20 |
+| Never surfaced | 1 | — |
+
+**31 of 32** real answers were surfaced, and the tier that pre-checks boxes has
+not produced a wrong answer yet. The single miss is "Currently in good health",
+which is a self-assessment with nothing in a record to derive it from.
+
+The low-confidence tier exists because most real "Yes" answers are not coded
+diagnoses at all — they live in narrative notes, PHA self-reports and scanned
+forms. Those are surfaced as one-click decisions with the page number attached,
+rather than leaving you to find them yourself. They start unchecked on purpose:
+one of the 21 was wrong, and defaulting to blank is what keeps that off your
+form.
 
 ## Privacy
 
@@ -119,7 +130,7 @@ Your records never leave your computer, and the files this tool generates are
 excluded from git by default. Two things to be careful about anyway:
 
 - **Don't commit your own outputs.** `conditions.json`, extracted `.txt`
-  files, OCR output, filled PDFs and the demo record are all gitignored. If
+  files, OCR output and filled PDFs are all gitignored. If
   you fork this and add files, check `git status` before committing.
 - **Don't zip and email the whole folder.** The git exclusions don't apply to
   a zip. Share the repository, not your working directory.

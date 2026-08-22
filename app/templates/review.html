@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% set active_step = 'review' %}
 {% block content %}
-{% if state.demo %}
-<div class="demo-banner">Demo mode — this is a fictional sample record. No real person's data.</div>
-{% endif %}
 <h1>Review each proposed answer</h1>
 <p class="lede">Each of these is a <em>proposal</em> drawn from your records — not
 an answer yet. Nothing is written to a form until you confirm it here.</p>
@@ -75,6 +72,10 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
 {% endif %}
 
 <h2>Proposed answers ({{ proposals|length }})</h2>
+<p class="help">Sorted strongest first. Items marked <span class="conf low">low</span>
+have no diagnosis behind them — just words appearing near that question in your
+records — so they start as <strong>Leave blank</strong>. Skipping one leaves the
+box empty rather than making a claim.</p>
 <form method="post">
 {% for p in proposals %}
 <div class="proposal">
@@ -86,40 +87,20 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
   <p class="qtext">{{ p.question_text }}</p>
   <p class="why">{{ p.rationale }}</p>
   <div class="choices">
-    <label><input type="radio" name="decision_{{ p.id }}" value="confirm" checked>
+    <label><input type="radio" name="decision_{{ p.id }}" value="confirm"
+      {{ 'checked' if p.confidence != 'low' }}>
       Confirm “{{ p.proposed_value }}”</label>
     <label><input type="radio" name="decision_{{ p.id }}" value="edit">
       Change to <input type="text" name="value_{{ p.id }}" value="No" size="6"></label>
-    <label><input type="radio" name="decision_{{ p.id }}" value="reject">
+    <label><input type="radio" name="decision_{{ p.id }}" value="reject"
+      {{ 'checked' if p.confidence == 'low' }}>
       Leave blank</label>
   </div>
   <p class="cite">Found in {{ p.source_document }}{% if p.source_page %} — page {{ p.source_page }}{% endif %}</p>
 </div>
 {% endfor %}
 
-{% if prompts %}
-<h2>Your records mention these — do they apply to you?</h2>
-<div class="notice warn">
-  <p>These questions have <strong>no coded diagnosis</strong> behind them, so the
-  tool will not propose an answer and nothing here is checked for you. But these
-  words do appear in your records, on the pages listed. Measured against a real
-  completed 2807-1, this is where most genuine "Yes" answers live — in notes,
-  self-reports and scanned forms rather than in the coded diagnosis list.</p>
-  <p>Open the cited pages and decide for yourself. If one applies, mark it by
-  hand on the finished form.</p>
-</div>
-<table class="files prompts">
-  <tr><th>Item</th><th>Question</th><th>Terms found</th><th>Pages</th></tr>
-  {% for pr in prompts %}
-  <tr>
-    <td class="mono">{{ pr.item }}</td>
-    <td>{{ pr.question_text }}</td>
-    <td class="help">{{ pr.matched_terms|join(', ') }} <span class="conf low">{{ pr.mentions }} mentions</span></td>
-    <td class="mono">{{ pr.pages|join(', ') }}{% if pr.pages|length >= 4 %}…{% endif %}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
+
 
 {% if unmapped %}
 <h2>Found in your records, but not matched to any form question</h2>

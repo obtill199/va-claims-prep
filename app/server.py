@@ -128,7 +128,6 @@ def upload():
             return render_template("upload.html", state=state,
                                    error="Choose at least one PDF.",
                                    ocr_ok=pipeline.ocr_available()[0],
-                                   demo_ok=pipeline.demo_available(),
                                    missing_forms=missing_blank_forms())
 
         paths = []
@@ -150,7 +149,15 @@ def upload():
             conditions, state["work_dir"])
         state["proposals"] = proposals
         state["unmapped"] = unmapped
-        state["prompts"] = pipeline.find_record_prompts(corpus, proposals)
+        prompts = pipeline.find_record_prompts(corpus, proposals)
+        state["prompts"] = prompts
+        # Merge the weak tier into the same review list. One pass, one
+        # mechanism -- rather than a second list the member works by hand.
+        from proposals import proposals_from_prompts
+        order = {"high": 0, "medium": 1, "low": 2}
+        state["proposals"] = sorted(
+            proposals + proposals_from_prompts(prompts),
+            key=lambda p: (order[p.confidence], p.target_form, p.question_text))
         if run_ocr:
             state["findings"] = pipeline.run_reconciliation(conditions, per_file)
 
@@ -158,28 +165,7 @@ def upload():
 
     return render_template("upload.html", state=state, error=None,
                            ocr_ok=pipeline.ocr_available()[0],
-                           demo_ok=pipeline.demo_available(),
                            missing_forms=missing_blank_forms())
-
-
-@app.route("/upload/demo", methods=["POST"])
-def upload_demo():
-    """Run the pipeline against the de-identified sample record."""
-    state = current()
-    if not state["answers"]:
-        return redirect(url_for("index"))
-
-    per_file, conditions, corpus = pipeline.process_demo()
-    state["per_file"] = per_file
-    state["conditions"] = conditions
-    proposals, unmapped = pipeline.build_session_proposals(
-        conditions, state["work_dir"])
-    state["proposals"] = proposals
-    state["unmapped"] = unmapped
-    state["prompts"] = pipeline.find_record_prompts(corpus, proposals)
-    state["findings"] = []
-    state["demo"] = True
-    return redirect(url_for("review"))
 
 
 # ------------------------------------------------------------ 3. review

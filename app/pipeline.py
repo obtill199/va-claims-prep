@@ -64,7 +64,9 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
         problems = list(extract_conditions.parse_problems(text))
         all_diag += diagnoses
         all_prob += problems
-        corpus.append((text, page_starts))
+        corpus.append({"text": text, "page_starts": page_starts,
+                       "source_document": source_document,
+                       "method": "structured"})
 
         entry = {
             "name": name,
@@ -97,6 +99,21 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
                 }
                 entry["ocr_results"] = results
                 entry["tier"] = "ocr"
+
+                # The recovered text joins the corpus. Without this, OCR
+                # only ever fed reconciliation, so a duty-limiting profile
+                # the scanner read perfectly well could never become a
+                # proposed answer -- the single biggest source of manual
+                # work left for the member.
+                ocr_text_parts, ocr_starts, off = [], [], 0
+                for r in results:
+                    ocr_starts.append(off)
+                    ocr_text_parts.append(r["text"])
+                    off += len(r["text"]) + 1
+                corpus.append({"text": "\n".join(ocr_text_parts),
+                               "page_starts": ocr_starts,
+                               "source_document": name,
+                               "method": "ocr"})
             elif run_ocr:
                 entry["ocr_unavailable"] = reason
 
@@ -111,49 +128,6 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
     return per_file, conditions, corpus
 
 
-DEMO_TXT = os.path.join(REPO, "demo", "sample_record.txt")
-
-
-def demo_available():
-    return os.path.exists(DEMO_TXT)
-
-
-def process_demo():
-    """Load the fictional sample record.
-
-    BUILD_BRIEF.md decision 4 makes demo mode first-class: the tool has to be
-    demonstrable and user-testable without anyone handling real PHI. The demo
-    file is pre-extracted text (pii_scrub.py output) rather than a PDF, so it
-    skips ingest.py and joins the pipeline at the same point a real file does
-    — same parser, same aggregation, same page citations.
-    """
-    with open(DEMO_TXT, encoding="utf-8", errors="replace") as fh:
-        text = fh.read()
-    with open(DEMO_TXT + ".pages.json") as fh:
-        sidecar = json.load(fh)
-
-    diagnoses = list(extract_conditions.parse_diagnoses(
-        text, sidecar["page_starts"], sidecar["source_document"]))
-    problems = list(extract_conditions.parse_problems(text))
-    records = extract_conditions.aggregate(diagnoses, problems)
-
-    per_file = [{
-        "name": sidecar["source_document"],
-        "pages": len(sidecar["page_starts"]),
-        "chars": len(text),
-        "diagnoses": len(diagnoses),
-        "problems": len(problems),
-        "tier": "structured",
-        "ocr": None,
-        "demo": True,
-    }]
-    conditions = {
-        "clinical": [r for r in records if not r["administrative"]],
-        "administrative": [r for r in records if r["administrative"]],
-    }
-    return per_file, conditions, [(text, sidecar["page_starts"])]
-
-
 def find_record_prompts(corpus, proposals):
     """Keyword mentions worth asking about — see prompts.py.
 
@@ -165,8 +139,10 @@ def find_record_prompts(corpus, proposals):
         rows = json.load(fh)
     already = {p.target_field for p in proposals}
     found = {}
-    for text, page_starts in corpus:
-        for pr in find_prompts(text, rows, page_starts, already):
+    for entry in corpus:
+        for pr in find_prompts(entry["text"], rows, entry["page_starts"], already):
+            pr["source_document"] = entry["source_document"]
+            pr["method"] = entry["method"]
             prev = found.get(pr["item"])
             if prev:
                 prev["mentions"] += pr["mentions"]

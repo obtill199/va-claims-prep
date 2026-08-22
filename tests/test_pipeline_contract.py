@@ -48,22 +48,24 @@ def test_process_files_returns_three_values(tiny_pdf, tmp_path):
     assert isinstance(corpus, list)
 
 
-def test_process_files_and_process_demo_agree(tiny_pdf, tmp_path):
-    """Both entry points feed the same server code, so they must match."""
-    from_files = pipeline.process_files([tiny_pdf], str(tmp_path), run_ocr=False)
-    if not pipeline.demo_available():
-        pytest.skip("demo record not generated on this machine")
-    from_demo = pipeline.process_demo()
-    assert len(from_files) == len(from_demo), (
-        "process_files() and process_demo() must return the same shape")
-
-
-def test_corpus_entries_are_text_and_offsets(tiny_pdf, tmp_path):
+def test_corpus_entries_carry_text_offsets_and_provenance(tiny_pdf, tmp_path):
+    """find_record_prompts() needs the text, the page offsets, and where it
+    came from -- the last so an OCR-derived proposal can say so rather than
+    passing itself off as a structured read."""
     _, _, corpus = pipeline.process_files([tiny_pdf], str(tmp_path), run_ocr=False)
     assert corpus, "corpus must not be empty -- find_record_prompts() needs it"
-    text, page_starts = corpus[0]
-    assert isinstance(text, str) and text
-    assert isinstance(page_starts, list)
+    entry = corpus[0]
+    assert set(entry) >= {"text", "page_starts", "source_document", "method"}
+    assert isinstance(entry["text"], str) and entry["text"]
+    assert isinstance(entry["page_starts"], list)
+    assert entry["method"] in ("structured", "ocr")
+
+
+def test_demo_mode_is_gone():
+    """Demo mode was removed deliberately: only real records go in. If it
+    comes back, it needs a sample record shipped with the repo again."""
+    assert not hasattr(pipeline, "process_demo")
+    assert not hasattr(pipeline, "demo_available")
 
 
 def test_no_text_layer_file_is_reported_not_skipped(tmp_path):
