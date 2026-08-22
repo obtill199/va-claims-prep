@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VA Claims Prep</title>
+<meta name="description" content="Turn your own military health records into a prepared package for your VSO appointment. Runs entirely on your computer.">
+<style>
+:root{--ink:#1a1d21;--muted:#5b6670;--line:#d8dee4;--bg:#f7f8fa;--panel:#fff;
+--accent:#1f4e79;--warn-bg:#fdf3e2;--warn-line:#d99b3d;--ok:#2c6e49}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+header{background:var(--accent);color:#fff;padding:60px 0 54px}
+header h1{margin:0 0 10px;font-size:40px;letter-spacing:-.4px}
+header p{margin:0;font-size:19px;opacity:.94;max-width:620px}
+.badge{display:inline-block;background:rgba(255,255,255,.16);padding:5px 13px;
+border-radius:999px;font-size:13px;margin-bottom:20px}
+h2{font-size:24px;margin:48px 0 12px}
+h3{font-size:17px;margin:28px 0 6px}
+p{margin:0 0 14px}
+.muted{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:16px 0}
+.warn{background:var(--warn-bg);border-left:4px solid var(--warn-line)}
+pre{background:#1a1d21;color:#e6edf3;padding:15px 17px;border-radius:8px;
+overflow-x:auto;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+img{max-width:100%;border:1px solid var(--line);border-radius:8px;display:block;margin:10px 0 4px}
+figure{margin:26px 0}
+figcaption{color:var(--muted);font-size:14px}
+table{width:100%;border-collapse:collapse;background:var(--panel);font-size:15px;margin:12px 0}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+th{background:#eef2f6}
+.cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+padding:12px 22px;border-radius:6px;font-weight:600;margin:8px 10px 8px 0}
+.cta.alt{background:var(--panel);color:var(--accent);border:1px solid var(--accent)}
+ul{margin:0 0 14px;padding-left:20px}
+li{margin-bottom:6px}
+footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0 50px;color:var(--muted);font-size:14px}
+@media(prefers-color-scheme:dark){
+:root{--ink:#e6edf3;--muted:#9aa4ae;--line:#2d333b;--bg:#0d1117;--panel:#161b22;--accent:#316ea8}
+th{background:#1c2430}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="badge">Runs on your computer — records never leave it</div>
+    <h1>VA Claims Prep</h1>
+    <p>Turn your own military health records into a prepared package for your
+       appointment with a Veterans Service Officer.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="panel warn">
+  <strong>Not affiliated with the VA or DoD.</strong> This tool does not file
+  claims, does not give legal or medical advice, and makes no promise about any
+  outcome. It organizes your own records so your VSO appointment starts from a
+  complete file.
+</div>
+
+<h2>What it does</h2>
+<p>It reads your health record export, finds the conditions documented in it, and
+fills in as much of <strong>DD Form 2807-1</strong> and the <strong>SHA Part A</strong>
+self-assessment as the evidence honestly supports — showing you the condition, the
+doctor who diagnosed it, and the page it came from for every single answer.</p>
+<p>Then it asks you to confirm each one. Nothing is written to a form you haven't
+approved.</p>
+
+<a class="cta" href="https://github.com/obtill199/va-claims-prep">Get it on GitHub</a>
+<a class="cta alt" href="#install">Install instructions</a>
+
+<h2>What it looks like</h2>
+
+<figure>
+  <img src="screenshots/1-intake.png" alt="Intake questionnaire">
+  <figcaption>1. The things your records can't tell us. Saved as you type.</figcaption>
+</figure>
+<figure>
+  <img src="screenshots/2-upload.png" alt="Record upload">
+  <figcaption>2. Drop in your record PDFs. Scanned forms get OCR'd.</figcaption>
+</figure>
+<figure>
+  <img src="screenshots/3-review.png" alt="Review screen">
+  <figcaption>3. Every proposed answer, with its source. Strongest first; weak
+  matches start as "leave blank" so skipping never makes a claim.</figcaption>
+</figure>
+<figure>
+  <img src="screenshots/4-explain.png" alt="Explanations">
+  <figcaption>4. Item 29 requires every "Yes" to be explained. Drafted from your
+  records, editable.</figcaption>
+</figure>
+<figure>
+  <img src="screenshots/5-package.png" alt="Package">
+  <figcaption>5. Both filled forms, a conditions worksheet, an evidence index and
+  buddy-letter templates.</figcaption>
+</figure>
+
+<h2 id="install">Install</h2>
+<p>Requires a Mac or Linux machine with Python 3.9+. OCR of scanned records
+currently needs macOS.</p>
+<pre>git clone https://github.com/obtill199/va-claims-prep.git
+cd va-claims-prep
+./setup.sh
+./run_app.sh</pre>
+<p>Then open <code>http://127.0.0.1:5000</code> in your browser.</p>
+
+<div class="panel">
+  <h3 style="margin-top:0">Why isn't this just a website I can use?</h3>
+  <p class="muted" style="margin-bottom:0">Because using it means handing over
+  your Social Security Number, DoD ID and complete medical history. A hosted
+  version would put all of that on somebody else's server. Running it on your own
+  machine means there is no server, no account, no upload, and nothing to breach.
+  The install is four lines; that is the trade.</p>
+</div>
+
+<h2>How much does it actually fill in?</h2>
+<p>Measured against a real, completed DD 2807-1 with 32 "Yes" answers:</p>
+<table>
+  <tr><th>&nbsp;</th><th>Count</th><th>Correct</th></tr>
+  <tr><td>Proposed and pre-checked</td><td>11</td><td>11</td></tr>
+  <tr><td>Proposed, left blank by default</td><td>21</td><td>20</td></tr>
+  <tr><td>Never surfaced</td><td>1</td><td>—</td></tr>
+</table>
+<p><strong>31 of 32</strong> real answers were surfaced, and the tier that
+pre-checks boxes hasn't produced a wrong answer yet. Weaker matches — words
+appearing near a question, with no diagnosis behind them — are shown with page
+numbers but start unchecked, because one of those 21 was wrong and defaulting to
+blank is what keeps it off your form.</p>
+
+<h2>What it deliberately won't do</h2>
+<ul>
+  <li><strong>Collect your SSN or DoD ID.</strong> Never stored, never written.
+      You fill those in by hand.</li>
+  <li><strong>Sign anything.</strong> Both forms come out unsigned.</li>
+  <li><strong>Check a box you didn't confirm.</strong> DD 2807-1 carries federal
+      penalties for a false statement — up to 5 years confinement or a $10,000
+      fine. Your record can also contain material you've never seen. So it
+      proposes; you decide.</li>
+  <li><strong>File anything with VA.</strong> The output is a package for an
+      accredited VSO, who is the one qualified to advise you.</li>
+</ul>
+
+<footer class="wrap">
+  <p>Open source under the MIT license.
+     <a href="https://github.com/obtill199/va-claims-prep">Source on GitHub</a>.
+     Provided as-is, without warranty.</p>
+</footer>
+
+</div>
+</body>
+</html>
