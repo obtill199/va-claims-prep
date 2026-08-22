@@ -43,3 +43,16 @@ reconciliation.json
 # Scrubbing is regex-based and carries false-negative risk, so the derived
 # sample is not committed until a human has read it end to end.
 demo/
+
+# --- Extra safety for anyone who forks this ---
+# Outputs derived from real records. Broad on purpose: a false negative here
+# means someone's medical data in a public repo.
+*_FILLED*.pdf
+*VSO_package*.zip
+ocr_output*.json
+reconciliation*.json
+questions_to_check.md
+evidence_index.md
+work/
+uploads/
+records/

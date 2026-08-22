@@ -1,5 +1,12 @@
 # VA Claims Prep
 
+**Not affiliated with, endorsed by, or connected to the U.S. Department of
+Veterans Affairs or the Department of Defense.** This is an independent tool.
+It does not file claims, does not give legal or medical advice, and makes no
+promise about any claim outcome. Use it to organize your own records, then
+take the result to an accredited Veterans Service Officer. Provided as-is,
+without warranty — see LICENSE.
+
 Turns your own military health records into a prepared package for an
 appointment with an accredited Veterans Service Officer (VSO).
 
@@ -74,3 +81,24 @@ temporary folder that is deleted when you close the app. Your intake answers
 are saved in your own browser and can be cleared from the first screen.
 
 On a shared computer, clear your saved answers when you're done.
+
+## If you're using this on your own records
+
+Your records never leave your computer, and the files this tool generates are
+excluded from git by default. Two things to be careful about anyway:
+
+- **Don't commit your own outputs.** `conditions.json`, extracted `.txt`
+  files, OCR output, filled PDFs and the demo record are all gitignored. If
+  you fork this and add files, check `git status` before committing.
+- **Don't zip and email the whole folder.** The git exclusions don't apply to
+  a zip. Share the repository, not your working directory.
+
+## Contributing / feedback
+
+This has been measured against exactly one real completed DD 2807-1. Against
+that form it proposed 11 answers with zero false positives, and surfaced 97%
+of the member's real "Yes" answers when its flagged prompts are included. That
+is one data point. If you run it on your own records, what it gets wrong is
+genuinely useful — open an issue.
+
+Do not attach your health records, or anyone's, to an issue.
