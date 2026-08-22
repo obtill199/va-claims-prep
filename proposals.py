@@ -46,7 +46,7 @@ def _rationale(condition):
 
 
 def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
-    matched, unmatched = build_mapping(
+    matched, unmatched, record_level = build_mapping(
         conditions_path, dd2807_crosswalk_path, sha_fields_path)
 
     proposals = []
@@ -63,14 +63,38 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
                 proposed_value="Yes",
                 source_document=cond["source_document"],
                 source_page=cond["source_page"],
-                confidence="high",  # curated rule + structured (regex, not OCR) extraction
+                # "medium" for inferred targets: the condition is coded, but
+                # the link to this particular question is our inference, not
+                # something the record states. Decision 3 says never present
+                # a weaker extraction as fact.
+                confidence="medium" if target.get("inferred") else "high",
                 extraction_method="structured",
                 rationale=(
                     f"{_rationale(cond)} Matched to "
                     f"{target['question_text'] or target['target_field']!r} "
                     f"via field_map.py rule for {cond['icd10']}."
+                    + (f" INFERRED, not directly coded: {target['inferred']}."
+                       if target.get("inferred") else "")
                 ),
             ))
+    for rl in record_level:
+        proposals.append(Proposal(
+            id=_stable_id("RECORD-LEVEL", rl["target_field"],
+                          rl["target_form"], rl["target_field"]),
+            condition_ref="RECORD-LEVEL",
+            target_form=rl["target_form"],
+            target_field=rl["target_field"],
+            proposed_value="Yes",
+            source_document=(matched[0]["condition"]["source_document"]
+                             if matched else "your records"),
+            source_page=None,
+            confidence=rl["confidence"],
+            extraction_method="structured",
+            rationale=(f"Derived from your records as a whole, not one "
+                       f"diagnosis: {rl['reason']}. Matched to "
+                       f"{rl['question_text']!r}."),
+        ))
+
     return proposals, unmatched
 
 

@@ -40,26 +40,81 @@ def sha_explain_field_for(response_field, sha_field_names):
     return matches[0] if len(matches) == 1 else None
 
 
+_PROV_PREFIX_RE = re.compile(r"^\s*\d{1,2}/\d{1,2}/\d{4}[^;]*;\s*")
+
+
+def clean_provider(raw):
+    """Turn a raw provider string into a usable name.
+
+    They arrive as "7/19/2021 13:13 CDT; DOE, DOE, JANE R, LCSW"
+    — an encounter timestamp, then the surname repeated. DD 2807-1 Item 29
+    explicitly asks for "name of doctor(s) and/or hospital(s)", so this is
+    required content, not decoration.
+    """
+    name = _PROV_PREFIX_RE.sub("", raw or "").strip().strip(",")
+    if not name:
+        return None
+    parts = [p.strip() for p in name.split(",") if p.strip()]
+    # Trailing role markers ("Primary", "Attending") are routing metadata,
+    # not part of the clinician's name.
+    while parts and parts[-1].lower() in ("primary", "attending", "consulting"):
+        parts.pop()
+    deduped = [p for i, p in enumerate(parts) if i == 0 or p.upper() != parts[i - 1].upper()]
+    return ", ".join(deduped) or None
+
+
+def provider_names(cond, limit=3):
+    seen, out = set(), []
+    for raw in cond.get("providers") or []:
+        name = clean_provider(raw)
+        if name and name.upper() not in seen:
+            seen.add(name.upper())
+            out.append(name)
+    return out[:limit]
+
+
+def _fmt(iso):
+    """MMM YYYY — how dates actually read on a completed 2807-1."""
+    try:
+        y, m, d = iso.split("-")
+        months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+                  "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
+        return f"{months[int(m) - 1]} {y}"
+    except Exception:
+        return iso
+
+
+TREATMENT_PROMPT = "[Add treatment received]"
+
+
 def _condition_sentence(cond):
-    """One condition, stated as what the record shows and nothing more."""
+    """One condition, in the shape Item 29 actually asks for.
+
+    The form wants: dates, doctor/hospital, treatment given, and current
+    medical status. Dates, providers and status come from the record.
+    Treatment does not — it lives in narrative notes this parser doesn't
+    read — so rather than quietly omit a field the form requires, each
+    entry carries an explicit prompt for the member to fill in.
+    """
     icd = f" ({cond['icd10']})" if cond.get("icd10") else ""
-    if cond["first_seen"] == cond["last_seen"]:
-        when = f"documented {cond['first_seen']}"
-    else:
-        when = f"documented {cond['first_seen']} through {cond['last_seen']}"
+    span = (_fmt(cond["first_seen"]) if cond["first_seen"] == cond["last_seen"]
+            else f"{_fmt(cond['first_seen'])} to {_fmt(cond['last_seen'])}")
+
+    bits = [f"{span}: {cond['condition']}{icd}"]
 
     encounters = cond.get("encounters", 0)
-    enc = f"{encounters} encounter{'s' if encounters != 1 else ''}"
+    bits.append(f"{encounters} documented encounter{'s' if encounters != 1 else ''}")
 
-    parts = [f"{cond['condition']}{icd}: {when}, {enc}"]
     if cond.get("on_problem_list"):
-        parts.append("listed on the clinician-maintained problem list")
+        bits.append("Active on problem list")
 
-    citation = cond.get("source_document") or "service treatment record"
-    page = cond.get("source_page")
-    parts.append(f"see {citation}" + (f", p. {page}" if page else ""))
+    providers = provider_names(cond)
+    if providers:
+        bits.append("Seen by " + "; ".join(providers))
 
-    return "; ".join(parts) + "."
+    bits.append("Status: " + ("ongoing" if cond.get("active") else "resolved/inactive"))
+
+    return ". ".join(bits) + f". {TREATMENT_PROMPT}"
 
 
 def sha_explain_labels(sha_field_names):

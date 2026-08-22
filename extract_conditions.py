@@ -73,6 +73,30 @@ def _page_for(pos, page_starts):
     return bisect.bisect_right(page_starts, pos)
 
 
+def _clean_provider_field(raw):
+    """Pick the full provider name out of a column-aligned line.
+
+    pdfplumber's layout mode preserves this record's two-column encounter
+    header, so the captured text is an abbreviated name and the full name
+    side by side, separated by a run of spaces:
+        "7/6/2021 09:27 CDT; DOE,          DOE, JANE R, LCSW"
+    Collapsing all whitespace first (the previous behaviour) welded them
+    into "DOE, DOE, JANE R, LCSW". Splitting on the column gap
+    and keeping the longest segment recovers the real name, which Item 29
+    of DD 2807-1 requires by name.
+    """
+    if not raw:
+        return None
+    # Drop the encounter timestamp first — otherwise it can make the
+    # abbreviated-name column the longest segment and win the pick below.
+    raw = re.sub(r"^\s*\d{1,2}/\d{1,2}/\d{4}[^;]*;\s*", "", raw)
+    segments = [s.strip() for s in re.split(r"\s{2,}", raw) if s.strip()]
+    if not segments:
+        return None
+    best = max(segments, key=len)
+    return re.sub(r"\s+", " ", best).strip() or None
+
+
 def parse_diagnoses(text, page_starts=None, source_document=None):
     """Yield one dict per Clinical Diagnoses entry.
 
@@ -92,9 +116,7 @@ def parse_diagnoses(text, page_starts=None, source_document=None):
             "status": m.group("status"),
             "code": code_m.group("code") if code_m else None,
             "code_system": code_m.group("system") if code_m else None,
-            "provider": (
-                re.sub(r"\s+", " ", prov_m.group("prov")).strip() if prov_m else None
-            ),
+            "provider": _clean_provider_field(prov_m.group("prov")) if prov_m else None,
             "page": _page_for(m.start(), page_starts),
             "source_document": source_document,
         }

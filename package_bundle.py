@@ -118,6 +118,29 @@ def build_worksheet(conditions, administrative, sources, findings=None):
     return "\n".join(out) + "\n"
 
 
+def build_prompts_doc(prompts):
+    """Questions the coded record can't answer but the narrative hints at."""
+    if not prompts:
+        return "No additional questions were flagged.\n"
+    lines = [
+        "# Questions To Check By Hand\n",
+        "These DD 2807-1 items have **no coded diagnosis** behind them, so "
+        "nothing was proposed or checked for them. But these terms do appear "
+        "in your records on the pages listed. Most real \"Yes\" answers live "
+        "here — in narrative notes, PHA self-reports and scanned forms — not "
+        "in the coded diagnosis list.\n",
+        "Open the cited pages, decide for yourself, and mark by hand what "
+        "applies.\n",
+        "| Item | Question | Terms found | Pages |",
+        "|---|---|---|---|",
+    ]
+    for p in prompts:
+        lines.append(f"| {p['item']} | {p['question_text']} | "
+                     f"{', '.join(p['matched_terms'])} | "
+                     f"{', '.join(str(x) for x in p['pages'])} |")
+    return "\n".join(lines) + "\n"
+
+
 def build_evidence_index(conditions, ocr_results=None):
     lines = ["# Evidence Index\n",
              "Where each condition came from, so your VSO can go straight to "
@@ -145,7 +168,8 @@ def build_evidence_index(conditions, ocr_results=None):
 
 
 def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
-                 evidence_text, buddy_letter_paths, unmapped_conditions=None):
+                 evidence_text, buddy_letter_paths, unmapped_conditions=None,
+                 prompts_text=None):
     contents, arcnames = [], {}
 
     for label, path in filled_forms.items():
@@ -155,6 +179,8 @@ def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
 
     contents.append("  conditions_worksheet.md  —  every condition found, with citations")
     contents.append("  evidence_index.md  —  where each condition came from")
+    if prompts_text:
+        contents.append("  questions_to_check.md  —  items to review and mark by hand")
     for path in buddy_letter_paths:
         contents.append(f"  buddy_letters/{os.path.basename(path)}")
 
@@ -179,6 +205,8 @@ def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
         z.writestr("README.txt", readme)
         z.writestr("conditions_worksheet.md", worksheet_text)
         z.writestr("evidence_index.md", evidence_text)
+        if prompts_text:
+            z.writestr("questions_to_check.md", prompts_text)
         for path, arc in arcnames.items():
             z.write(path, arc)
         for path in buddy_letter_paths:

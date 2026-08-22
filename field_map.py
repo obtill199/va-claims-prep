@@ -41,11 +41,15 @@ RULES = {
     },
     "H52.13": {  # Myopia
         "dd2807": (11, "c"),  # "Eye disorder or trouble"
+        "dd2807_inferred": [((11, "f"), "corrective lenses are the standard "
+                             "treatment for this refractive error")],
         "sha_field": "CO_79_RG_2Eyedisorderortrouble_Question_YesNo_Response",
         "sha_label": "Eye disorder or trouble",
     },
     "H52.223": {  # Astigmatism
         "dd2807": (11, "c"),
+        "dd2807_inferred": [((11, "f"), "corrective lenses are the standard "
+                             "treatment for this refractive error")],
         "sha_field": "CO_79_RG_2Eyedisorderortrouble_Question_YesNo_Response",
         "sha_label": "Eye disorder or trouble",
     },
@@ -61,6 +65,8 @@ RULES = {
     },
     "M25.561": {  # Right knee pain
         "dd2807": (12, "i"),  # "Knee trouble"
+        "dd2807_inferred": [((12, "h"), "the knee is a joint, so documented "
+                             "knee pain answers the painful-joint item too")],
         "sha_field": "CO_65_RG_7LegKnee_Question_YesNo_Response",
         "sha_label": "Leg/knee",
     },
@@ -78,6 +84,39 @@ RULES = {
         "dd2807": (17, "d"),  # "Frequent trouble sleeping"
     },
 }
+
+
+# Rules that depend on the record as a whole rather than one condition.
+# Each predicate gets (clinical, administrative) and returns a reason string
+# when it fires, or None. These are the items a member almost always answers
+# Yes to but that no single ICD-10 code maps onto.
+
+def _treated_within_5_years(clinical, administrative):
+    from datetime import date, timedelta
+    cutoff = (date.today() - timedelta(days=5 * 365)).isoformat()
+    recent = [c for c in clinical if c["last_seen"] >= cutoff]
+    if not recent:
+        return None
+    return (f"{len(recent)} condition(s) in your records were seen by a "
+            f"provider within the last 5 years, the most recent on "
+            f"{max(c['last_seen'] for c in recent)}")
+
+
+def _surgical_aftercare_present(clinical, administrative):
+    hits = [a for a in administrative if (a.get("icd10") or "").startswith("Z48")]
+    if not hits:
+        return None
+    return ("your records contain a surgical-aftercare encounter code "
+            f"({hits[0]['icd10']}, {hits[0]['first_seen']}), which normally "
+            "means a procedure was performed")
+
+
+RECORD_LEVEL_RULES = [
+    {"dd2807": (24, None), "predicate": _treated_within_5_years,
+     "confidence": "high"},
+    {"dd2807": (22, None), "predicate": _surgical_aftercare_present,
+     "confidence": "medium"},
+]
 
 
 def load_dd2807_crosswalk(path):
@@ -123,6 +162,18 @@ def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path):
                 raise ValueError(
                     f"{cond['icd10']}: dd2807 crosswalk entry {rule['dd2807']} "
                     f"missing or has no yes_field — form layout may have changed")
+        for (item_letter, why) in rule.get("dd2807_inferred", []):
+            row = crosswalk.get(item_letter)
+            if not (row and row.get("yes_field")):
+                raise ValueError(
+                    f"{cond['icd10']}: inferred dd2807 entry {item_letter} "
+                    f"missing or has no yes_field")
+            targets.append({
+                "target_form": "DD2807-1",
+                "target_field": row["yes_field"],
+                "question_text": row["question_text"],
+                "inferred": why,
+            })
         if "sha_field" in rule:
             if rule["sha_field"] not in sha_fields:
                 raise ValueError(
@@ -136,7 +187,25 @@ def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path):
 
         matched.append({"condition": cond, "targets": targets})
 
-    return matched, unmatched
+    record_level = []
+    with open(conditions_path) as fh:
+        blob = json.load(fh)
+    for rl in RECORD_LEVEL_RULES:
+        reason = rl["predicate"](blob["clinical"], blob["administrative"])
+        if not reason:
+            continue
+        row = crosswalk.get(rl["dd2807"])
+        if not (row and row.get("yes_field")):
+            continue
+        record_level.append({
+            "target_form": "DD2807-1",
+            "target_field": row["yes_field"],
+            "question_text": row["question_text"],
+            "confidence": rl["confidence"],
+            "reason": reason,
+        })
+
+    return matched, unmatched, record_level
 
 
 def main():
@@ -146,7 +215,7 @@ def main():
     ap.add_argument("sha_fields_json")
     args = ap.parse_args()
 
-    matched, unmatched = build_mapping(
+    matched, unmatched, record_level = build_mapping(
         args.conditions_json, args.dd2807_crosswalk_json, args.sha_fields_json)
 
     print(f"{len(matched)} active conditions matched a rule "
@@ -155,6 +224,10 @@ def main():
         c = m["condition"]
         forms = ", ".join(t["target_form"] for t in m["targets"])
         print(f"  {c['icd10']}: {c['condition']!r} -> {forms}")
+
+    print(f"\n{len(record_level)} record-level rule(s) fired:")
+    for rl in record_level:
+        print(f"  [{rl['confidence']}] {rl['question_text']}")
 
     print(f"\n{len(unmatched)} active conditions with no rule (no proposal generated):")
     for c in unmatched:

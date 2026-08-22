@@ -82,6 +82,30 @@ an answer yet. Nothing is written to a form until you confirm it here.</p>
 </div>
 {% endfor %}
 
+{% if prompts %}
+<h2>Your records mention these — do they apply to you?</h2>
+<div class="notice warn">
+  <p>These questions have <strong>no coded diagnosis</strong> behind them, so the
+  tool will not propose an answer and nothing here is checked for you. But these
+  words do appear in your records, on the pages listed. Measured against a real
+  completed 2807-1, this is where most genuine "Yes" answers live — in notes,
+  self-reports and scanned forms rather than in the coded diagnosis list.</p>
+  <p>Open the cited pages and decide for yourself. If one applies, mark it by
+  hand on the finished form.</p>
+</div>
+<table class="files prompts">
+  <tr><th>Item</th><th>Question</th><th>Terms found</th><th>Pages</th></tr>
+  {% for pr in prompts %}
+  <tr>
+    <td class="mono">{{ pr.item }}</td>
+    <td>{{ pr.question_text }}</td>
+    <td class="help">{{ pr.matched_terms|join(', ') }} <span class="conf low">{{ pr.mentions }} mentions</span></td>
+    <td class="mono">{{ pr.pages|join(', ') }}{% if pr.pages|length >= 4 %}…{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
 {% if unmapped %}
 <h2>Found in your records, but not matched to any form question</h2>
 <p class="help">No box is checked for these. The tool only proposes an answer when

@@ -41,7 +41,7 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
         if progress:
             progress(msg)
 
-    per_file, all_diag, all_prob = [], [], []
+    per_file, all_diag, all_prob, corpus = [], [], [], []
 
     for path in paths:
         name = os.path.basename(path)
@@ -64,6 +64,7 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
         problems = list(extract_conditions.parse_problems(text))
         all_diag += diagnoses
         all_prob += problems
+        corpus.append((text, page_starts))
 
         entry = {
             "name": name,
@@ -150,7 +151,30 @@ def process_demo():
         "clinical": [r for r in records if not r["administrative"]],
         "administrative": [r for r in records if r["administrative"]],
     }
-    return per_file, conditions
+    return per_file, conditions, [(text, sidecar["page_starts"])]
+
+
+def find_record_prompts(corpus, proposals):
+    """Keyword mentions worth asking about — see prompts.py.
+
+    Runs after proposals so a question that already has a real, coded
+    proposal doesn't also get flagged as a maybe.
+    """
+    from prompts import find_prompts
+    with open(DD_CROSSWALK) as fh:
+        rows = json.load(fh)
+    already = {p.target_field for p in proposals}
+    found = {}
+    for text, page_starts in corpus:
+        for pr in find_prompts(text, rows, page_starts, already):
+            prev = found.get(pr["item"])
+            if prev:
+                prev["mentions"] += pr["mentions"]
+                prev["pages"] = sorted(set(prev["pages"] + pr["pages"]))[:4]
+                prev["matched_terms"] = sorted(set(prev["matched_terms"] + pr["matched_terms"]))
+            else:
+                found[pr["item"]] = dict(pr)
+    return sorted(found.values(), key=lambda p: (-p["mentions"], p["item"]))
 
 
 def build_session_proposals(conditions, work_dir):

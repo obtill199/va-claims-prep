@@ -59,7 +59,7 @@ def current():
         os.makedirs(work_dir, exist_ok=True)
         SESSIONS[sid] = {"answers": {}, "work_dir": work_dir, "proposals": [],
                          "conditions": None, "per_file": [], "unmapped": [],
-                         "findings": [], "log": []}
+                         "findings": [], "prompts": [], "log": []}
     return SESSIONS[sid]
 
 
@@ -118,7 +118,7 @@ def upload():
 
         run_ocr = request.form.get("run_ocr") == "on"
         state["log"] = []
-        per_file, conditions = pipeline.process_files(
+        per_file, conditions, corpus = pipeline.process_files(
             paths, state["work_dir"], run_ocr=run_ocr,
             progress=state["log"].append)
 
@@ -128,6 +128,7 @@ def upload():
             conditions, state["work_dir"])
         state["proposals"] = proposals
         state["unmapped"] = unmapped
+        state["prompts"] = pipeline.find_record_prompts(corpus, proposals)
         if run_ocr:
             state["findings"] = pipeline.run_reconciliation(conditions, per_file)
 
@@ -145,13 +146,14 @@ def upload_demo():
     if not state["answers"]:
         return redirect(url_for("index"))
 
-    per_file, conditions = pipeline.process_demo()
+    per_file, conditions, corpus = pipeline.process_demo()
     state["per_file"] = per_file
     state["conditions"] = conditions
     proposals, unmapped = pipeline.build_session_proposals(
         conditions, state["work_dir"])
     state["proposals"] = proposals
     state["unmapped"] = unmapped
+    state["prompts"] = pipeline.find_record_prompts(corpus, proposals)
     state["findings"] = []
     state["demo"] = True
     return redirect(url_for("review"))
@@ -183,7 +185,8 @@ def review():
     return render_template("review.html", state=state,
                            proposals=state["proposals"],
                            findings=state["findings"],
-                           unmapped=state["unmapped"])
+                           unmapped=state["unmapped"],
+                           prompts=state.get("prompts", []))
 
 
 # ------------------------------------- 3b. confirm drafted explanation text
@@ -271,7 +274,8 @@ def download():
     package_bundle.build_bundle(
         out_zip, answers.get("full_name", ""),
         {k: v[1] for k, v in filled.items()},
-        worksheet, evidence, letters, state["unmapped"])
+        worksheet, evidence, letters, state["unmapped"],
+        prompts_text=package_bundle.build_prompts_doc(state.get("prompts", [])))
 
     return send_file(out_zip, as_attachment=True,
                      download_name=os.path.basename(out_zip))
