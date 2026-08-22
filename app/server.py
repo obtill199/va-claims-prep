@@ -63,13 +63,34 @@ def current():
     return SESSIONS[sid]
 
 
+FORMS_DIR = os.path.join(REPO, "forms")
+
+
 def blank_forms():
-    """Blank form locations. Configurable so this isn't tied to ~/Downloads."""
+    """Where the two blank forms live.
+
+    Looked up in order: an explicit environment override, then the repo's
+    own forms/ directory. The blank forms ship with the tool so it works on
+    a machine that has never downloaded them -- they are public DoD forms
+    with no personal data in them (verified: zero filled fields).
+    """
     dd = os.environ.get("DD2807_BLANK",
-                        os.path.expanduser("~/Downloads/dd2807-1.pdf"))
-    sha = os.environ.get("SHA_BLANK", os.path.expanduser(
-        "~/Downloads/SHA_DBQ_Part_A_Self-Assessment.pdf"))
+                        os.path.join(FORMS_DIR, "dd2807-1.pdf"))
+    sha = os.environ.get("SHA_BLANK",
+                         os.path.join(FORMS_DIR, "SHA_DBQ_Part_A_Self-Assessment.pdf"))
     return dd, sha
+
+
+def missing_blank_forms():
+    """Report missing forms up front rather than at the download step.
+
+    Getting a FileNotFoundError after uploading records, waiting through
+    OCR and reviewing every proposal is the worst possible moment to learn
+    a form is absent.
+    """
+    labels = {"DD 2807-1": blank_forms()[0], "SHA Part A": blank_forms()[1]}
+    return {name: path for name, path in labels.items()
+            if not os.path.exists(path)}
 
 
 # ------------------------------------------------------------ 1. intake
@@ -107,7 +128,8 @@ def upload():
             return render_template("upload.html", state=state,
                                    error="Choose at least one PDF.",
                                    ocr_ok=pipeline.ocr_available()[0],
-                                   demo_ok=pipeline.demo_available())
+                                   demo_ok=pipeline.demo_available(),
+                                   missing_forms=missing_blank_forms())
 
         paths = []
         for f in files:
@@ -136,7 +158,8 @@ def upload():
 
     return render_template("upload.html", state=state, error=None,
                            ocr_ok=pipeline.ocr_available()[0],
-                           demo_ok=pipeline.demo_available())
+                           demo_ok=pipeline.demo_available(),
+                           missing_forms=missing_blank_forms())
 
 
 @app.route("/upload/demo", methods=["POST"])
@@ -292,6 +315,12 @@ def download():
 
 def main():
     port = int(os.environ.get("PORT", "5000"))
+    missing = missing_blank_forms()
+    if missing:
+        print("\n  WARNING: blank form(s) not found:")
+        for name, path in missing.items():
+            print(f"    {name}: expected at {path}")
+        print("  The app will run, but cannot produce that filled form.")
     print(f"\n  VA Claims Prep -- http://127.0.0.1:{port}")
     print("  Local only. Records are processed on this machine and never "
           "uploaded.\n")

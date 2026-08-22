@@ -58,7 +58,16 @@ def _redact_provider(text):
     return PROV_RE.sub("Responsible Provider: [REDACTED-PROVIDER]", text), n
 
 
-def scrub_generic(text):
+def scrub_generic(text, redact_providers=False):
+    """Structural PII rules.
+
+    redact_providers defaults to False. A clinician's name is not the
+    member's identity, and DD 2807-1 Item 29 asks for "name of doctor(s)
+    and/or hospital(s)" by name -- stripping them makes the output worse at
+    the job it exists to do. Pass True only when producing a file you intend
+    to hand to someone else, where a third party's name is not yours to
+    share.
+    """
     counts = {}
 
     text, n = SSN_RE.subn("[REDACTED-SSN]", text)
@@ -75,8 +84,9 @@ def scrub_generic(text):
     text, n = ADDRESS_RE.subn("[REDACTED-ADDRESS]", text)
     counts["address"] = n
 
-    text, n = _redact_provider(text)
-    counts["provider"] = n
+    if redact_providers:
+        text, n = _redact_provider(text)
+        counts["provider"] = n
 
     return text, counts
 
@@ -97,7 +107,8 @@ def scrub_literals(text, literals):
     return text, count
 
 
-def scrub_paged(text, page_starts, literals_path=None):
+def scrub_paged(text, page_starts, literals_path=None,
+                redact_providers=False):
     """Scrub page-by-page and recompute page offsets.
 
     Redactions change text length, so scrubbing the whole document at once
@@ -112,7 +123,8 @@ def scrub_paged(text, page_starts, literals_path=None):
     bounds = list(page_starts) + [len(text)]
     for i in range(len(page_starts)):
         page_text = text[bounds[i]:bounds[i + 1]]
-        scrubbed, counts = scrub(page_text, literals_path)
+        scrubbed, counts = scrub(page_text, literals_path,
+                                 redact_providers=redact_providers)
         for key, n in counts.items():
             counts_total[key] = counts_total.get(key, 0) + n
         new_starts.append(offset)
@@ -122,8 +134,8 @@ def scrub_paged(text, page_starts, literals_path=None):
     return "".join(out_parts), new_starts, counts_total
 
 
-def scrub(text, literals_path=None):
-    text, counts = scrub_generic(text)
+def scrub(text, literals_path=None, redact_providers=False):
+    text, counts = scrub_generic(text, redact_providers=redact_providers)
     if literals_path:
         literals = load_literals(literals_path)
         text, n = scrub_literals(text, literals)
@@ -137,12 +149,17 @@ def main():
     ap.add_argument("input_txt")
     ap.add_argument("-o", "--output", required=True)
     ap.add_argument("--literals", help="path to your own literal-value list (gitignored)")
+    ap.add_argument("--redact-providers", action="store_true",
+                    help="also strip clinician names. Off by default: the "
+                         "member needs those names on the form. Use only for "
+                         "a file you plan to share with someone else.")
     args = ap.parse_args()
 
     with open(args.input_txt, encoding="utf-8", errors="replace") as fh:
         text = fh.read()
 
-    scrubbed, counts = scrub(text, args.literals)
+    scrubbed, counts = scrub(text, args.literals,
+                             redact_providers=args.redact_providers)
 
     with open(args.output, "w", encoding="utf-8") as fh:
         fh.write(scrubbed)

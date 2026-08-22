@@ -1,0 +1,76 @@
+# VA Claims Prep
+
+Turns your own military health records into a prepared package for an
+appointment with an accredited Veterans Service Officer (VSO).
+
+It reads your records, finds the conditions documented in them, and fills in
+as much of **DD Form 2807-1** (Report of Medical History) and the **SHA Part A**
+self-assessment as the evidence honestly supports — then asks you to confirm
+every single answer before anything is written.
+
+## What it does not do
+
+- It does not file anything with VA.
+- It does not advise you on what to claim or what you are owed. That is your
+  VSO's job and they are accredited to do it.
+- It does not send your records anywhere. Everything runs on your computer.
+
+## Setup
+
+```bash
+./setup.sh      # one time
+./run_app.sh    # start it
+```
+
+Then open <http://127.0.0.1:5000>.
+
+Requires Python 3.9+. OCR of scanned records currently needs macOS; everything
+else works anywhere.
+
+## Using it
+
+1. **About you** — name, service, medications. Things your records can't say.
+   Saved in your browser as you go, so you can stop and come back.
+2. **Your records** — drop in your health record PDFs. An MHS Genesis export
+   is the useful one. Scanned AF forms and legacy STRs work too, with OCR.
+3. **Review** — every proposed answer, with the condition behind it, the
+   doctor who diagnosed it, and the page it came from. Confirm, change, or
+   leave blank. **Nothing is written to a form until you confirm it.**
+4. **Explanations** — DD 2807-1 requires every "Yes" to be explained. Drafts
+   are prepared from your records; edit them freely.
+5. **Package** — download a zip with both filled forms, a conditions
+   worksheet, an evidence index, and buddy-letter templates.
+
+No records? The upload screen has a demo record so you can see the whole flow
+without using real data.
+
+## Things it deliberately leaves blank
+
+- **Social Security Number and DoD ID.** Never collected, stored, or written.
+  Fill them in by hand.
+- **Signatures.** Both forms come out unsigned.
+- **Any answer you didn't confirm.**
+
+## Why it asks you to confirm everything
+
+DD Form 2807-1 is an official statement carrying federal penalties for a false
+statement — up to 5 years confinement or a $10,000 fine. Your service record
+can also contain material you have never seen, including records faxed in from
+before you enlisted. A tool that silently checked boxes on your behalf would be
+putting your signature under claims you never made. So it proposes; you decide.
+
+Measured against a real completed 2807-1, the conditions it proposes have been
+correct every time — but they cover only about a third of what a member
+actually answers. Most real "Yes" answers live in narrative notes and scanned
+forms rather than in coded diagnoses. So the review screen also lists questions
+your records *mention* without proposing an answer, with page numbers, for you
+to check by hand.
+
+## Privacy
+
+Records are processed on your machine and never uploaded. The app binds to
+`127.0.0.1`, so nothing on your network can reach it. Uploaded files live in a
+temporary folder that is deleted when you close the app. Your intake answers
+are saved in your own browser and can be cleared from the first screen.
+
+On a shared computer, clear your saved answers when you're done.

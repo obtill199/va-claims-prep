@@ -1,5 +1,10 @@
 # Real records / PHI — never commit
 *.pdf
+# ...except the two blank government forms the tool ships with. These are
+# public DoD forms containing no personal data (verified: zero filled
+# fields), and bundling them is what lets the app run on a machine that
+# has never downloaded them.
+!forms/*.pdf
 *.txt
 conditions.json
 

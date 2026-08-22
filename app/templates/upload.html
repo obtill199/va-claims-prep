@@ -7,6 +7,15 @@ this computer — nothing is sent anywhere.</p>
 
 {% if error %}<div class="errors">{{ error }}</div>{% endif %}
 
+{% if missing_forms %}
+<div class="errors">
+  <strong>A blank form is missing, so it can't be filled:</strong>
+  <ul>{% for name, path in missing_forms.items() %}<li>{{ name }} — expected at {{ path }}</li>{% endfor %}</ul>
+  <p class="help">Put the blank PDF at that path, or set DD2807_BLANK / SHA_BLANK
+  to point at it, then reload. Everything else still works.</p>
+</div>
+{% endif %}
+
 <form method="post" enctype="multipart/form-data">
   <div class="drop">
     <input type="file" name="records" id="records" accept="application/pdf" multiple>
