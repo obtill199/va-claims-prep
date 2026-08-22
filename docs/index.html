@@ -39,8 +39,13 @@ ul{margin:0 0 14px;padding-left:20px}
 li{margin-bottom:6px}
 footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0 50px;color:var(--muted);font-size:14px}
 @media(prefers-color-scheme:dark){
-:root{--ink:#e6edf3;--muted:#9aa4ae;--line:#2d333b;--bg:#0d1117;--panel:#161b22;--accent:#316ea8}
+/* Every token that light mode defines must be redefined here, not just the
+   text colours -- leaving --warn-bg light while --ink turns light gives
+   light-on-light and the disclaimer becomes unreadable. */
+:root{--ink:#e6edf3;--muted:#9aa4ae;--line:#2d333b;--bg:#0d1117;--panel:#161b22;
+--accent:#316ea8;--warn-bg:#2a2113;--warn-line:#b8862f;--ok:#4a9d6f}
 th{background:#1c2430}
+pre{background:#010409}
 }
 </style>
 </head>
