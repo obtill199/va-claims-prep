@@ -28,10 +28,47 @@ this computer — nothing is sent anywhere.</p>
     </p>
   </div>
 
-  <button type="submit">Process records →</button>
-  <p class="help">Large exports with OCR can take several minutes. This page will
-     stay put until it's done.</p>
+  <button type="submit" id="go">Process records →</button>
+  <div id="working" class="working" hidden>
+    <span class="spinner" aria-hidden="true"></span>
+    <div>
+      <strong>Processing your records…</strong>
+      <p class="help" id="worktext">Reading the text layer. Large exports take a
+      minute or two.</p>
+      <p class="help">Keep this tab open. Nothing is being uploaded — this is your
+      own computer doing the work.</p>
+    </div>
+  </div>
 </form>
+
+<script>
+(function () {
+  var form = document.querySelector('form[enctype]');
+  if (!form) return;
+  form.addEventListener('submit', function () {
+    var btn = document.getElementById('go');
+    var box = document.getElementById('working');
+    var txt = document.getElementById('worktext');
+    if (btn) { btn.disabled = true; btn.textContent = 'Processing…'; }
+    if (box) box.hidden = false;
+    var ocr = document.querySelector('input[name=run_ocr]');
+    var stages = ocr && ocr.checked
+      ? ['Reading the text layer…',
+         'Extracting conditions…',
+         'Running OCR on scanned pages — this is the slow part, several minutes…',
+         'Still OCR-ing. A 100-page scan takes about 4 minutes…',
+         'Reconciling scanned evidence against the coded record…']
+      : ['Reading the text layer…',
+         'Extracting conditions…',
+         'Matching conditions to form questions…'];
+    var i = 0;
+    setInterval(function () {
+      i = Math.min(i + 1, stages.length - 1);
+      if (txt) txt.textContent = stages[i];
+    }, 20000);
+  });
+})();
+</script>
 
 {% if demo_ok %}
 <h2>No records handy?</h2>

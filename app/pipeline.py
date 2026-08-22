@@ -108,7 +108,7 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
         "clinical": [r for r in records if not r["administrative"]],
         "administrative": [r for r in records if r["administrative"]],
     }
-    return per_file, conditions
+    return per_file, conditions, corpus
 
 
 DEMO_TXT = os.path.join(REPO, "demo", "demo_record.txt")

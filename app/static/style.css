@@ -90,3 +90,9 @@ button.secondary { background: var(--panel); color: var(--accent); border: 1px s
 .demo-banner { background: #eef4fb; border: 1px solid var(--accent); color: var(--accent); padding: 10px 14px; border-radius: 4px; font-size: 14px; margin: 0 0 16px; font-weight: 600; }
 table.prompts td { font-size: 13px; }
 table.prompts td.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+.working { display: flex; gap: 14px; align-items: flex-start; background: var(--panel);
+  border: 1px solid var(--accent); border-radius: 6px; padding: 14px 16px; margin-top: 14px; }
+.working p { margin: 4px 0 0; }
+.spinner { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 2px; border-radius: 50%;
+  border: 3px solid var(--line); border-top-color: var(--accent); animation: spin 0.9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
