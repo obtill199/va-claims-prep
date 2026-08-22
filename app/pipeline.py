@@ -111,7 +111,7 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
     return per_file, conditions, corpus
 
 
-DEMO_TXT = os.path.join(REPO, "demo", "demo_record.txt")
+DEMO_TXT = os.path.join(REPO, "demo", "sample_record.txt")
 
 
 def demo_available():
@@ -119,7 +119,7 @@ def demo_available():
 
 
 def process_demo():
-    """Load the de-identified sample record.
+    """Load the fictional sample record.
 
     BUILD_BRIEF.md decision 4 makes demo mode first-class: the tool has to be
     demonstrable and user-testable without anyone handling real PHI. The demo
