@@ -5,79 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VA Claims Prep</title>
 <meta name="description" content="Turn your military health records into prefilled VA forms, plus every link you need to file a disability claim.">
+<link rel="stylesheet" href="assets/base.css">
 <style>
-:root{--ink:#1a1d21;--muted:#5b6670;--line:#d8dee4;--bg:#f7f8fa;--panel:#fff;
---accent:#1f4e79;--accent-soft:#eef4fb;--warn-bg:#fdf3e2;--warn-line:#d99b3d;
---err-bg:#fdeaea;--err-line:#c0392b;--ok:#2c6e49}
-@media(prefers-color-scheme:dark){:root{--ink:#e6edf3;--muted:#9aa4ae;--line:#2d333b;
---bg:#0d1117;--panel:#161b22;--accent:#4a90d9;--accent-soft:#15243a;--warn-bg:#2a2113;
---warn-line:#b8862f;--err-bg:#2b1616;--err-line:#e06c63;--ok:#4a9d6f}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-.wrap{max-width:940px;margin:0 auto;padding:0 22px}
-a{color:var(--accent)}
-
-header{background:linear-gradient(160deg,#1f4e79,#2d6ca3);color:#fff;padding:52px 0 46px}
-@media(prefers-color-scheme:dark){header{background:linear-gradient(160deg,#12283d,#1b3e5e)}}
-header h1{margin:0 0 10px;font-size:38px;letter-spacing:-.4px}
-header p{margin:0;font-size:18px;opacity:.94;max-width:640px}
-.pill{display:inline-block;background:rgba(255,255,255,.16);padding:5px 13px;
-border-radius:999px;font-size:13px;margin-bottom:18px}
-
-h2{font-size:22px;margin:44px 0 6px;scroll-margin-top:16px}
-h2 .num{color:var(--muted);font-weight:400;margin-right:8px}
-.sub{color:var(--muted);margin:0 0 16px;font-size:15px}
-
-.hero{background:var(--panel);border:2px solid var(--accent);border-radius:10px;
-padding:24px 26px;margin:-30px 0 8px;box-shadow:0 6px 24px rgba(0,0,0,.09)}
-.hero h2{margin:0 0 6px;font-size:24px}
-.hero p{margin:0 0 14px}
-.cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
-padding:13px 26px;border-radius:6px;font-weight:600;margin:6px 10px 6px 0;font-size:17px}
-.cta.alt{background:transparent;color:var(--accent);border:1px solid var(--accent);
-padding:12px 22px;font-size:15px}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:12px;margin:12px 0}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;
-padding:14px 16px;text-decoration:none;color:inherit;display:block;transition:border-color .12s}
-.card:hover{border-color:var(--accent)}
-.card b{display:block;color:var(--accent);margin-bottom:3px;font-size:15px}
-.card span{color:var(--muted);font-size:13.5px;line-height:1.45;display:block}
-.card .who{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.3px;
-font-weight:700;color:var(--muted);background:var(--bg);border:1px solid var(--line);
-padding:1px 7px;border-radius:999px;margin-top:7px}
-
-.note{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
-padding:13px 16px;border-radius:5px;margin:14px 0;font-size:15px}
-.note.warn{background:var(--warn-bg);border-left-color:var(--warn-line)}
-.note.crisis{background:var(--err-bg);border-left-color:var(--err-line)}
-/* Only the leading label is a block. Styling every <b> that way broke
-   mid-sentence emphasis onto its own line. */
-.note>b:first-child{display:block;margin-bottom:4px}
-.note p{margin:6px 0 0}
-
-table{width:100%;border-collapse:collapse;background:var(--panel);font-size:14.5px;margin:10px 0}
-th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
-th{background:var(--accent-soft)}
-
-footer{border-top:1px solid var(--line);margin-top:52px;padding:22px 0 56px}
-footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
-.toc{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:22px 0}
-.toc ol{margin:0;padding-left:20px;columns:2;column-gap:26px;font-size:14.5px}
-@media(max-width:620px){.toc ol{columns:1}}
-.toc li{margin-bottom:3px}
+/* Dashboard-specific only. */
+.hero {
+  background: var(--surface); border: 1px solid var(--brand-300);
+  border-top: 3px solid var(--accent); border-radius: var(--radius);
+  padding: var(--s6); margin: calc(var(--s7) * -1) 0 var(--s5);
+  box-shadow: var(--shadow-md); position: relative;
+}
+.hero h2 { margin-bottom: var(--s3); }
+.section-head { display: flex; align-items: baseline; gap: var(--s3);
+  margin: var(--s7) 0 var(--s2); }
+.section-head__num {
+  width: 26px; height: 26px; flex: 0 0 auto; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent);
+  display: grid; place-items: center; font-size: 13px; font-weight: 700;
+}
+.toc { background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s4) var(--s5); margin: var(--s5) 0; }
+.toc ol { margin: 0; padding-left: var(--s5); columns: 2; column-gap: var(--s6);
+  font-size: 15px; }
+@media (max-width: 640px) { .toc ol { columns: 1; } }
+.toc li { margin-bottom: var(--s1); break-inside: avoid; }
 </style>
 </head>
 <body>
 
-<header><div class="wrap">
-  <div class="pill">Runs in your browser — your records are never uploaded</div>
-  <h1>VA Claims Prep</h1>
-  <p>Turn your own military health records into prefilled forms — and find everything
-     else you need to file a disability claim, in the order you'll need it.</p>
-</div></header>
+<a class="skip-link" href="#main">Skip to content</a>
 
+<header class="masthead">
+  <div class="wrap masthead__bar">
+    <a class="wordmark" href="./">
+      <span class="wordmark__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/>
+        </svg>
+      </span>
+      VA Claims Prep
+    </a>
+    <span class="unofficial">Independent tool &middot; not affiliated with VA or DoD</span>
+  </div>
+  <div class="wrap masthead__hero">
+    <h1>Prepare your VA disability claim</h1>
+    <p>Turn your own military health records into prefilled forms — and find everything
+       else you need, in the order you'll need it.</p>
+  </div>
+</header>
+
+<main id="main">
 <div class="wrap">
 
   <div class="hero">
@@ -86,14 +64,14 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
     prefills <b>DD Form 2807-1</b> and <b>SHA Part A</b> — showing you the condition, the
     doctor who diagnosed it, and the page it came from, for every single answer. You
     confirm each one; nothing is written to a form you haven't approved.</p>
-    <a class="cta" href="app/">Open the tool →</a>
-    <a class="cta alt" href="https://github.com/obtill199/va-claims-prep">Source on GitHub</a>
+    <a class="btn btn--lg" href="app/">Open the tool →</a>
+    <a class="btn btn--secondary" href="https://github.com/obtill199/va-claims-prep">Source on GitHub</a>
     <p class="sub" style="margin-top:12px;margin-bottom:0">Everything happens inside your
     browser tab. There is no server, no account, and nothing stored — you can disconnect
     from the internet once the page loads and it still works.</p>
   </div>
 
-  <div class="note warn">
+  <div class="note note--warn">
     <b>Not affiliated with the VA or the Department of Defense.</b>
     This is an independent tool. It does not file claims, does not give legal or medical
     advice, and makes no promise about any outcome. Every link below goes to an official
@@ -114,44 +92,44 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="records"><span class="num">1</span>Get your records</h2>
+  <div class="section-head"><span class="section-head__num">1</span><h2 id="records">Get your records</h2></div>
   <p class="sub">Everything else depends on these. Request them first — some take weeks.</p>
 
-  <div class="grid">
+  <div class="cards">
     <a class="card" href="https://milconnect.dmdc.osd.mil/milconnect/" target="_blank" rel="noopener">
-      <b>milConnect</b>
-      <span>Your DD-214, service treatment records and personnel file, if you served
+      <span class="card__title">milConnect</span>
+      <span class="card__desc">Your DD-214, service treatment records and personnel file, if you served
       recently. The fastest route for most people.</span>
-      <span class="who">DD-214 · service records</span></a>
+      <span class="card__tag">DD-214 · service records</span></a>
 
     <a class="card" href="https://patientportal.mhsgenesis.health.mil/" target="_blank" rel="noopener">
-      <b>MHS Genesis Patient Portal</b>
-      <span>Your DoD medical record. The export from here is exactly what the tool above
+      <span class="card__title">MHS Genesis Patient Portal</span>
+      <span class="card__desc">Your DoD medical record. The export from here is exactly what the tool above
       reads best.</span>
-      <span class="who">Medical records</span></a>
+      <span class="card__tag">Medical records</span></a>
 
     <a class="card" href="https://www.archives.gov/personnel-records-center" target="_blank" rel="noopener">
-      <b>National Personnel Records Center</b>
-      <span>Older records, or anything milConnect can't produce. Held by the National
+      <span class="card__title">National Personnel Records Center</span>
+      <span class="card__desc">Older records, or anything milConnect can't produce. Held by the National
       Archives.</span>
-      <span class="who">Archived records</span></a>
+      <span class="card__tag">Archived records</span></a>
 
     <a class="card" href="https://www.archives.gov/veterans/military-service-records/standard-form-180.html" target="_blank" rel="noopener">
-      <b>Standard Form 180</b>
-      <span>The paper request form for military records, when the online routes don't
+      <span class="card__title">Standard Form 180</span>
+      <span class="card__desc">The paper request form for military records, when the online routes don't
       cover your situation.</span>
-      <span class="who">SF-180</span></a>
+      <span class="card__tag">SF-180</span></a>
 
     <a class="card" href="https://www.va.gov/records/get-military-service-records/" target="_blank" rel="noopener">
-      <b>VA: request service records</b>
-      <span>VA's own walkthrough of which route applies to you, by service era.</span>
-      <span class="who">Guide</span></a>
+      <span class="card__title">VA: request service records</span>
+      <span class="card__desc">VA's own walkthrough of which route applies to you, by service era.</span>
+      <span class="card__tag">Guide</span></a>
 
     <a class="card" href="https://www.myhealth.va.gov/" target="_blank" rel="noopener">
-      <b>My HealtheVet</b>
-      <span>Your VA medical records, once you're in the VA health system. Different from
+      <span class="card__title">My HealtheVet</span>
+      <span class="card__desc">Your VA medical records, once you're in the VA health system. Different from
       your DoD records.</span>
-      <span class="who">VA medical records</span></a>
+      <span class="card__tag">VA medical records</span></a>
   </div>
 
   <div class="note">
@@ -162,37 +140,37 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="help"><span class="num">2</span>Get free help — do this early</h2>
+  <div class="section-head"><span class="section-head__num">2</span><h2 id="help">Get free help — do this early</h2></div>
   <p class="sub">An accredited VSO is free, and they do this every day. Talk to one before
   you file, not after.</p>
 
-  <div class="grid">
+  <div class="cards">
     <a class="card" href="https://www.va.gov/get-help-from-accredited-representative/" target="_blank" rel="noopener">
-      <b>Find an accredited representative</b>
-      <span>VA's official directory of VSOs, attorneys and claims agents who are
+      <span class="card__title">Find an accredited representative</span>
+      <span class="card__desc">VA's official directory of VSOs, attorneys and claims agents who are
       accredited to represent you.</span>
-      <span class="who">Start here</span></a>
+      <span class="card__tag">Start here</span></a>
 
     <a class="card" href="https://www.va.gov/ogc/apps/accreditation/index.asp" target="_blank" rel="noopener">
-      <b>Verify accreditation</b>
-      <span>Check that whoever is helping you is actually accredited by VA's Office of
+      <span class="card__title">Verify accreditation</span>
+      <span class="card__desc">Check that whoever is helping you is actually accredited by VA's Office of
       General Counsel.</span>
-      <span class="who">Verify</span></a>
+      <span class="card__tag">Verify</span></a>
 
     <a class="card" href="https://www.va.gov/vso/" target="_blank" rel="noopener">
-      <b>Recognized organizations</b>
-      <span>The full list of chartered veterans service organizations — VFW, American
+      <span class="card__title">Recognized organizations</span>
+      <span class="card__desc">The full list of chartered veterans service organizations — VFW, American
       Legion, DAV and others.</span>
-      <span class="who">Directory</span></a>
+      <span class="card__tag">Directory</span></a>
 
     <a class="card" href="https://www.va.gov/statedva.htm" target="_blank" rel="noopener">
-      <b>State veterans affairs offices</b>
-      <span>Your state has its own VSOs and its own benefits, separate from federal
+      <span class="card__title">State veterans affairs offices</span>
+      <span class="card__desc">Your state has its own VSOs and its own benefits, separate from federal
       ones. Frequently overlooked.</span>
-      <span class="who">By state</span></a>
+      <span class="card__tag">By state</span></a>
   </div>
 
-  <div class="note warn">
+  <div class="note note--warn">
     <b>You should never pay to file an initial claim.</b>
     Accredited VSOs are free. Charging a fee to prepare an initial disability claim is
     not permitted for accredited representatives — if someone is asking for a percentage
@@ -200,9 +178,9 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="file"><span class="num">3</span>File your claim</h2>
+  <div class="section-head"><span class="section-head__num">3</span><h2 id="file">File your claim</h2></div>
 
-  <div class="note warn">
+  <div class="note note--warn">
     <b>Still in? The timing window matters.</b>
     <p><b>Benefits Delivery at Discharge (BDD)</b> lets you file <b>180 to 90 days</b>
     before separation, so a decision can land close to your discharge date. Inside 90
@@ -210,47 +188,47 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
     deadline for separating members.</p>
   </div>
 
-  <div class="grid">
+  <div class="cards">
     <a class="card" href="https://www.va.gov/disability/how-to-file-claim/when-to-file/pre-discharge-claim/" target="_blank" rel="noopener">
-      <b>Pre-discharge claims (BDD)</b>
-      <span>How to file before you separate, and what the 180–90 day window means for
+      <span class="card__title">Pre-discharge claims (BDD)</span>
+      <span class="card__desc">How to file before you separate, and what the 180–90 day window means for
       you.</span>
-      <span class="who">Separating</span></a>
+      <span class="card__tag">Separating</span></a>
 
     <a class="card" href="https://www.va.gov/disability/how-to-file-claim/" target="_blank" rel="noopener">
-      <b>How to file a disability claim</b>
-      <span>VA's step-by-step, whether you're separating or filing years later.</span>
-      <span class="who">Main guide</span></a>
+      <span class="card__title">How to file a disability claim</span>
+      <span class="card__desc">VA's step-by-step, whether you're separating or filing years later.</span>
+      <span class="card__tag">Main guide</span></a>
 
     <a class="card" href="https://www.va.gov/find-forms/about-form-21-0966/" target="_blank" rel="noopener">
-      <b>Intent to File (21-0966)</b>
-      <span>Locks in your effective date while you gather evidence — potentially months
+      <span class="card__title">Intent to File (21-0966)</span>
+      <span class="card__desc">Locks in your effective date while you gather evidence — potentially months
       of back pay. File it early, even if nothing else is ready.</span>
-      <span class="who">Do this first</span></a>
+      <span class="card__tag">Do this first</span></a>
 
     <a class="card" href="https://www.va.gov/disability/file-disability-claim-form-21-526ez/" target="_blank" rel="noopener">
-      <b>The claim itself (21-526EZ)</b>
-      <span>The actual application for disability compensation.</span>
-      <span class="who">Main form</span></a>
+      <span class="card__title">The claim itself (21-526EZ)</span>
+      <span class="card__desc">The actual application for disability compensation.</span>
+      <span class="card__tag">Main form</span></a>
 
     <a class="card" href="https://www.va.gov/disability/eligibility/" target="_blank" rel="noopener">
-      <b>Eligibility</b>
-      <span>Who qualifies, and what "service connected" actually requires you to
+      <span class="card__title">Eligibility</span>
+      <span class="card__desc">Who qualifies, and what "service connected" actually requires you to
       show.</span>
-      <span class="who">Before filing</span></a>
+      <span class="card__tag">Before filing</span></a>
 
     <a class="card" href="https://www.va.gov/disability/get-help-filing-claim/" target="_blank" rel="noopener">
-      <b>Help filing</b>
-      <span>VA's own page on getting assistance with the paperwork.</span>
-      <span class="who">Support</span></a>
+      <span class="card__title">Help filing</span>
+      <span class="card__desc">VA's own page on getting assistance with the paperwork.</span>
+      <span class="card__tag">Support</span></a>
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="forms"><span class="num">4</span>The forms, and what each is for</h2>
+  <div class="section-head"><span class="section-head__num">4</span><h2 id="forms">The forms, and what each is for</h2></div>
   <p class="sub">Form numbers are how VA talks about all of this. Worth knowing which is
   which.</p>
 
-  <table>
+  <div class="table-scroll"><table class="table">
     <tr><th>Form</th><th>What it's for</th><th></th></tr>
     <tr><td><b>DD 2807-1</b></td>
         <td>Report of Medical History. Your account of every condition, with an
@@ -275,7 +253,7 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
     <tr><td><b>21-4138</b></td>
         <td>Statement in Support of Claim. Your own narrative, in your words.</td>
         <td><a href="https://www.va.gov/find-forms/about-form-21-4138/" target="_blank" rel="noopener">VA →</a></td></tr>
-  </table>
+  </table></div>
 
   <div class="note">
     <b>Buddy letters carry real weight.</b>
@@ -286,68 +264,68 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="after"><span class="num">5</span>What happens after you file</h2>
+  <div class="section-head"><span class="section-head__num">5</span><h2 id="after">What happens after you file</h2></div>
 
-  <div class="grid">
+  <div class="cards">
     <a class="card" href="https://www.va.gov/disability/va-claim-exam/" target="_blank" rel="noopener">
-      <b>Your C&amp;P exam</b>
-      <span>The compensation &amp; pension exam. What it is, and why missing it can sink
+      <span class="card__title">Your C&amp;P exam</span>
+      <span class="card__desc">The compensation &amp; pension exam. What it is, and why missing it can sink
       an otherwise strong claim.</span>
-      <span class="who">Don't miss it</span></a>
+      <span class="card__tag">Don't miss it</span></a>
 
     <a class="card" href="https://www.va.gov/claim-or-appeal-status/" target="_blank" rel="noopener">
-      <b>Check your claim status</b>
-      <span>Track where your claim is in the process.</span>
-      <span class="who">Tracking</span></a>
+      <span class="card__title">Check your claim status</span>
+      <span class="card__desc">Track where your claim is in the process.</span>
+      <span class="card__tag">Tracking</span></a>
 
     <a class="card" href="https://www.va.gov/decision-reviews/" target="_blank" rel="noopener">
-      <b>Disagree with a decision</b>
-      <span>Supplemental claim, higher-level review, or Board appeal — and the deadlines
+      <span class="card__title">Disagree with a decision</span>
+      <span class="card__desc">Supplemental claim, higher-level review, or Board appeal — and the deadlines
       on each.</span>
-      <span class="who">Appeals</span></a>
+      <span class="card__tag">Appeals</span></a>
 
     <a class="card" href="https://www.va.gov/disability/compensation-rates/veteran-rates/" target="_blank" rel="noopener">
-      <b>Compensation rates</b>
-      <span>What each rating actually pays, by rating and dependents.</span>
-      <span class="who">Rates</span></a>
+      <span class="card__title">Compensation rates</span>
+      <span class="card__desc">What each rating actually pays, by rating and dependents.</span>
+      <span class="card__tag">Rates</span></a>
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="understand"><span class="num">6</span>Understand the system</h2>
+  <div class="section-head"><span class="section-head__num">6</span><h2 id="understand">Understand the system</h2></div>
 
-  <div class="grid">
+  <div class="cards">
     <a class="card" href="https://www.va.gov/disability/about-disability-ratings/" target="_blank" rel="noopener">
-      <b>How ratings work</b>
-      <span>Including why two 50% ratings don't add up to 100% — VA combines them, it
+      <span class="card__title">How ratings work</span>
+      <span class="card__desc">Including why two 50% ratings don't add up to 100% — VA combines them, it
       doesn't sum them.</span>
-      <span class="who">Ratings</span></a>
+      <span class="card__tag">Ratings</span></a>
 
     <a class="card" href="https://www.ecfr.gov/current/title-38/chapter-I/part-4" target="_blank" rel="noopener">
-      <b>38 CFR Part 4 — the rating schedule</b>
-      <span>The actual regulation raters use. Dense, but it is the source of truth for
+      <span class="card__title">38 CFR Part 4 — the rating schedule</span>
+      <span class="card__desc">The actual regulation raters use. Dense, but it is the source of truth for
       how any condition gets rated.</span>
-      <span class="who">The law</span></a>
+      <span class="card__tag">The law</span></a>
 
     <a class="card" href="https://www.va.gov/resources/the-pact-act-and-your-va-benefits/" target="_blank" rel="noopener">
-      <b>The PACT Act</b>
-      <span>Burn pits and toxic exposure. Expanded presumptive conditions — worth
+      <span class="card__title">The PACT Act</span>
+      <span class="card__desc">Burn pits and toxic exposure. Expanded presumptive conditions — worth
       checking even if you filed before.</span>
-      <span class="who">Presumptive</span></a>
+      <span class="card__tag">Presumptive</span></a>
 
     <a class="card" href="https://www.va.gov/disability/eligibility/hazardous-materials-exposure/" target="_blank" rel="noopener">
-      <b>Hazardous exposure</b>
-      <span>Agent Orange, burn pits, contaminated water, radiation and more.</span>
-      <span class="who">Presumptive</span></a>
+      <span class="card__title">Hazardous exposure</span>
+      <span class="card__desc">Agent Orange, burn pits, contaminated water, radiation and more.</span>
+      <span class="card__tag">Presumptive</span></a>
 
     <a class="card" href="https://www.health.mil/Military-Health-Topics/Health-Readiness/Separation-Health-Assessment" target="_blank" rel="noopener">
-      <b>Separation Health Assessment</b>
-      <span>What the SHA is and how it fits between DoD and VA.</span>
-      <span class="who">Separating</span></a>
+      <span class="card__title">Separation Health Assessment</span>
+      <span class="card__desc">What the SHA is and how it fits between DoD and VA.</span>
+      <span class="card__tag">Separating</span></a>
 
     <a class="card" href="https://www.benefits.va.gov/predischarge/" target="_blank" rel="noopener">
-      <b>Pre-discharge programs</b>
-      <span>BDD, IDES and the other routes available while you're still in.</span>
-      <span class="who">Separating</span></a>
+      <span class="card__title">Pre-discharge programs</span>
+      <span class="card__desc">BDD, IDES and the other routes available while you're still in.</span>
+      <span class="card__tag">Separating</span></a>
   </div>
 
   <div class="note">
@@ -358,51 +336,54 @@ footer p{color:var(--muted);font-size:13.5px;margin:0 0 8px}
   </div>
 
   <!-- ============================================================ -->
-  <h2 id="support"><span class="num">7</span>Health care and support</h2>
+  <div class="section-head"><span class="section-head__num">7</span><h2 id="support">Health care and support</h2></div>
 
-  <div class="note crisis">
+  <div class="note note--err">
     <b>Veterans Crisis Line — call or text 988, then press 1</b>
     <p>Free, confidential, 24/7, whether or not you're enrolled in VA health care.
     <a href="https://www.veteranscrisisline.net/" target="_blank" rel="noopener">veteranscrisisline.net</a></p>
   </div>
 
-  <div class="grid">
+  <div class="cards">
     <a class="card" href="https://www.va.gov/health-care/how-to-apply/" target="_blank" rel="noopener">
-      <b>Apply for VA health care</b>
-      <span>Separate from disability compensation, and you don't need a rating to
+      <span class="card__title">Apply for VA health care</span>
+      <span class="card__desc">Separate from disability compensation, and you don't need a rating to
       enroll.</span>
-      <span class="who">Health care</span></a>
+      <span class="card__tag">Health care</span></a>
 
     <a class="card" href="https://www.va.gov/find-locations/" target="_blank" rel="noopener">
-      <b>Find a VA facility</b>
-      <span>Medical centers, clinics, vet centers and regional benefit offices.</span>
-      <span class="who">Locations</span></a>
+      <span class="card__title">Find a VA facility</span>
+      <span class="card__desc">Medical centers, clinics, vet centers and regional benefit offices.</span>
+      <span class="card__tag">Locations</span></a>
 
     <a class="card" href="https://www.va.gov/careers-employment/vocational-rehabilitation/" target="_blank" rel="noopener">
-      <b>Veteran Readiness &amp; Employment</b>
-      <span>Chapter 31. Training and employment support if a service-connected disability
+      <span class="card__title">Veteran Readiness &amp; Employment</span>
+      <span class="card__desc">Chapter 31. Training and employment support if a service-connected disability
       affects your ability to work.</span>
-      <span class="who">VR&amp;E</span></a>
+      <span class="card__tag">VR&amp;E</span></a>
 
     <a class="card" href="https://www.va.gov/disability/survivor-dic-rates/" target="_blank" rel="noopener">
-      <b>Survivor benefits (DIC)</b>
-      <span>What your dependents may be entitled to.</span>
-      <span class="who">Family</span></a>
+      <span class="card__title">Survivor benefits (DIC)</span>
+      <span class="card__desc">What your dependents may be entitled to.</span>
+      <span class="card__tag">Family</span></a>
   </div>
 
 </div>
 
-<footer class="wrap">
-  <p><b>Not affiliated with, endorsed by, or connected to the U.S. Department of Veterans
-  Affairs or the Department of Defense.</b> This is an independent, open-source tool. It
-  does not file claims, does not provide legal or medical advice, and makes no promise
-  about any claim outcome.</p>
-  <p>Every external link goes to an official government site. Links were verified working
-  at the time of publication; if one has moved, search for it on
-  <a href="https://www.va.gov/" target="_blank" rel="noopener">va.gov</a>.</p>
-  <p>Open source under the MIT license.
-  <a href="https://github.com/obtill199/va-claims-prep">Source on GitHub</a>.
-  Provided as-is, without warranty.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>Not affiliated with, endorsed by, or connected to the U.S. Department of
+    Veterans Affairs or the Department of Defense.</strong> This is an independent,
+    open-source tool. It does not file claims, does not provide legal or medical advice,
+    and makes no promise about any claim outcome.</p>
+    <p>Every external link goes to an official government site and was verified working
+    at publication. If one has moved, search for it on
+    <a href="https://www.va.gov/">va.gov</a>.</p>
+    <p>MIT licensed. <a href="https://github.com/obtill199/va-claims-prep">Source on
+    GitHub</a>. Provided as-is, without warranty.</p>
+  </div>
 </footer>
 
 </body>

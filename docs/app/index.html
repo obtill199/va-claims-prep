@@ -5,93 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VA Claims Prep</title>
 <meta name="robots" content="noindex">
+<link rel="stylesheet" href="../assets/base.css">
 <style>
-:root{--ink:#1a1d21;--muted:#5b6670;--line:#d8dee4;--bg:#f7f8fa;--panel:#fff;
---accent:#1f4e79;--warn-bg:#fdf3e2;--warn-line:#d99b3d;--err-bg:#fdeaea;
---err-line:#c0392b;--ok:#2c6e49}
-@media(prefers-color-scheme:dark){:root{--ink:#e6edf3;--muted:#9aa4ae;--line:#2d333b;
---bg:#0d1117;--panel:#161b22;--accent:#316ea8;--warn-bg:#2a2113;--warn-line:#b8862f;
---err-bg:#2b1616;--err-line:#e06c63;--ok:#4a9d6f}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-.wrap{max-width:860px;margin:0 auto;padding:0 20px}
-header{background:var(--accent);color:#fff;padding:14px 0}
-header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.brand{font-weight:700}
-.badge{font-size:12px;background:rgba(255,255,255,.16);padding:4px 10px;border-radius:999px}
-nav{background:var(--panel);border-bottom:1px solid var(--line)}
-nav ol{list-style:none;display:flex;gap:16px;margin:0;padding:10px 0;font-size:13px;
-color:var(--muted);flex-wrap:wrap}
-nav li.on{color:var(--accent);font-weight:600}
-main{padding:26px 20px 50px}
-h1{font-size:25px;margin:0 0 8px}h2{font-size:18px;margin:28px 0 10px}
-.lede{color:var(--muted);margin:0 0 18px}
-.help{color:var(--muted);font-size:13px;margin:6px 0 0}
-.notice{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
-padding:12px 14px;border-radius:4px;margin:14px 0}
-.notice.warn{background:var(--warn-bg);border-left-color:var(--warn-line)}
-.notice p{margin:6px 0 0;font-size:14px}
-.errors{background:var(--err-bg);border-left:4px solid var(--err-line);padding:12px 14px;
-border-radius:4px;margin:14px 0;font-size:14px}
-.field{margin:0 0 15px}
-label{display:block;font-weight:600;font-size:14px;margin-bottom:5px}
-input[type=text],input[type=date],select,textarea{width:100%;padding:9px 10px;
-border:1px solid var(--line);border-radius:4px;font:inherit;background:var(--panel);color:var(--ink)}
-button{background:var(--accent);color:#fff;border:0;padding:11px 20px;border-radius:5px;
-font:inherit;font-weight:600;cursor:pointer;margin-top:10px}
-button:disabled{opacity:.5;cursor:not-allowed}
-button.secondary{background:var(--panel);color:var(--accent);border:1px solid var(--accent)}
-.drop{border:2px dashed var(--line);background:var(--panel);border-radius:6px;padding:22px;text-align:center}
-table{width:100%;border-collapse:collapse;background:var(--panel);font-size:14px;margin:10px 0}
-th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-.tier,.conf,.method,.form-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;
-text-transform:uppercase;letter-spacing:.3px;font-weight:700}
-.tier.structured,.conf.high{background:#e3f1e8;color:var(--ok)}
-.tier.ocr,.conf.medium{background:var(--warn-bg);color:#8a5a00}
-.tier\.no-text-layer,.tier.unreadable,.tier.narrative,.conf.low{background:var(--err-bg);color:var(--err-line)}
-.method,.form-tag{background:#eaeef2;color:var(--muted)}
-@media(prefers-color-scheme:dark){.method,.form-tag{background:#222b36}
-.tier.structured,.conf.high{background:#12301f}}
-.proposal{background:var(--panel);border:1px solid var(--line);border-radius:6px;
-padding:14px 16px;margin:0 0 13px}
-.phead{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
-.qtext{margin:0 0 4px;font-size:16px;font-weight:600}
-.why{margin:0 0 10px;font-size:14px;color:var(--muted)}
-.choices{display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
-.choices label{font-weight:400;font-size:14px;display:flex;align-items:center;gap:6px;margin:0}
-.cite{margin:10px 0 0;padding-top:8px;border-top:1px solid var(--line);font-size:12px;color:#97a1aa}
-.spinner{display:inline-block;width:18px;height:18px;border-radius:50%;
-border:3px solid var(--line);border-top-color:var(--accent);animation:spin .9s linear infinite;
-vertical-align:middle;margin-right:8px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.boot{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);
-border-radius:6px;padding:14px 16px;margin:14px 0}
-.dl{display:block;background:var(--panel);border:1px solid var(--line);border-radius:6px;
-padding:11px 14px;margin:6px 0;text-decoration:none;color:var(--accent);font-weight:600;font-size:14px}
-.dl:hover{border-color:var(--accent)}
-.dl small{display:block;color:var(--muted);font-weight:400;margin-top:2px}
-footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 20px 40px}
-footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
-.hidden{display:none}
+/* App-specific only. Everything shared lives in assets/base.css. */
+.dropzone {
+  border: 2px dashed var(--line-strong); background: var(--surface-alt);
+  border-radius: var(--radius); padding: var(--s6) var(--s5); text-align: center;
+  transition: border-color .13s ease, background .13s ease;
+}
+.dropzone:hover, .dropzone--active { border-color: var(--accent);
+  background: var(--accent-soft); }
+.dropzone input[type=file] { max-width: 100%; }
+
+.proposal { background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s4) var(--s5);
+  margin-bottom: var(--s3); box-shadow: var(--shadow-sm); }
+.proposal--low { border-left: 3px solid var(--line-strong); }
+.proposal__meta { display: flex; gap: var(--s2); align-items: center;
+  flex-wrap: wrap; margin-bottom: var(--s3); }
+.proposal__q { font-size: 16.5px; font-weight: 650; margin: 0 0 var(--s1);
+  line-height: 1.35; }
+.proposal__why { font-size: 14.5px; color: var(--ink-muted); margin: 0 0 var(--s4); }
+.proposal__choices { display: flex; gap: var(--s5); flex-wrap: wrap;
+  border-top: 1px solid var(--line); padding-top: var(--s3); }
+.choice { display: flex; align-items: center; gap: var(--s2); font-size: 14.5px;
+  cursor: pointer; min-height: 32px; }
+.choice input[type=radio] { width: 17px; height: 17px; accent-color: var(--accent);
+  cursor: pointer; flex: 0 0 auto; }
+.choice input[type=text] { width: 66px; min-height: 34px; padding: 4px var(--s2);
+  font-size: 14px; }
+.proposal__cite { margin: var(--s3) 0 0; padding-top: var(--s2);
+  border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-subtle); }
+
+.download { display: flex; align-items: center; gap: var(--s3);
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s3) var(--s4);
+  margin-bottom: var(--s2); text-decoration: none; color: inherit;
+  transition: border-color .13s ease, box-shadow .13s ease; }
+.download:hover { border-color: var(--accent); box-shadow: var(--shadow-sm);
+  color: inherit; }
+.download__icon { width: 34px; height: 34px; flex: 0 0 auto; border-radius: 6px;
+  background: var(--accent-soft); color: var(--accent); display: grid;
+  place-items: center; font-size: 11px; font-weight: 700; }
+.download__name { display: block; font-weight: 600; font-size: 14.5px; }
+.download__desc { display: block; color: var(--ink-muted); font-size: 13px; }
 </style>
 </head>
 <body>
 
-<header><div class="wrap">
-  <span class="brand">VA Claims Prep</span>
-  <span class="badge" id="privacy-badge">Runs in your browser — nothing is uploaded</span>
-</div></header>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<nav><div class="wrap"><ol>
-  <li id="nav-1" class="on">1. About you</li>
-  <li id="nav-2">2. Your records</li>
-  <li id="nav-3">3. Review</li>
-  <li id="nav-4">4. Explanations</li>
-  <li id="nav-5">5. Package</li>
-</ol></div></nav>
+<header class="masthead">
+  <div class="wrap masthead__bar">
+    <a class="wordmark" href="../">
+      <span class="wordmark__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/>
+        </svg>
+      </span>
+      VA Claims Prep
+    </a>
+    <span class="unofficial">Independent tool &middot; not affiliated with VA or DoD</span>
+  </div>
+</header>
 
-<main class="wrap">
+<nav class="steps" aria-label="Progress">
+  <div class="wrap">
+    <ol class="steps__list">
+      <li class="steps__item" id="nav-1" aria-current="step">
+        <span class="steps__num">1</span>About you</li>
+      <li class="steps__item" id="nav-2"><span class="steps__num">2</span>Your records</li>
+      <li class="steps__item" id="nav-3"><span class="steps__num">3</span>Review</li>
+      <li class="steps__item" id="nav-4"><span class="steps__num">4</span>Explanations</li>
+      <li class="steps__item" id="nav-5"><span class="steps__num">5</span>Package</li>
+    </ol>
+  </div>
+</nav>
+
+<main class="wrap" id="main" style="padding:var(--s6) var(--s5) var(--s8)">
 
 <!-- ---------------------------------------------------------- step 1 -->
 <section id="step-1">
@@ -99,24 +92,24 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
   <p class="lede">These are the things your medical records can't tell us. They go
   straight onto both forms — you're the source, so there's nothing to review later.</p>
 
-  <div class="notice">
-    <strong>This all runs inside your browser tab.</strong>
+  <div class="note">
+    <span class="note__title">This all runs inside your browser tab.</span>
     <p>Your records are read on this computer and never sent anywhere — there is no
     server to send them to. You can disconnect from the internet after this page
     loads and the whole thing still works.</p>
   </div>
 
-  <div class="notice">
-    <strong>Social Security Number and DoD ID are not collected.</strong>
+  <div class="note">
+    <span class="note__title">Social Security Number and DoD ID are not collected.</span>
     <p>They are intentionally left blank on both forms. Fill them in by hand in a
     PDF reader before you hand the package to your VSO.</p>
   </div>
 
-  <div id="intake-errors" class="errors hidden"></div>
+  <div id="intake-errors" class="note note--err hidden"></div>
   <div id="intake-fields"></div>
-  <button id="to-upload">Continue to your records →</button>
+  <button class="btn btn--lg" id="to-upload">Continue to your records →</button>
   <span id="draftstatus" class="help" style="margin-left:10px"></span>
-  <button type="button" id="cleardraft" class="secondary hidden" style="margin-left:6px">Clear saved answers</button>
+  <button type="button" id="cleardraft" class="btn btn--ghost hidden" style="margin-left:6px">Clear saved answers</button>
   <p class="help" id="draftnote">Your answers are saved in this browser as you type, so you
   can close the tab and come back. They stay on this computer. On a shared computer,
   clear them when you're done.</p>
@@ -128,29 +121,29 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
   <p class="lede">Drop in your health record PDFs. Everything is processed inside this
   browser tab.</p>
 
-  <div id="boot" class="boot">
+  <div id="boot" class="status-row">
     <span class="spinner"></span>
-    <div><strong>Loading the engine…</strong>
+    <div><span class="note__title">Loading the engine…</span>
       <p class="help" id="boot-detail">First load downloads about 15&nbsp;MB of Python
       runtime. It is cached afterwards.</p></div>
   </div>
 
-  <div class="notice warn">
-    <strong>Scanned records need the desktop version.</strong>
+  <div class="note note--warn">
+    <span class="note__title">Scanned records need the desktop version.</span>
     <p>This browser build reads PDFs that have a text layer — an MHS Genesis export
     does. It cannot OCR a scanned AF form, because that uses a native library the
     browser can't run. Scanned files will say so rather than silently producing
     nothing.</p>
   </div>
 
-  <div id="upload-errors" class="errors hidden"></div>
-  <div class="drop">
+  <div id="upload-errors" class="note note--err hidden"></div>
+  <div class="dropzone">
     <input type="file" id="files" accept="application/pdf" multiple>
     <p class="help">PDF only. Nothing leaves this page.</p>
   </div>
-  <button id="process" disabled>Process records →</button>
-  <div id="processing" class="boot hidden">
-    <span class="spinner"></span><div><strong id="proc-msg">Working…</strong></div>
+  <button class="btn btn--lg" id="process" disabled>Process records →</button>
+  <div id="processing" class="status-row hidden">
+    <span class="spinner"></span><div><strong id="proc-msg">Working…</span></div>
   </div>
 </section>
 
@@ -160,8 +153,8 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
   <p class="lede">Each of these is a <em>proposal</em> drawn from your records — not an
   answer yet. Nothing is written to a form until you confirm it here.</p>
 
-  <div class="notice warn">
-    <strong>Read these carefully.</strong>
+  <div class="note note--warn">
+    <span class="note__title">Read these carefully.</span>
     <p>DD Form 2807-1 is an official statement carrying federal penalties for a false
     statement (up to 5 years confinement or a $10,000 fine). Your records may contain
     entries you've never seen. Confirm only what you know to be true.</p>
@@ -171,13 +164,13 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
   <div id="file-table"></div>
 
   <h2 id="prop-heading">Proposed answers</h2>
-  <p class="help">Sorted strongest first. Items marked <span class="conf low">low</span>
+  <p class="help">Sorted strongest first. Items marked <span class="badge badge--err">low</span>
   have no diagnosis behind them — just words appearing near that question in your
   records — so they start as <strong>Leave blank</strong>. Skipping one leaves the box
   empty rather than making a claim.</p>
   <div id="proposals"></div>
   <div id="unmapped"></div>
-  <button id="to-explain">Save decisions →</button>
+  <button class="btn btn--lg" id="to-explain">Save decisions →</button>
 </section>
 
 <!-- ---------------------------------------------------------- step 4 -->
@@ -186,7 +179,7 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
   <p class="lede">DD Form 2807-1 requires every “Yes” to be explained in Item 29, and
   SHA Part A has an explanation box for each one. These drafts state only what your
   records document — edit them freely, in your own words.</p>
-  <div class="notice">
+  <div class="note">
     <p>These were generated from your records, so read them before they go on the form.
     They deliberately don't characterise severity, cause, or service connection — that's
     your and your VSO's judgement, not this tool's.</p>
@@ -194,7 +187,7 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
   <h2>DD 2807-1 — Item 29</h2>
   <textarea id="item29" rows="14"></textarea>
   <div id="sha-explains"></div>
-  <button id="to-package">Continue to your package →</button>
+  <button class="btn btn--lg" id="to-package">Continue to your package →</button>
 </section>
 
 <!-- ---------------------------------------------------------- step 5 -->
@@ -202,15 +195,15 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
   <h1>Your VSO package</h1>
   <p class="lede" id="package-lede"></p>
 
-  <div class="notice warn">
-    <strong>Two things to do by hand before you hand this over.</strong>
+  <div class="note note--warn">
+    <span class="note__title">Two things to do by hand before you hand this over.</span>
     <p>Social Security Number and DoD ID are intentionally left blank — fill them in
     yourself in a PDF reader.</p>
     <p>Both forms are also <strong>unsigned by design</strong> — sign and date them.</p>
   </div>
 
-  <div id="building" class="boot"><span class="spinner"></span>
-    <div><strong>Building your documents…</strong></div></div>
+  <div id="building" class="status-row"><span class="spinner"></span>
+    <div><span class="note__title">Building your documents…</span></div></div>
   <div id="downloads"></div>
 
   <h2>Then what?</h2>
@@ -221,11 +214,15 @@ footer p{color:var(--muted);font-size:13px;margin:0 0 6px}
 
 </main>
 
-<footer class="wrap">
-  <p>This tool organises your own records. It does not file anything with VA and does
-  not advise on what to claim — take the package to an accredited VSO.</p>
-  <p>Not affiliated with the U.S. Department of Veterans Affairs or the Department of
-  Defense. Provided as-is, without warranty.</p>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>Not affiliated with, endorsed by, or connected to the U.S. Department
+    of Veterans Affairs or the Department of Defense.</strong> This tool organizes your
+    own records. It does not file anything with VA and does not advise on what to
+    claim — take the finished package to an accredited VSO.</p>
+    <p>Your records are processed inside this browser tab and are never uploaded.
+    Open source under the MIT license.</p>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
@@ -262,9 +259,18 @@ const esc = s => String(s==null?"":s).replace(/[&<>"']/g,
 function show(n){
   for (let i=1;i<=5;i++){
     $("step-"+i).classList.toggle("hidden", i!==n);
-    $("nav-"+i).classList.toggle("on", i===n);
+    const nav = $("nav-"+i);
+    if (i === n) nav.setAttribute("aria-current","step");
+    else nav.removeAttribute("aria-current");
+    nav.dataset.done = i < n ? "true" : "false";
+    if (i < n) nav.querySelector(".steps__num").textContent = "\u2713";
+    else nav.querySelector(".steps__num").textContent = String(i);
   }
   window.scrollTo(0,0);
+  // Move focus to the new step so screen-reader and keyboard users are not
+  // stranded at the bottom of the previous one.
+  const heading = $("step-"+n).querySelector("h1");
+  if (heading) { heading.setAttribute("tabindex","-1"); heading.focus({preventScroll:true}); }
 }
 
 // -------------------------------------------------------------- step 1
@@ -283,8 +289,8 @@ function renderIntake(){
     else if (kind==="textarea") input = `<textarea id="f-${k}" rows="3">${v}</textarea>`;
     else if (kind==="date") input = `<input type="date" id="f-${k}" value="${v}">`;
     else input = `<input type="text" id="f-${k}" value="${v}">`;
-    return `<div class="field"><label for="f-${k}">${esc(label)}` +
-      (req?` <span style="color:var(--err-line);font-weight:400;font-size:12px">required</span>`:"") +
+    return `<div class="field"><label class="field__label" for="f-${k}">${esc(label)}` +
+      (req?`<span class="field__req">required</span>`:"") +
       `</label>${input}` + (help?`<p class="help">${esc(help)}</p>`:"") + `</div>`;
   }).join("");
 
@@ -364,7 +370,7 @@ import web_pipeline
     $("process").disabled = false;
   } catch (err){
     $("boot").innerHTML =
-      `<div><strong>The engine could not load.</strong>
+      `<div><span class="note__title">The engine could not load.</span>
        <p class="help">${esc(err.message||err)}</p>
        <p class="help">This build needs a browser with WebAssembly. If you are offline,
        the first load needs a connection; after that it is cached.</p></div>`;
@@ -417,7 +423,7 @@ json.dumps({
     renderReview();
     show(3);
   } catch (err){
-    errs.innerHTML = `<strong>Something went wrong reading those files.</strong>
+    errs.innerHTML = `<span class="note__title">Something went wrong reading those files.</span>
       <p class="help">${esc(err.message||err)}</p>`;
     errs.classList.remove("hidden");
   } finally {
@@ -427,49 +433,86 @@ json.dumps({
 });
 
 // -------------------------------------------------------------- step 3
+function groupProposals(proposals){
+  // One card per form question, not per condition. Three conditions can map
+  // to "Been evaluated or treated for a mental condition"; showing that as
+  // three separate decisions invites contradictory answers and triples the
+  // review burden. The individual proposals are kept inside each group so
+  // Item 29 can still cite every contributing condition.
+  const order = {high:0, medium:1, low:2};
+  const groups = new Map();
+  for (const p of proposals){
+    const key = p.form + "|" + p.question_text;
+    if (!groups.has(key)) groups.set(key, {key, form:p.form, question:p.question_text,
+                                          members:[], confidence:p.confidence,
+                                          method:p.method, value:p.value});
+    const g = groups.get(key);
+    g.members.push(p);
+    // A group is as strong as its strongest supporting condition.
+    if (order[p.confidence] < order[g.confidence]) {
+      g.confidence = p.confidence; g.method = p.method;
+    }
+  }
+  return [...groups.values()].sort((a,b) =>
+    order[a.confidence] - order[b.confidence] ||
+    a.form.localeCompare(b.form) || a.question.localeCompare(b.question));
+}
+
 function renderReview(){
   $("file-table").innerHTML =
-    `<table><tr><th>File</th><th>Pages</th><th>Extraction</th><th>Found</th></tr>` +
+    `<div class="table-scroll"><table class="table"><thead><tr><th>File</th><th>Pages</th><th>Extraction</th><th>Found</th></tr></thead><tbody>` +
     S.perFile.map(f=>`<tr><td>${esc(f.name)}</td><td>${f.pages}</td>
-      <td><span class="tier ${esc(f.tier)}">${esc(String(f.tier).replace(/-/g," "))}</span></td>
+      <td><span class="badge badge--${f.tier==='structured'?'ok':(f.tier==='ocr'?'warn':'err')}">${esc(String(f.tier).replace(/-/g," "))}</span></td>
       <td>${f.diagnoses} diagnoses, ${f.problems} problem-list entries
       ${f.warning?`<p class="help">${esc(f.warning)}</p>`:""}</td></tr>`).join("") +
-    `</table>`;
+    `</tbody></table></div>`;
 
-  $("prop-heading").textContent = `Proposed answers (${S.proposals.length})`;
-  if (!S.proposals.length){
-    $("proposals").innerHTML = `<div class="notice warn">
-      <strong>No answers could be proposed from these files.</strong>
+  S.groups = groupProposals(S.proposals);
+  $("prop-heading").textContent = `Proposed answers (${S.groups.length})`;
+
+  if (!S.groups.length){
+    $("proposals").innerHTML = `<div class="note note--warn">
+      <span class="note__title">No answers could be proposed from these files.</span>
       <p>The files were read — see the table above — but nothing in them matched a
       question on either form. That usually means the export contains no coded
       diagnoses, or it is a scan whose text could not be recovered. You can still
       continue: both forms will be filled with the details you entered.</p></div>`;
   } else {
-    $("proposals").innerHTML = S.proposals.map(p=>{
-      const low = p.confidence === "low";
-      return `<div class="proposal">
-        <div class="phead">
-          <span class="form-tag">${esc(p.form)}</span>
-          <span class="conf ${esc(p.confidence)}">${esc(p.confidence)} confidence</span>
-          <span class="method">${esc(p.method)}</span>
+    $("proposals").innerHTML = S.groups.map(g=>{
+      const low = g.confidence === "low";
+      const tone = low ? "err" : (g.confidence === "medium" ? "warn" : "ok");
+      const why = g.members.length === 1
+        ? `<p class="proposal__why">${esc(g.members[0].rationale)}</p>`
+        : `<p class="proposal__why">${g.members.length} conditions in your records
+             point to this question:</p>
+           <ul class="proposal__why" style="margin:0 0 var(--s4);padding-left:var(--s5)">
+             ${g.members.map(m=>`<li>${esc(m.rationale)}</li>`).join("")}</ul>`;
+      const cites = [...new Set(g.members.map(m =>
+        m.doc + (m.page ? " \u00b7 page " + m.page : "")))];
+      return `<div class="proposal${low?" proposal--low":""}">
+        <div class="proposal__meta">
+          <span class="badge badge--neutral">${esc(g.form)}</span>
+          <span class="badge badge--${tone}">${esc(g.confidence)} confidence</span>
+          <span class="badge badge--neutral">${esc(g.method)}</span>
         </div>
-        <p class="qtext">${esc(p.question_text)}</p>
-        <p class="why">${esc(p.rationale)}</p>
-        <div class="choices">
-          <label><input type="radio" name="d-${p.id}" value="confirm"${low?"":" checked"}>
-            Confirm “${esc(p.value)}”</label>
-          <label><input type="radio" name="d-${p.id}" value="edit">
-            Change to <input type="text" id="v-${p.id}" value="No" size="5" style="width:60px;padding:4px 6px"></label>
-          <label><input type="radio" name="d-${p.id}" value="reject"${low?" checked":""}>
+        <p class="proposal__q">${esc(g.question)}</p>
+        ${why}
+        <fieldset class="proposal__choices" style="border:0;margin:0;padding:var(--s3) 0 0">
+          <legend class="hidden">Decision for ${esc(g.question)}</legend>
+          <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="confirm"${low?"":" checked"}>
+            Confirm &ldquo;${esc(g.value)}&rdquo;</label>
+          <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="edit">
+            Change to <input type="text" id="gv-${esc(g.key)}" value="No" aria-label="Replacement answer"></label>
+          <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="reject"${low?" checked":""}>
             Leave blank</label>
-        </div>
-        <p class="cite">Found in ${esc(p.doc)}${p.page?` — page ${p.page}`:""}</p>
+        </fieldset>
+        <p class="proposal__cite">Found in ${cites.map(esc).join(" &middot; ")}</p>
       </div>`;
     }).join("");
   }
 
   $("unmapped").innerHTML = S.unmapped && S.unmapped.length
-    ? `<h2>Found in your records, but not matched to any form question</h2>
+    ? `<h2 style="margin-top:var(--s6)">Found in your records, but not matched to any form question</h2>
        <p class="help">No box is checked for these. Raise them with your VSO directly —
        they're listed in your package.</p><ul>` +
       S.unmapped.map(c=>`<li>${esc(c.condition)} (${esc(c.icd10||"uncoded")})</li>`).join("") + `</ul>`
@@ -478,10 +521,13 @@ function renderReview(){
 
 $("to-explain").addEventListener("click", async ()=>{
   const decisions = {};
-  S.proposals.forEach(p=>{
-    const sel = document.querySelector(`input[name="d-${p.id}"]:checked`);
+  (S.groups || []).forEach(g=>{
+    const sel = document.querySelector(`input[name="g-${CSS.escape(g.key)}"]:checked`);
     const choice = sel ? sel.value : "reject";
-    decisions[p.id] = { choice, value: choice==="edit" ? ($("v-"+p.id).value||"No") : p.value };
+    const el = document.getElementById("gv-" + g.key);
+    const value = choice === "edit" ? ((el && el.value) || "No") : g.value;
+    // One decision, applied to every condition that supports the question.
+    g.members.forEach(m => { decisions[m.id] = { choice, value }; });
   });
   py.globals.set("js_decisions", py.toPy(decisions));
   const out = await py.runPythonAsync(`
@@ -577,8 +623,11 @@ v if isinstance(v, bytes) else v.encode("utf-8")
         "evidence_index.md": "Where each condition came from, page by page",
         "README.txt": "What this package is, and what it isn't",
       }[name] || (name.startsWith("buddy_letters/") ? "Editable buddy-letter template" : "");
-      links.push(`<a class="dl" href="${url}" download="${esc(name.replace("buddy_letters/",""))}">
-        ${esc(name)}${label?`<small>${esc(label)}</small>`:""}</a>`);
+      const ext = isPdf ? "PDF" : (name.endsWith(".md") ? "MD" : "TXT");
+      links.push(`<a class="download" href="${url}" download="${esc(name.replace("buddy_letters/",""))}">
+        <span class="download__icon" aria-hidden="true">${ext}</span>
+        <span><span class="download__name">${esc(name)}</span>
+        ${label?`<span class="download__desc">${esc(label)}</span>`:""}</span></a>`);
       if (data.destroy) data.destroy();
     }
     $("downloads").innerHTML =
@@ -586,8 +635,8 @@ v if isinstance(v, bytes) else v.encode("utf-8")
       `<p class="help">Each file downloads from this page — they were built here, in your
        browser, and were never sent anywhere.</p>`;
   } catch (err){
-    $("downloads").innerHTML = `<div class="errors">
-      <strong>Could not build the documents.</strong>
+    $("downloads").innerHTML = `<div class="note note--err">
+      <span class="note__title">Could not build the documents.</span>
       <p class="help">${esc(err.message||err)}</p></div>`;
   } finally {
     $("building").classList.add("hidden");

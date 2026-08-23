@@ -4,36 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}VA Claims Prep{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <span class="brand">VA Claims Prep</span>
-    <span class="local-badge" title="Nothing is uploaded. All processing happens on this computer.">Local only — nothing is uploaded</span>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__bar">
+    <span class="wordmark">
+      <span class="wordmark__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/>
+        </svg>
+      </span>
+      VA Claims Prep
+    </span>
+    <span class="unofficial">Local only &middot; nothing is uploaded</span>
   </div>
 </header>
 
-<nav class="steps">
+<nav class="steps" aria-label="Progress">
   <div class="wrap">
-    {% set step = self._TemplateReference__context.get('active_step', '') %}
-    <ol>
-      <li class="{{ 'on' if active_step == 'intake' }}">1. About you</li>
-      <li class="{{ 'on' if active_step == 'upload' }}">2. Your records</li>
-      <li class="{{ 'on' if active_step == 'review' }}">3. Review</li>
-      <li class="{{ 'on' if active_step == 'explain' }}">4. Explanations</li>
-      <li class="{{ 'on' if active_step == 'package' }}">5. Package</li>
+    <ol class="steps__list">
+      {% for n, label in [(1,'About you'),(2,'Your records'),(3,'Review'),
+                          (4,'Explanations'),(5,'Package')] %}
+      {% set keys = {'intake':1,'upload':2,'review':3,'explain':4,'package':5} %}
+      {% set current = keys.get(active_step, 0) %}
+      <li class="steps__item"{% if n == current %} aria-current="step"{% endif %}
+          data-done="{{ 'true' if n < current else 'false' }}">
+        <span class="steps__num">{{ '&#10003;'|safe if n < current else n }}</span>{{ label }}</li>
+      {% endfor %}
     </ol>
   </div>
 </nav>
 
-<main class="wrap">
+<main class="wrap" id="main" style="padding:var(--s6) var(--s5) var(--s8)">
 {% block content %}{% endblock %}
 </main>
 
-<footer class="wrap">
-  <p>This tool organizes your own records. It does not file anything with VA
-     and does not advise on what to claim — take the package to an accredited VSO.</p>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>This tool organizes your own records. It does not file anything with VA and does
+    not advise on what to claim — take the package to an accredited VSO.</p>
+    <p><strong>Not affiliated with the U.S. Department of Veterans Affairs or the
+    Department of Defense.</strong></p>
+  </div>
 </footer>
 </body>
 </html>
