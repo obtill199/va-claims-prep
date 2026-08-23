@@ -124,8 +124,9 @@
   <div id="boot" class="status-row">
     <span class="spinner"></span>
     <div><span class="note__title">Loading the engine…</span>
-      <p class="help" id="boot-detail">First load downloads about 15&nbsp;MB of Python
-      runtime. It is cached afterwards.</p></div>
+      <p class="help" id="boot-detail">This started while you were filling in the
+      previous step, so it is usually already finished. First visit downloads about
+      15&nbsp;MB; it is cached afterwards.</p></div>
   </div>
 
   <div class="note note--warn">
@@ -333,6 +334,14 @@ $("to-upload").addEventListener("click", ()=>{
   S.answers = a;
   show(2); boot();
 });
+
+// Start the 15MB runtime download immediately, while the member is still
+// filling in the questionnaire. Previously it began only after they clicked
+// Continue, so a form that takes two minutes to complete was followed by a
+// minute of watching a spinner. The two now overlap, and the engine is
+// usually ready before they arrive at step 2.
+if (document.readyState === "complete") boot();
+else window.addEventListener("load", boot);
 
 // -------------------------------------------------------------- step 2
 let booting = false;
