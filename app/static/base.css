@@ -2,11 +2,16 @@
    VA Claims Prep — design system
    ============================================================================
 
-   The palette sits in the same family as the U.S. Web Design System, which
-   VA's own sites are built on. That is deliberate and it is a usability
-   decision, not a branding one: a veteran who has spent the week on VA.gov
-   reads this palette without having to reorient. Familiarity lowers the
-   cost of using the thing.
+   The palette matches VA.gov, which is built on the U.S. Web Design System.
+   That is a usability decision, not a branding one: a veteran who has spent
+   the week on VA.gov reads this without reorienting.
+
+   LIGHT ONLY, on purpose. VA.gov has no dark mode, so honouring the system
+   dark preference produced a near-black interface that looked nothing like
+   the site people arrive from — and this tool's whole output is black text
+   on white paper. Following the OS here actively worked against the goal.
+   Re-adding a dark theme is a matter of restoring a
+   prefers-color-scheme block; it was removed deliberately, not overlooked.
 
    What is NOT borrowed, and must never be: the VA seal, the federal banner,
    .gov naming, or any suggestion of affiliation. The masthead carries a
@@ -23,28 +28,28 @@
 :root {
   /* Neutrals — a warm-leaning ramp; pure grey reads clinical and cheap. */
   --n-0:  #ffffff;
-  --n-25: #fbfbfa;
-  --n-50: #f5f5f3;
-  --n-100:#ececea;
-  --n-200:#dcdcd8;
-  --n-300:#c2c2bd;
-  --n-400:#9a9a94;
-  --n-500:#71716c;
-  --n-600:#55554f;
-  --n-700:#3d3d38;
-  --n-800:#282824;
-  --n-900:#171714;
+  --n-25: #fcfcfc;
+  --n-50: #f9f9f9;
+  --n-100:#f0f0f0;
+  --n-200:#dfe1e2;   /* USWDS base-lighter, VA's standard rule colour */
+  --n-300:#c9c9c9;
+  --n-400:#a9aeb1;
+  --n-500:#71767a;   /* USWDS base */
+  --n-600:#565c65;
+  --n-700:#3d4551;
+  --n-800:#2d2e2f;
+  --n-900:#1b1b1b;   /* USWDS ink */
 
   /* USWDS-family blues — the palette VA's own properties are built on. */
-  --brand-50: #eff6fb;
+  --brand-50: #eff6fb;   /* USWDS primary-lightest */
   --brand-100:#d9e8f6;
   --brand-200:#aacdec;
-  --brand-300:#73b3e7;
+  --brand-300:#73b3e7;   /* primary-light */
   --brand-500:#0071bc;
-  --brand-600:#005ea2;
-  --brand-700:#1a4480;
-  --brand-800:#162e51;
-  --brand-900:#0b1b34;
+  --brand-600:#005ea2;   /* USWDS primary — VA's link and button blue */
+  --brand-700:#1a4480;   /* primary-dark */
+  --brand-800:#162e51;   /* primary-darker — VA's header navy */
+  --brand-900:#112f4e;
 
   /* USWDS accent + status hues. */
   --accent-warm:#fa9441;
@@ -54,16 +59,16 @@
   --warn-bg:#faf3d1; --warn-line:#ffbe2e; --warn-ink:#5c4809;
   --err-bg:#f4e3db;  --err-line:#d83933;  --err-ink:#6f3331;
 
-  --ink:        var(--n-800);
-  --ink-muted:  var(--n-500);
+  --ink:        var(--n-900);
+  --ink-muted:  var(--n-600);
   --ink-subtle: var(--n-400);
   --surface:    var(--n-0);
   --surface-alt:var(--n-50);
-  --page:       var(--n-25);
+  --page:       var(--n-0);
   --line:       var(--n-200);
   --line-strong:var(--n-300);
-  --accent:     var(--brand-700);
-  --accent-ink: var(--brand-800);
+  --accent:     var(--brand-600);
+  --accent-ink: var(--brand-700);
   --accent-soft:var(--brand-50);
 
   --radius: 8px;
@@ -84,30 +89,7 @@
   --measure: 68ch;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --n-0:#14161a; --n-25:#0e1013; --n-50:#181b20; --n-100:#1f232a;
-    --n-200:#2b3038; --n-300:#3b424c; --n-400:#6b7280; --n-500:#98a1ad;
-    --n-600:#b8c0ca; --n-700:#d3d9e0; --n-800:#e8ecf1; --n-900:#f6f8fa;
 
-    --brand-50:#12243a; --brand-100:#16304d; --brand-200:#1d4470;
-    --brand-300:#3d7ab8; --brand-500:#4f9ddb; --brand-600:#73b3e7;
-    --brand-700:#93c7ef; --brand-800:#b6dbf7; --brand-900:#d9ecfb;
-
-    --ok-bg:#122117;   --ok-line:#4cb964;   --ok-ink:#8fd6a2;
-    --warn-bg:#2a2109;  --warn-line:#e5a72a; --warn-ink:#f0cf7a;
-    --err-bg:#2c1614;  --err-line:#e05a52; --err-ink:#f5a9a2;
-
-    --ink:var(--n-800); --ink-muted:var(--n-500); --ink-subtle:var(--n-400);
-    --surface:var(--n-50); --surface-alt:var(--n-100); --page:var(--n-25);
-    --line:var(--n-200); --line-strong:var(--n-300);
-    --accent:var(--brand-700); --accent-ink:var(--brand-800);
-    --accent-soft:var(--brand-50);
-
-    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
-    --shadow-md:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.35);
-  }
-}
 
 /* ---------------------------------------------------------------- reset */
 *, *::before, *::after { box-sizing: border-box; }
@@ -170,13 +152,11 @@ small { font-size: 13.5px; }
 
 /* ---------------------------------------------------------------- header */
 .masthead {
-  background: var(--brand-800);
+  background: var(--brand-900);
   color: #fff;
   border-bottom: 3px solid var(--brand-600);
 }
-@media (prefers-color-scheme: dark) {
-  .masthead { background: #0d1f38; border-bottom-color: var(--brand-300); }
-}
+
 .masthead a { color: #fff; }
 .masthead__bar {
   display: flex; align-items: center; justify-content: space-between;
@@ -449,9 +429,28 @@ details.tier-group > div { padding-top: var(--s3); }
   .unofficial { font-size: 11px; white-space: normal; }
   /* A single-column card grid beats two cramped ones. */
   .cards { grid-template-columns: 1fr; }
-  /* Long form names and file names must wrap rather than push the page wide. */
-  .table td, .table th { word-break: break-word; }
-  .proposal__cite { word-break: break-word; }
+  .proposal__cite { overflow-wrap: anywhere; }
+
+  /* A three-column table cannot survive a 375px screen: the first column
+     collapses to about 40px and `word-break` then stacks "DD 2807-1" one
+     character per line. Below this width each row becomes its own block
+     with its header shown as a label, which is the only layout that keeps
+     a form number readable on a phone. */
+  .table--stack thead { position: absolute; width: 1px; height: 1px;
+                        overflow: hidden; clip: rect(0 0 0 0); }
+  .table--stack, .table--stack tbody, .table--stack tr, .table--stack td {
+    display: block; width: 100%; }
+  .table--stack tr {
+    border-bottom: 1px solid var(--line); padding: var(--s4) var(--s4) var(--s3); }
+  .table--stack tr:last-child { border-bottom: 0; }
+  .table--stack td { border: 0; padding: 0 0 var(--s2); }
+  .table--stack td[data-label]::before {
+    content: attr(data-label); display: block;
+    font-size: 11.5px; font-weight: 700; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--ink-muted); margin-bottom: 2px;
+  }
+  .table--stack td:first-child { font-weight: 700; font-size: 16px;
+                                 color: var(--accent); }
   .btn--lg { width: 100%; }
   .masthead__hero h1 { font-size: 27px; }
 }
