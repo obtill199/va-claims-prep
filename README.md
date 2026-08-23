@@ -55,15 +55,34 @@ every single answer before anything is written.
 
 ## Setup
 
+**macOS / Linux**
 ```bash
 ./setup.sh      # one time
 ./run_app.sh    # start it
 ```
 
-Then open <http://127.0.0.1:5000>.
+**Windows** — double-click `setup.bat`, then `run_app.bat`. Or from PowerShell:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup.ps1
+.\run_app.bat
+```
 
-Requires Python 3.9+. OCR of scanned records currently needs macOS; everything
-else works anywhere.
+Then open <http://127.0.0.1:5000>. Requires Python 3.9+.
+
+### OCR of scanned records
+
+Scanned records — AF Form 469s, legacy STRs, anything without a text layer —
+need OCR. The engine is whatever your platform already provides, so there is
+normally nothing extra to install:
+
+| Platform | Engine | Comes from |
+|---|---|---|
+| macOS | Vision framework | ships with the OS (`pyobjc`, installed by setup) |
+| Windows | Windows.Media.Ocr | ships with Windows 10/11 (`winsdk`, installed by setup) |
+| Linux | Tesseract | `apt install tesseract-ocr`, then `pip install pytesseract pillow` |
+
+Without any of them the app still runs — scanned files simply report that they
+could not be read, rather than silently producing nothing.
 
 ## Using it
 

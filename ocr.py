@@ -2,17 +2,17 @@
 """
 ocr.py — Milestone 3: OCR tier for files with no usable text layer.
 
-Targets the scanned AF-forms/STR class of document (BUILD_BRIEF.md section
-3.1) — poor/absent text layer, printed form labels mixed with handwritten
-or typed fill-in content. Uses macOS's built-in Vision framework (via
-pyobjc) rather than tesseract, since tesseract needs Homebrew and this
-machine doesn't have it — Vision needs nothing beyond the pip packages
-already installed in this venv.
+Targets the scanned AF-forms/STR class of document — poor or absent text
+layer, printed form labels mixed with handwritten or typed fill-in content.
+
+The engine is chosen at run time by ocr_backends.select(): macOS Vision,
+Windows.Media.Ocr, or Tesseract. Each ships with its platform (Tesseract
+excepted), so a user installs nothing beyond a pip package.
 
 Per BUILD_BRIEF.md section 4, decision 3: extraction confidence is always
 visible, and a low-confidence extraction is never presented as fact. OCR
 output here is tagged per page:
-  - "medium": Vision's average per-page confidence is reasonably high —
+  - "medium": the backend's average per-page confidence is reasonably high —
     plausibly usable, but still OCR, never "high" (structured-text only).
   - "low": average confidence is weak, OR too few text observations to be
     a real printed page (blank, mostly-image, or mostly-handwritten) —
@@ -27,9 +27,8 @@ import io
 import json
 
 import fitz  # pymupdf
-import Quartz
-import Vision
-from Foundation import NSData
+
+import ocr_backends
 
 # Below this average per-observation confidence, or below this many
 # observations, a page is flagged "low" rather than "medium" — see module
@@ -42,42 +41,40 @@ MIN_OBSERVATIONS = 5
 
 
 def rasterize(page, dpi=300):
+    """Page -> PNG bytes. Backend-agnostic: each OCR engine decodes the PNG
+    itself, so this no longer depends on a macOS image type."""
     zoom = dpi / 72
     pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom))
-    png_bytes = pix.tobytes("png")
-    ns_data = NSData.dataWithBytes_length_(png_bytes, len(png_bytes))
-    src = Quartz.CGImageSourceCreateWithData(ns_data, None)
-    return Quartz.CGImageSourceCreateImageAtIndex(src, 0, None)
+    return pix.tobytes("png")
 
 
-def ocr_image(cg_image):
-    req = Vision.VNRecognizeTextRequest.alloc().initWithCompletionHandler_(None)
-    req.setRecognitionLevel_(Vision.VNRequestTextRecognitionLevelAccurate)
-    req.setUsesLanguageCorrection_(True)
-
-    handler = Vision.VNImageRequestHandler.alloc().initWithCGImage_options_(cg_image, None)
-    success, error = handler.performRequests_error_([req], None)
-    if not success:
-        return [], str(error)
-
-    observations = req.results() or []
-    lines = []
-    for obs in observations:
-        candidate = obs.topCandidates_(1)
-        if not candidate:
-            continue
-        lines.append({
-            "text": candidate[0].string(),
-            "confidence": float(obs.confidence()),
-        })
-    return lines, None
+def ocr_image(png_bytes, recognize=None):
+    """Recognise text in a rasterised page using whichever backend exists."""
+    if recognize is None:
+        _, recognize, _ = ocr_backends.select()
+    if recognize is None:
+        return [], ocr_backends.unavailable_reason()
+    return recognize(png_bytes)
 
 
 def classify(lines):
+    """Rate a page's extraction as medium or low.
+
+    Windows.Media.Ocr reports no confidence value, so a page there is judged
+    purely on how much text came off it. Never returns "high": that tier is
+    reserved for structured text, and OCR output must not be presented as
+    equivalent (BUILD_BRIEF decision 3).
+    """
     if len(lines) < MIN_OBSERVATIONS:
         return "low"
-    avg_conf = sum(l["confidence"] for l in lines) / len(lines)
-    return "medium" if avg_conf >= MIN_AVG_CONFIDENCE else "low"
+
+    scored = [l["confidence"] for l in lines if l.get("confidence") is not None]
+    if not scored:
+        # No confidence available. A page with a healthy amount of recognised
+        # text is plausible; a nearly empty one is not.
+        return "medium" if len(lines) >= MIN_OBSERVATIONS * 3 else "low"
+
+    return "medium" if sum(scored) / len(scored) >= MIN_AVG_CONFIDENCE else "low"
 
 
 def ocr_pdf(pdf_path, dpi=300, page_range=None):
@@ -85,14 +82,19 @@ def ocr_pdf(pdf_path, dpi=300, page_range=None):
     if doc.needs_pass and not doc.authenticate(""):
         raise ValueError(f"{pdf_path}: encrypted with a non-empty password")
 
+    _, recognize, description = ocr_backends.select()
+    if recognize is None:
+        raise RuntimeError(ocr_backends.unavailable_reason())
+
     indices = range(doc.page_count) if page_range is None else page_range
     results = []
     for i in indices:
-        cg_image = rasterize(doc[i], dpi=dpi)
-        lines, error = ocr_image(cg_image)
+        png = rasterize(doc[i], dpi=dpi)
+        lines, error = ocr_image(png, recognize)
         confidence = classify(lines) if not error else "low"
         text = "\n".join(l["text"] for l in lines)
-        avg_conf = (sum(l["confidence"] for l in lines) / len(lines)) if lines else 0.0
+        scored = [l["confidence"] for l in lines if l.get("confidence") is not None]
+        avg_conf = (sum(scored) / len(scored)) if scored else 0.0
         results.append({
             "page": i + 1,
             "confidence": confidence,

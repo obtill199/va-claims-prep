@@ -15,9 +15,17 @@ if [[ "$(uname)" == "Darwin" ]]; then
   echo "Installing macOS OCR support..."
   .venv/bin/pip install --quiet pyobjc-framework-Vision pyobjc-framework-Quartz
 else
-  echo "Note: OCR of scanned records currently requires macOS. Everything"
-  echo "      else works; scanned files will simply report that they could"
-  echo "      not be read."
+  echo "Note: OCR of scanned records needs Tesseract on this platform."
+  echo "      Install it, then re-run this script:"
+  echo "        Debian/Ubuntu:  sudo apt install tesseract-ocr"
+  echo "        Fedora:         sudo dnf install tesseract"
+  echo "      Everything else works without it; scanned files will report"
+  echo "      that they could not be read rather than silently yielding"
+  echo "      nothing."
+  if command -v tesseract >/dev/null 2>&1; then
+    echo "Tesseract found - installing the Python bindings..."
+    .venv/bin/pip install --quiet pytesseract pillow
+  fi
 fi
 
 echo

@@ -25,14 +25,13 @@ SHA_FIELDS = os.path.join(REPO, "field_names_sha.json")
 
 
 def ocr_available():
-    """OCR uses macOS's Vision framework -- see ocr.py. Not portable yet."""
-    if platform.system() != "Darwin":
-        return False, "OCR requires macOS (uses the built-in Vision framework)."
-    try:
-        import Vision  # noqa: F401
-        return True, None
-    except ImportError:
-        return False, "pyobjc Vision bindings are not installed."
+    """Whether OCR can run here, and why not if it can't.
+
+    Delegates to ocr_backends so the answer is the same on every platform
+    and the reason is actionable rather than "not supported".
+    """
+    import ocr_backends
+    return ocr_backends.describe()
 
 
 def process_files(paths, work_dir, run_ocr=True, progress=None):
