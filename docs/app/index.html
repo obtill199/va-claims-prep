@@ -49,7 +49,7 @@ th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-ali
 text-transform:uppercase;letter-spacing:.3px;font-weight:700}
 .tier.structured,.conf.high{background:#e3f1e8;color:var(--ok)}
 .tier.ocr,.conf.medium{background:var(--warn-bg);color:#8a5a00}
-.tier\.no-text-layer,.tier.unreadable,.conf.low{background:var(--err-bg);color:var(--err-line)}
+.tier\.no-text-layer,.tier.unreadable,.tier.narrative,.conf.low{background:var(--err-bg);color:var(--err-line)}
 .method,.form-tag{background:#eaeef2;color:var(--muted)}
 @media(prefers-color-scheme:dark){.method,.form-tag{background:#222b36}
 .tier.structured,.conf.high{background:#12301f}}
@@ -388,12 +388,16 @@ $("process").addEventListener("click", async ()=>{
       payload.push([f.name, new Uint8Array(await f.arrayBuffer())]);
     }
     py.globals.set("js_files", py.toPy(payload));
+    // Gates the female-only questions (DD 2807-1 item 18) so they are never
+    // proposed to a member who did not indicate female birth sex.
+    py.globals.set("js_birth_sex", S.answers.birth_sex || null);
     $("proc-msg").textContent = "Extracting conditions…";
     const result = await py.runPythonAsync(`
 import json, web_pipeline
 files = [(n, bytes(b)) for n, b in js_files]
 per_file, conditions, corpus = web_pipeline.process_files(files)
-proposals, unmapped = web_pipeline.build_review(conditions, corpus)
+proposals, unmapped = web_pipeline.build_review(
+    conditions, corpus, js_birth_sex)
 _state = {"per_file": per_file, "conditions": conditions,
           "proposals": proposals, "unmapped": unmapped}
 json.dumps({

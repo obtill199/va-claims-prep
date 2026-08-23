@@ -83,6 +83,16 @@ def process_files(files):
         diagnoses = list(extract_conditions.parse_diagnoses(
             text, page_starts, name))
         problems = list(extract_conditions.parse_problems(text))
+
+        # MHS Genesis is one layout among many. Fall back to the generic
+        # coded-record parser for CCD-A exports, claims and pharmacy ledgers.
+        narrative = False
+        if not diagnoses:
+            import coded_records
+            if coded_records.looks_narrative(text):
+                narrative = True
+            else:
+                diagnoses = coded_records.extract(text, page_starts, name)
         all_diag += diagnoses
         all_prob += problems
         corpus.append({"text": text, "page_starts": page_starts,
@@ -93,12 +103,19 @@ def process_files(files):
                  "tier": "structured" if diagnoses else "no-text-layer",
                  "ocr": None}
         if not diagnoses:
+            entry["tier"] = "narrative" if narrative else "no-text-layer"
             entry["warning"] = (
-                "No structured diagnoses were found. This is expected for "
-                "scanned records whose text layer is poor or absent. "
-                "Recovering those needs OCR, which this browser version "
-                "cannot do — the desktop version can. Nothing from this file "
-                "was extracted.")
+                "This record is written as narrative text — progress notes, "
+                "chronological SF-600 entries or imaging reports — and "
+                "contains no diagnosis codes. Reading a diagnosis out of a "
+                "sentence is a different problem from matching a code, and "
+                "this tool does not attempt it. Nothing was extracted from "
+                "this file; bring it to your VSO directly."
+                if narrative else
+                "No structured diagnoses were found and no text could be "
+                "recovered. This is expected for scanned records. Recovering "
+                "those needs OCR, which this browser version cannot do — the "
+                "desktop version can.")
         per_file.append(entry)
 
     records = extract_conditions.aggregate(all_diag, all_prob)
@@ -109,12 +126,14 @@ def process_files(files):
     return per_file, conditions, corpus
 
 
-def build_review(conditions, corpus):
+def build_review(conditions, corpus, birth_sex=None):
     """conditions + corpus -> (proposals, unmapped) ready for review."""
     with open("conditions.json", "w") as fh:
         json.dump(conditions, fh)
 
-    proposals, unmapped, _ = _mapping("conditions.json")
+    proposals, unmapped = build_proposals(
+        "conditions.json", "dd2807_crosswalk.json", "field_names_sha.json",
+        birth_sex=birth_sex)
     with open("dd2807_crosswalk.json") as fh:
         rows = json.load(fh)
 
@@ -140,11 +159,6 @@ def build_review(conditions, corpus):
                     key=lambda p: (order[p.confidence], p.target_form,
                                    p.question_text))
     return merged, unmapped
-
-
-def _mapping(path):
-    return build_proposals(path, "dd2807_crosswalk.json",
-                           "field_names_sha.json") + (None,)
 
 
 # --------------------------------------------------------------- filling

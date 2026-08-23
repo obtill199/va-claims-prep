@@ -28,6 +28,8 @@ SHARED_MODULES = [
     "prompts.py",
     "schema.py",
     "package_bundle.py",
+    "condition_library.py",
+    "coded_records.py",
 ]
 
 DATA = [

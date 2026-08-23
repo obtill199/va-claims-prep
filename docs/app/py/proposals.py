@@ -80,9 +80,10 @@ def _rationale(condition):
     return text
 
 
-def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
+def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path,
+                    birth_sex=None):
     matched, unmatched, record_level = build_mapping(
-        conditions_path, dd2807_crosswalk_path, sha_fields_path)
+        conditions_path, dd2807_crosswalk_path, sha_fields_path, birth_sex)
 
     proposals = []
     for m in matched:
@@ -104,7 +105,11 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path):
                 # the link to this particular question is our inference, not
                 # something the record states. Decision 3 says never present
                 # a weaker extraction as fact.
-                confidence="medium" if target.get("inferred") else "high",
+                # A library rule carries its own confidence: acute symptom
+                # codes mapped to chronic-condition questions are "low" and
+                # therefore default to Leave blank on the review screen.
+                confidence=(target.get("library_confidence")
+                            or ("medium" if target.get("inferred") else "high")),
                 extraction_method="structured",
                 rationale=(
                     _rationale(cond)

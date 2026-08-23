@@ -6,19 +6,43 @@
 
     ===== PROBLEM LIST =====
 
-    Problem Name: Seasonal allergic rhinitis                                        
+    Problem Name: Tinnitus, bilateral                                               
     Life Cycle Status: Active                                                 Onset:
 
-    Problem Name: Lumbago                                                           
+    Problem Name: Sensorineural hearing loss, bilateral                             
     Life Cycle Status: Active                                                 Onset:
 
-    Problem Name: Mild intermittent asthma                                          
+    Problem Name: Low back pain, unspecified                                        
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Pain in right knee                                                
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Post-traumatic stress disorder, chronic                           
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Major depressive disorder, recurrent, moderate                    
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Insomnia, unspecified                                             
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Obstructive sleep apnea (adult)                                   
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Allergic rhinitis, unspecified                                    
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Migraine without aura, intractable                                
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Gastro-esophageal reflux disease without esophagitis              
+    Life Cycle Status: Active                                                 Onset:
+
+    Problem Name: Essential (primary) hypertension                                  
     Life Cycle Status: Active                                                 Onset:
 
     Problem Name: Myopia of both eyes                                               
-    Life Cycle Status: Active                                                 Onset:
-
-    Problem Name: Adjustment disorder with anxiety                                  
     Life Cycle Status: Active                                                 Onset:
 
     Problem Name: Obesity, unspecified                                              
@@ -26,166 +50,90 @@
 
     ===== CLINICAL DIAGNOSES =====
 
-    Diagnosis: Seasonal allergic rhinitis
+    Diagnosis: Tinnitus, bilateral
     Secondary Description:
     Last Reviewed Date:                                        Responsible Provider:
-                  3/14/2022 09:15 CDT; EXAMPLE,                   EXAMPLE, PAT A, MD
+                  4/19/2021 09:15 CDT; FICTION,                FICTION, MORGAN K, MD
 
-    Diagnosis Date: 3/14/2022                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: J30.2 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Seasonal allergic rhinitis
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  4/2/2023 09:15 CDT; EXAMPLE,                    EXAMPLE, PAT A, MD
-
-    Diagnosis Date: 4/2/2023                                          Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: J30.2 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Lumbago
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  9/8/2023 09:15 CDT; SAMPLE,                   SAMPLE, JORDAN B, DO
-
-    Diagnosis Date: 9/8/2023                                          Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: M54.5 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Lumbago
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  1/17/2024 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
-
-    Diagnosis Date: 1/17/2024                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: M54.5 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Lumbago
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  6/3/2025 09:15 CDT; SAMPLE,                   SAMPLE, JORDAN B, DO
-
-    Diagnosis Date: 6/3/2025                                          Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: M54.5 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    ===== CLINICAL DIAGNOSES (continued) =====
-
-    Diagnosis: Sprain of left ankle
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  7/21/2021 09:15 CDT; DEMO,                     DEMO, CASEY L, PA-C
-
-    Diagnosis Date: 7/21/2021                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: S93.402A (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Tension-type headache
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  2/9/2023 09:15 CDT; EXAMPLE,                    EXAMPLE, PAT A, MD
-
-    Diagnosis Date: 2/9/2023                                          Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: G44.209 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Tension-type headache
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  2/28/2023 09:15 CDT; EXAMPLE,                   EXAMPLE, PAT A, MD
-
-    Diagnosis Date: 2/28/2023                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: G44.209 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Mild intermittent asthma
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  5/5/2022 09:15 CDT; FICTION,                 FICTION, MORGAN K, MD
-
-    Diagnosis Date: 5/5/2022                                          Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: J45.20 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Myopia of both eyes
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  11/2/2022 09:15 CDT; PLACEHOLDER,         PLACEHOLDER, RILEY N, OD
-
-    Diagnosis Date: 11/2/2022                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: H52.13 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    ===== CLINICAL DIAGNOSES (continued) =====
-
-    Diagnosis: Myopia of both eyes
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  11/8/2024 09:15 CDT; PLACEHOLDER,         PLACEHOLDER, RILEY N, OD
-
-    Diagnosis Date: 11/8/2024                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: H52.13 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Adjustment disorder with anxiety
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  8/16/2023 09:15 CDT; TESTCASE,             TESTCASE, AVERY P, LCSW
-
-    Diagnosis Date: 8/16/2023                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: F43.22 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Adjustment disorder with anxiety
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  9/6/2023 09:15 CDT; TESTCASE,              TESTCASE, AVERY P, LCSW
-
-    Diagnosis Date: 9/6/2023                                          Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: F43.22 (ICD-10-CM); Onset: ; Comments: ;
-    Severity: ; Provider:
-
-    Diagnosis: Adjustment disorder with anxiety
-    Secondary Description:
-    Last Reviewed Date:                                        Responsible Provider:
-                  10/4/2023 09:15 CDT; TESTCASE,             TESTCASE, AVERY P, LCSW
-
-    Diagnosis Date: 10/4/2023                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: F43.22 (ICD-10-CM); Onset: ; Comments: ;
+    Diagnosis Date: 4/19/2021                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: H93.13 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
 
     Diagnosis: Tinnitus, bilateral
     Secondary Description:
     Last Reviewed Date:                                        Responsible Provider:
-                  4/19/2024 09:15 CDT; FICTION,                FICTION, MORGAN K, MD
+                  6/2/2023 09:15 CDT; FICTION,                 FICTION, MORGAN K, MD
 
-    Diagnosis Date: 4/19/2024                                         Status: Active
+    Diagnosis Date: 6/2/2023                                          Status: Active
     Encounter Type: ; Clinic: Family Medicine; Code: H93.13 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Sensorineural hearing loss, bilateral
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  4/19/2021 09:15 CDT; FICTION,                FICTION, MORGAN K, MD
+
+    Diagnosis Date: 4/19/2021                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: H90.3 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Low back pain, unspecified
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  9/8/2019 09:15 CDT; SAMPLE,                   SAMPLE, JORDAN B, DO
+
+    Diagnosis Date: 9/8/2019                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: M54.50 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Low back pain, unspecified
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  1/17/2022 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
+
+    Diagnosis Date: 1/17/2022                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: M54.50 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
 
     ===== CLINICAL DIAGNOSES (continued) =====
 
-    Diagnosis: Gastro-esophageal reflux disease
+    Diagnosis: Low back pain, unspecified
     Secondary Description:
     Last Reviewed Date:                                        Responsible Provider:
-                  6/12/2024 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
+                  6/3/2025 09:15 CDT; SAMPLE,                   SAMPLE, JORDAN B, DO
 
-    Diagnosis Date: 6/12/2024                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: K21.9 (ICD-10-CM); Onset: ; Comments: ;
+    Diagnosis Date: 6/3/2025                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: M54.50 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
 
-    Diagnosis: Right knee pain
+    Diagnosis: Radiculopathy, lumbar region
     Secondary Description:
     Last Reviewed Date:                                        Responsible Provider:
-                  2/2/2025 09:15 CDT; SAMPLE,                   SAMPLE, JORDAN B, DO
+                  1/17/2022 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
 
-    Diagnosis Date: 2/2/2025                                          Status: Active
+    Diagnosis Date: 1/17/2022                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: M54.16 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Cervical strain
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  3/22/2020 09:15 CDT; DEMO,                     DEMO, CASEY L, PA-C
+
+    Diagnosis Date: 3/22/2020                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: S16.1XXA (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Pain in right knee
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  2/2/2023 09:15 CDT; SAMPLE,                   SAMPLE, JORDAN B, DO
+
+    Diagnosis Date: 2/2/2023                                          Status: Active
     Encounter Type: ; Clinic: Family Medicine; Code: M25.561 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
 
-    Diagnosis: Right knee pain
+    Diagnosis: Pain in right knee
     Secondary Description:
     Last Reviewed Date:                                        Responsible Provider:
                   8/14/2025 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
@@ -194,13 +142,221 @@
     Encounter Type: ; Clinic: Family Medicine; Code: M25.561 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
 
-    Diagnosis: Acute cough
+    ===== CLINICAL DIAGNOSES (continued) =====
+
+    Diagnosis: Patellofemoral pain syndrome, left knee
     Secondary Description:
     Last Reviewed Date:                                        Responsible Provider:
-                  1/30/2023 09:15 CDT; DEMO,                     DEMO, CASEY L, PA-C
+                  8/14/2025 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
 
-    Diagnosis Date: 1/30/2023                                         Status: Active
-    Encounter Type: ; Clinic: Family Medicine; Code: R05.1 (ICD-10-CM); Onset: ; Comments: ;
+    Diagnosis Date: 8/14/2025                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: M22.2X2 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Post-traumatic stress disorder, chronic
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  8/16/2022 09:15 CDT; TESTCASE,             TESTCASE, AVERY P, LCSW
+
+    Diagnosis Date: 8/16/2022                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: F43.12 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Post-traumatic stress disorder, chronic
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  10/4/2022 09:15 CDT; TESTCASE,             TESTCASE, AVERY P, LCSW
+
+    Diagnosis Date: 10/4/2022                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: F43.12 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Post-traumatic stress disorder, chronic
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  2/7/2024 09:15 CDT; TESTCASE,              TESTCASE, AVERY P, LCSW
+
+    Diagnosis Date: 2/7/2024                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: F43.12 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Major depressive disorder, recurrent, moderate
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  10/4/2022 09:15 CDT; TESTCASE,             TESTCASE, AVERY P, LCSW
+
+    Diagnosis Date: 10/4/2022                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: F33.1 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    ===== CLINICAL DIAGNOSES (continued) =====
+
+    Diagnosis: Generalized anxiety disorder
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  8/16/2022 09:15 CDT; TESTCASE,             TESTCASE, AVERY P, LCSW
+
+    Diagnosis Date: 8/16/2022                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: F41.1 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Insomnia, unspecified
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  10/4/2022 09:15 CDT; TESTCASE,             TESTCASE, AVERY P, LCSW
+
+    Diagnosis Date: 10/4/2022                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: G47.00 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Obstructive sleep apnea (adult)
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  5/9/2024 09:15 CDT; EXAMPLE,                    EXAMPLE, PAT A, MD
+
+    Diagnosis Date: 5/9/2024                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: G47.33 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Mild intermittent asthma, uncomplicated
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  5/5/2021 09:15 CDT; FICTION,                 FICTION, MORGAN K, MD
+
+    Diagnosis Date: 5/5/2021                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: J45.20 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Allergic rhinitis, unspecified
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  3/14/2019 09:15 CDT; EXAMPLE,                   EXAMPLE, PAT A, MD
+
+    Diagnosis Date: 3/14/2019                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: J30.9 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    ===== CLINICAL DIAGNOSES (continued) =====
+
+    Diagnosis: Allergic rhinitis, unspecified
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  4/2/2023 09:15 CDT; EXAMPLE,                    EXAMPLE, PAT A, MD
+
+    Diagnosis Date: 4/2/2023                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: J30.9 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Chronic sinusitis, unspecified
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  4/2/2023 09:15 CDT; EXAMPLE,                    EXAMPLE, PAT A, MD
+
+    Diagnosis Date: 4/2/2023                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: J32.9 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Migraine without aura, intractable
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  2/9/2022 09:15 CDT; EXAMPLE,                    EXAMPLE, PAT A, MD
+
+    Diagnosis Date: 2/9/2022                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: G43.019 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Migraine without aura, intractable
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  2/28/2023 09:15 CDT; EXAMPLE,                   EXAMPLE, PAT A, MD
+
+    Diagnosis Date: 2/28/2023                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: G43.019 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Gastro-esophageal reflux disease without esophagitis
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  6/12/2023 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
+
+    Diagnosis Date: 6/12/2023                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: K21.9 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    ===== CLINICAL DIAGNOSES (continued) =====
+
+    Diagnosis: Irritable bowel syndrome, unspecified
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  6/12/2023 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
+
+    Diagnosis Date: 6/12/2023                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: K58.9 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Plantar fasciitis, right foot
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  7/21/2020 09:15 CDT; DEMO,                     DEMO, CASEY L, PA-C
+
+    Diagnosis Date: 7/21/2020                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: M72.2 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Sprain of left ankle, initial encounter
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  7/21/2020 09:15 CDT; DEMO,                     DEMO, CASEY L, PA-C
+
+    Diagnosis Date: 7/21/2020                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: S93.402A (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Rotator cuff tendinitis, right shoulder
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  11/3/2021 09:15 CDT; SAMPLE,                  SAMPLE, JORDAN B, DO
+
+    Diagnosis Date: 11/3/2021                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: M75.31 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Scar, painful, left lower extremity
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  7/21/2020 09:15 CDT; DEMO,                     DEMO, CASEY L, PA-C
+
+    Diagnosis Date: 7/21/2020                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: L90.5 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    ===== CLINICAL DIAGNOSES (continued) =====
+
+    Diagnosis: Essential (primary) hypertension
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  6/3/2025 09:15 CDT; EXAMPLE,                    EXAMPLE, PAT A, MD
+
+    Diagnosis Date: 6/3/2025                                          Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: I10 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Myopia of both eyes
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  11/2/2020 09:15 CDT; PLACEHOLDER,         PLACEHOLDER, RILEY N, OD
+
+    Diagnosis Date: 11/2/2020                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: H52.13 (ICD-10-CM); Onset: ; Comments: ;
+    Severity: ; Provider:
+
+    Diagnosis: Myopia of both eyes
+    Secondary Description:
+    Last Reviewed Date:                                        Responsible Provider:
+                  11/8/2024 09:15 CDT; PLACEHOLDER,         PLACEHOLDER, RILEY N, OD
+
+    Diagnosis Date: 11/8/2024                                         Status: Active
+    Encounter Type: ; Clinic: Family Medicine; Code: H52.13 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
 
     Diagnosis: Obesity, unspecified
@@ -212,8 +368,6 @@
     Encounter Type: ; Clinic: Family Medicine; Code: E66.9 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
 
-    ===== CLINICAL DIAGNOSES (continued) =====
-
     Diagnosis: Hyperlipidemia, unspecified
     Secondary Description:
     Last Reviewed Date:                                        Responsible Provider:
@@ -222,6 +376,8 @@
     Diagnosis Date: 6/3/2025                                        Status: Inactive
     Encounter Type: ; Clinic: Family Medicine; Code: E78.5 (ICD-10-CM); Onset: ; Comments: ;
     Severity: ; Provider:
+
+    ===== CLINICAL DIAGNOSES (continued) =====
 
     ===== ADMINISTRATIVE ENCOUNTERS =====
 

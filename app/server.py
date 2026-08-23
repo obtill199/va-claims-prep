@@ -146,7 +146,8 @@ def upload():
         state["per_file"] = per_file
         state["conditions"] = conditions
         proposals, unmapped = pipeline.build_session_proposals(
-            conditions, state["work_dir"])
+            conditions, state["work_dir"],
+            birth_sex=state["answers"].get("birth_sex"))
         state["proposals"] = proposals
         state["unmapped"] = unmapped
         prompts = pipeline.find_record_prompts(corpus, proposals)

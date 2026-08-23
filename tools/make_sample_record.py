@@ -23,29 +23,79 @@ OUT_TXT = os.path.join(REPO, "tools", "sample_record.txt")
 PATIENT = "SAMPLE, ALEX RIVER"
 
 # (name, icd10, provider, [(date, status), ...], on_problem_list)
+#
+# Chosen to mirror what veterans actually claim rather than an arbitrary
+# assortment: tinnitus and hearing loss are consistently the most-claimed VA
+# disabilities, followed by lumbosacral and cervical strain, limitation of
+# knee flexion, PTSD and other mental-health conditions, migraine, sleep
+# apnea, radiculopathy, scars and plantar fasciitis. A sample that reflects
+# that distribution exercises the condition library the way real records
+# will, and shows a new user output that looks like their own situation.
+#
+# Every name, date, code pairing and clinician here is invented. It
+# describes no real person.
 CONDITIONS = [
-    ("Seasonal allergic rhinitis", "J30.2", "EXAMPLE, PAT A, MD",
-     [("3/14/2022", "Active"), ("4/2/2023", "Active")], True),
-    ("Lumbago", "M54.5", "SAMPLE, JORDAN B, DO",
-     [("9/8/2023", "Active"), ("1/17/2024", "Active"), ("6/3/2025", "Active")], True),
-    ("Sprain of left ankle", "S93.402A", "DEMO, CASEY L, PA-C",
-     [("7/21/2021", "Active")], False),
-    ("Tension-type headache", "G44.209", "EXAMPLE, PAT A, MD",
-     [("2/9/2023", "Active"), ("2/28/2023", "Active")], False),
-    ("Mild intermittent asthma", "J45.20", "FICTION, MORGAN K, MD",
-     [("5/5/2022", "Active")], True),
-    ("Myopia of both eyes", "H52.13", "PLACEHOLDER, RILEY N, OD",
-     [("11/2/2022", "Active"), ("11/8/2024", "Active")], True),
-    ("Adjustment disorder with anxiety", "F43.22", "TESTCASE, AVERY P, LCSW",
-     [("8/16/2023", "Active"), ("9/6/2023", "Active"), ("10/4/2023", "Active")], True),
+    # --- the perennial top claims ---
     ("Tinnitus, bilateral", "H93.13", "FICTION, MORGAN K, MD",
-     [("4/19/2024", "Active")], False),
-    ("Gastro-esophageal reflux disease", "K21.9", "SAMPLE, JORDAN B, DO",
-     [("6/12/2024", "Active")], False),
-    ("Right knee pain", "M25.561", "SAMPLE, JORDAN B, DO",
-     [("2/2/2025", "Active"), ("8/14/2025", "Active")], False),
-    ("Acute cough", "R05.1", "DEMO, CASEY L, PA-C",
-     [("1/30/2023", "Active")], False),
+     [("4/19/2021", "Active"), ("6/2/2023", "Active")], True),
+    ("Sensorineural hearing loss, bilateral", "H90.3", "FICTION, MORGAN K, MD",
+     [("4/19/2021", "Active")], True),
+    ("Low back pain, unspecified", "M54.50", "SAMPLE, JORDAN B, DO",
+     [("9/8/2019", "Active"), ("1/17/2022", "Active"), ("6/3/2025", "Active")], True),
+    ("Radiculopathy, lumbar region", "M54.16", "SAMPLE, JORDAN B, DO",
+     [("1/17/2022", "Active")], False),
+    ("Cervical strain", "S16.1XXA", "DEMO, CASEY L, PA-C",
+     [("3/22/2020", "Active")], False),
+    ("Pain in right knee", "M25.561", "SAMPLE, JORDAN B, DO",
+     [("2/2/2023", "Active"), ("8/14/2025", "Active")], True),
+    ("Patellofemoral pain syndrome, left knee", "M22.2X2", "SAMPLE, JORDAN B, DO",
+     [("8/14/2025", "Active")], False),
+
+    # --- mental health ---
+    ("Post-traumatic stress disorder, chronic", "F43.12", "TESTCASE, AVERY P, LCSW",
+     [("8/16/2022", "Active"), ("10/4/2022", "Active"), ("2/7/2024", "Active")], True),
+    ("Major depressive disorder, recurrent, moderate", "F33.1",
+     "TESTCASE, AVERY P, LCSW", [("10/4/2022", "Active")], True),
+    ("Generalized anxiety disorder", "F41.1", "TESTCASE, AVERY P, LCSW",
+     [("8/16/2022", "Active")], False),
+    ("Insomnia, unspecified", "G47.00", "TESTCASE, AVERY P, LCSW",
+     [("10/4/2022", "Active")], True),
+
+    # --- respiratory / sleep ---
+    ("Obstructive sleep apnea (adult)", "G47.33", "EXAMPLE, PAT A, MD",
+     [("5/9/2024", "Active")], True),
+    ("Mild intermittent asthma, uncomplicated", "J45.20", "FICTION, MORGAN K, MD",
+     [("5/5/2021", "Active")], False),
+    ("Allergic rhinitis, unspecified", "J30.9", "EXAMPLE, PAT A, MD",
+     [("3/14/2019", "Active"), ("4/2/2023", "Active")], True),
+    ("Chronic sinusitis, unspecified", "J32.9", "EXAMPLE, PAT A, MD",
+     [("4/2/2023", "Active")], False),
+
+    # --- neurological ---
+    ("Migraine without aura, intractable", "G43.019", "EXAMPLE, PAT A, MD",
+     [("2/9/2022", "Active"), ("2/28/2023", "Active")], True),
+
+    # --- digestive ---
+    ("Gastro-esophageal reflux disease without esophagitis", "K21.9",
+     "SAMPLE, JORDAN B, DO", [("6/12/2023", "Active")], True),
+    ("Irritable bowel syndrome, unspecified", "K58.9", "SAMPLE, JORDAN B, DO",
+     [("6/12/2023", "Active")], False),
+
+    # --- musculoskeletal, lower extremity ---
+    ("Plantar fasciitis, right foot", "M72.2", "DEMO, CASEY L, PA-C",
+     [("7/21/2020", "Active")], False),
+    ("Sprain of left ankle, initial encounter", "S93.402A", "DEMO, CASEY L, PA-C",
+     [("7/21/2020", "Active")], False),
+    ("Rotator cuff tendinitis, right shoulder", "M75.31", "SAMPLE, JORDAN B, DO",
+     [("11/3/2021", "Active")], False),
+
+    # --- other commonly rated ---
+    ("Scar, painful, left lower extremity", "L90.5", "DEMO, CASEY L, PA-C",
+     [("7/21/2020", "Active")], False),
+    ("Essential (primary) hypertension", "I10", "EXAMPLE, PAT A, MD",
+     [("6/3/2025", "Active")], True),
+    ("Myopia of both eyes", "H52.13", "PLACEHOLDER, RILEY N, OD",
+     [("11/2/2020", "Active"), ("11/8/2024", "Active")], True),
     ("Obesity, unspecified", "E66.9", "EXAMPLE, PAT A, MD",
      [("6/3/2025", "Active")], True),
     ("Hyperlipidemia, unspecified", "E78.5", "EXAMPLE, PAT A, MD",

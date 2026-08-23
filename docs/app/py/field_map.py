@@ -23,6 +23,8 @@ Usage:
 import argparse
 import json
 
+_SHA_RESOLVED = None
+
 # icd10 -> targets. Each target is high confidence: an exact or
 # near-exact textual match between the condition and the question, checked
 # by hand. Conditions not listed here (single-encounter acute symptoms,
@@ -130,7 +132,40 @@ def load_sha_fields(path):
         return json.load(fh)
 
 
-def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path):
+def _library_targets(cond, crosswalk, sha_fields, sha_resolved, birth_sex):
+    """Range-based matches from condition_library.py.
+
+    RULES above stays as the curated, exact-code layer; this adds coverage
+    for every code nobody hand-wrote a rule for, which is the difference
+    between the tool working for one person and working for anyone.
+    """
+    import condition_library as cl
+
+    targets = []
+    for item, letter, sha_slug, label, confidence in cl.match(cond["icd10"], birth_sex):
+        if item is not None:
+            row = crosswalk.get((item, letter))
+            if row and row.get("yes_field"):
+                targets.append({
+                    "target_form": "DD2807-1",
+                    "target_field": row["yes_field"],
+                    "question_text": row["question_text"],
+                    "library_confidence": confidence,
+                })
+        if sha_slug and sha_slug in sha_resolved:
+            field = sha_resolved[sha_slug]
+            if field in sha_fields:
+                targets.append({
+                    "target_form": "SHA_PART_A",
+                    "target_field": field,
+                    "question_text": label,
+                    "library_confidence": confidence,
+                })
+    return targets
+
+
+def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path,
+                  birth_sex=None):
     """Returns (matched, unmatched) where matched is a list of dicts ready
     for proposals.py, and unmatched lists conditions with no rule (printed
     for visibility, not an error — see module docstring)."""
@@ -140,16 +175,32 @@ def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path):
     crosswalk = load_dd2807_crosswalk(dd2807_crosswalk_path)
     sha_fields = load_sha_fields(sha_fields_path)
 
+    global _SHA_RESOLVED
+    if _SHA_RESOLVED is None:
+        import condition_library as cl
+        _SHA_RESOLVED, unresolved = cl.resolve_sha_fields(list(sha_fields))
+        if unresolved:
+            raise ValueError(
+                f"condition_library SHA slugs did not resolve against the live "
+                f"form: {unresolved}. The form layout may have changed.")
+
     matched, unmatched = [], []
+
     for cond in conditions:
         if not cond["active"]:
             continue
         rule = RULES.get(cond["icd10"])
+        targets = []
         if not rule:
-            unmatched.append(cond)
+            lib = _library_targets(cond, crosswalk, sha_fields,
+                                   _SHA_RESOLVED, birth_sex)
+            if not lib:
+                unmatched.append(cond)
+                continue
+            targets = lib
+            matched.append({"condition": cond, "targets": targets})
             continue
 
-        targets = []
         if "dd2807" in rule:
             row = crosswalk.get(rule["dd2807"])
             if row and row.get("yes_field"):
@@ -184,6 +235,14 @@ def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path):
                 "target_field": rule["sha_field"],
                 "question_text": rule.get("sha_label"),
             })
+
+        # Add library coverage, skipping fields the curated rules already hit.
+        seen = {(t["target_form"], t["target_field"]) for t in targets}
+        for t in _library_targets(cond, crosswalk, sha_fields,
+                                  _SHA_RESOLVED, birth_sex):
+            if (t["target_form"], t["target_field"]) not in seen:
+                targets.append(t)
+                seen.add((t["target_form"], t["target_field"]))
 
         matched.append({"condition": cond, "targets": targets})
 

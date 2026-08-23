@@ -174,12 +174,13 @@ def find_record_prompts(corpus, proposals):
     return sorted(found.values(), key=lambda p: (-p["mentions"], p["item"]))
 
 
-def build_session_proposals(conditions, work_dir):
+def build_session_proposals(conditions, work_dir, birth_sex=None):
     """conditions dict -> (proposals, unmapped). Reuses proposals.py."""
     conditions_path = os.path.join(work_dir, "conditions.json")
     with open(conditions_path, "w") as fh:
         json.dump(conditions, fh, indent=2)
-    return build_proposals(conditions_path, DD_CROSSWALK, SHA_FIELDS)
+    return build_proposals(conditions_path, DD_CROSSWALK, SHA_FIELDS,
+                           birth_sex=birth_sex)
 
 
 def run_reconciliation(conditions, per_file):
