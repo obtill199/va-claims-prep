@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VA Claims Prep</title>
 <meta name="description" content="Turn your military health records into prefilled VA forms, plus every link you need to file a disability claim.">
-<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/base.css?v=75cd4176be">
 <style>
 /* Dashboard-specific only. */
 .hero {
@@ -13,6 +13,13 @@
   border-top: 3px solid var(--accent); border-radius: var(--radius);
   padding: var(--s6); margin: calc(var(--s7) * -1) 0 var(--s5);
   box-shadow: var(--shadow-md); position: relative;
+}
+/* The negative pull assumes the masthead copy fits on one or two lines. On a
+   narrow screen it wraps to four, and the card lands 45px on top of it.
+   Measured at 375px before this rule existed. */
+@media (max-width: 720px) {
+  .hero { margin-top: var(--s4); padding: var(--s5); }
+  .masthead__hero { padding: var(--s5) 0 var(--s5); }
 }
 .hero h2 { margin-bottom: var(--s3); }
 .section-head { display: flex; align-items: baseline; gap: var(--s3);

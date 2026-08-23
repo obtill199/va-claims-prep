@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VA Claims Prep</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/base.css?v=75cd4176be">
 <style>
 /* App-specific only. Everything shared lives in assets/base.css. */
 .dropzone {
@@ -74,13 +74,14 @@
 <nav class="steps" aria-label="Progress">
   <div class="wrap">
     <ol class="steps__list">
-      <li class="steps__item" id="nav-1" aria-current="step">
+      <li class="steps__item" id="nav-1" data-pos="1" aria-current="step">
         <span class="steps__num">1</span>About you</li>
-      <li class="steps__item" id="nav-2"><span class="steps__num">2</span>Your records</li>
-      <li class="steps__item" id="nav-3"><span class="steps__num">3</span>Review</li>
-      <li class="steps__item" id="nav-4"><span class="steps__num">4</span>Explanations</li>
-      <li class="steps__item" id="nav-5"><span class="steps__num">5</span>Package</li>
+      <li class="steps__item" id="nav-2" data-pos="2"><span class="steps__num">2</span>Your records</li>
+      <li class="steps__item" id="nav-3" data-pos="3"><span class="steps__num">3</span>Review</li>
+      <li class="steps__item" id="nav-4" data-pos="4"><span class="steps__num">4</span>Explanations</li>
+      <li class="steps__item" id="nav-5" data-pos="5"><span class="steps__num">5</span>Package</li>
     </ol>
+    <span class="steps__track" aria-hidden="true"><i id="steps-fill" style="width:20%"></i></span>
   </div>
 </nav>
 
@@ -267,6 +268,8 @@ function show(n){
     if (i < n) nav.querySelector(".steps__num").textContent = "\u2713";
     else nav.querySelector(".steps__num").textContent = String(i);
   }
+  const fill = $("steps-fill");
+  if (fill) fill.style.width = (n / 5 * 100) + "%";
   window.scrollTo(0,0);
   // Move focus to the new step so screen-reader and keyboard users are not
   // stranded at the bottom of the previous one.

@@ -6,4 +6,6 @@ intake.py
 prompts.py
 schema.py
 package_bundle.py
+condition_library.py
+coded_records.py
 web_pipeline.py
