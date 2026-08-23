@@ -2,11 +2,16 @@
    VA Claims Prep — design system
    ============================================================================
 
-   Deliberately NOT styled to resemble va.gov. This tool is not affiliated
-   with VA or DoD, and a benefits tool that borrows government branding is
-   both misleading to the veteran using it and the exact pattern predatory
-   claim services use. Credibility here comes from typography, spacing,
-   contrast and clarity — not from looking like something it isn't.
+   The palette sits in the same family as the U.S. Web Design System, which
+   VA's own sites are built on. That is deliberate and it is a usability
+   decision, not a branding one: a veteran who has spent the week on VA.gov
+   reads this palette without having to reorient. Familiarity lowers the
+   cost of using the thing.
+
+   What is NOT borrowed, and must never be: the VA seal, the federal banner,
+   .gov naming, or any suggestion of affiliation. The masthead carries a
+   permanent "not affiliated" marker so the familiarity is never mistaken
+   for endorsement. Colour is orientation; provenance is stated in words.
 
    The audience includes people with visual, motor and cognitive
    disabilities, which makes accessibility a functional requirement rather
@@ -30,18 +35,24 @@
   --n-800:#282824;
   --n-900:#171714;
 
-  /* Deep slate-navy. Serious, and distinct from VA's palette. */
-  --brand-50: #eef3f8;
-  --brand-100:#d4e2ef;
-  --brand-300:#7ba3c7;
-  --brand-600:#2b5f8f;
-  --brand-700:#1e4670;
-  --brand-800:#153353;
-  --brand-900:#0f2540;
+  /* USWDS-family blues — the palette VA's own properties are built on. */
+  --brand-50: #eff6fb;
+  --brand-100:#d9e8f6;
+  --brand-200:#aacdec;
+  --brand-300:#73b3e7;
+  --brand-500:#0071bc;
+  --brand-600:#005ea2;
+  --brand-700:#1a4480;
+  --brand-800:#162e51;
+  --brand-900:#0b1b34;
 
-  --ok-bg:#e8f3ec;   --ok-line:#2f6b4a;   --ok-ink:#1e4a33;
-  --warn-bg:#fdf4e3; --warn-line:#b5822a; --warn-ink:#6f4e12;
-  --err-bg:#fdecea;  --err-line:#b3392c;  --err-ink:#7d2318;
+  /* USWDS accent + status hues. */
+  --accent-warm:#fa9441;
+  --accent-cool:#00bde3;
+
+  --ok-bg:#ecf3ec;   --ok-line:#00a91c;   --ok-ink:#154c21;
+  --warn-bg:#faf3d1; --warn-line:#ffbe2e; --warn-ink:#5c4809;
+  --err-bg:#f4e3db;  --err-line:#d83933;  --err-ink:#6f3331;
 
   --ink:        var(--n-800);
   --ink-muted:  var(--n-500);
@@ -79,13 +90,13 @@
     --n-200:#2b3038; --n-300:#3b424c; --n-400:#6b7280; --n-500:#98a1ad;
     --n-600:#b8c0ca; --n-700:#d3d9e0; --n-800:#e8ecf1; --n-900:#f6f8fa;
 
-    --brand-50:#152436; --brand-100:#1b3048; --brand-300:#4a7ba8;
-    --brand-600:#6fa3d0; --brand-700:#8ab8de; --brand-800:#a9cbe9;
-    --brand-900:#c8dff2;
+    --brand-50:#12243a; --brand-100:#16304d; --brand-200:#1d4470;
+    --brand-300:#3d7ab8; --brand-500:#4f9ddb; --brand-600:#73b3e7;
+    --brand-700:#93c7ef; --brand-800:#b6dbf7; --brand-900:#d9ecfb;
 
-    --ok-bg:#12241a;   --ok-line:#3f8a61;   --ok-ink:#8fd3ac;
-    --warn-bg:#251d0e; --warn-line:#a8792a; --warn-ink:#e3bd76;
-    --err-bg:#2a1512;  --err-line:#c2544a; --err-ink:#f0a49b;
+    --ok-bg:#122117;   --ok-line:#4cb964;   --ok-ink:#8fd6a2;
+    --warn-bg:#2a2109;  --warn-line:#e5a72a; --warn-ink:#f0cf7a;
+    --err-bg:#2c1614;  --err-line:#e05a52; --err-ink:#f5a9a2;
 
     --ink:var(--n-800); --ink-muted:var(--n-500); --ink-subtle:var(--n-400);
     --surface:var(--n-50); --surface-alt:var(--n-100); --page:var(--n-25);
@@ -159,13 +170,12 @@ small { font-size: 13.5px; }
 
 /* ---------------------------------------------------------------- header */
 .masthead {
-  background: linear-gradient(165deg, var(--brand-900), var(--brand-800) 62%,
-              var(--brand-700));
+  background: var(--brand-800);
   color: #fff;
-  border-bottom: 1px solid rgba(255,255,255,.09);
+  border-bottom: 3px solid var(--brand-600);
 }
 @media (prefers-color-scheme: dark) {
-  .masthead { background: linear-gradient(165deg, #0b1a2c, #10263f); }
+  .masthead { background: #0d1f38; border-bottom-color: var(--brand-300); }
 }
 .masthead a { color: #fff; }
 .masthead__bar {
@@ -368,4 +378,52 @@ select {
                          break-inside: avoid; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt;
                            color: #444; word-break: break-all; }
+}
+
+/* ------------------------------------------------- review-step controls
+   47 individual decisions is where someone abandons the process, and an
+   abandoned claim means an unpaid one. These exist to make a long review
+   feel finite: a live count of what is left, bulk actions for the obvious
+   cases, and the weak tier folded away until it is wanted. */
+.reviewbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s3) var(--s4);
+  margin-bottom: var(--s4); box-shadow: var(--shadow-sm);
+}
+.reviewbar__count { font-weight: 650; font-size: 15px; }
+.reviewbar__count b { color: var(--brand-600); }
+.reviewbar__actions { display: flex; gap: var(--s2); flex-wrap: wrap;
+                      margin-left: auto; }
+.progressbar { height: 5px; border-radius: 999px; background: var(--n-100);
+               overflow: hidden; flex: 1 1 120px; min-width: 90px; }
+.progressbar__fill { height: 100%; background: var(--brand-600);
+                     border-radius: 999px; transition: width .2s ease; }
+
+details.tier-group { margin: var(--s5) 0 0; }
+details.tier-group > summary {
+  cursor: pointer; list-style: none; padding: var(--s3) var(--s4);
+  background: var(--surface-alt); border: 1px solid var(--line);
+  border-radius: var(--radius); font-weight: 650; font-size: 15px;
+  display: flex; align-items: center; gap: var(--s2);
+}
+details.tier-group > summary::-webkit-details-marker { display: none; }
+details.tier-group > summary::before {
+  content: "\25B8"; color: var(--ink-muted); transition: transform .15s ease;
+}
+details.tier-group[open] > summary::before { transform: rotate(90deg); }
+details.tier-group > summary:hover { border-color: var(--brand-300); }
+details.tier-group > div { padding-top: var(--s3); }
+
+/* A decided card recedes, so what is left stands out. */
+.proposal[data-decided="true"] { opacity: .62; }
+.proposal[data-decided="true"]:hover,
+.proposal[data-decided="true"]:focus-within { opacity: 1; }
+
+@media (max-width: 640px) {
+  .reviewbar { position: static; }
+  .proposal__choices { gap: var(--s3); flex-direction: column;
+                       align-items: flex-start; }
+  .wrap { padding: 0 var(--s4); }
 }

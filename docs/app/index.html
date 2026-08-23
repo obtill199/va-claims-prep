@@ -467,6 +467,67 @@ function groupProposals(proposals){
     a.form.localeCompare(b.form) || a.question.localeCompare(b.question));
 }
 
+function renderGroup(g){
+  const low = g.confidence === "low";
+  const tone = low ? "err" : (g.confidence === "medium" ? "warn" : "ok");
+  const why = g.members.length === 1
+    ? `<p class="proposal__why">${esc(g.members[0].rationale)}</p>`
+    : `<p class="proposal__why">${g.members.length} conditions in your records point to
+         this question:</p>
+       <ul class="proposal__why" style="margin:0 0 var(--s4);padding-left:var(--s5)">
+         ${g.members.map(m=>`<li>${esc(m.rationale)}</li>`).join("")}</ul>`;
+  const cites = [...new Set(g.members.map(m =>
+    m.doc + (m.page ? " \u00b7 page " + m.page : "")))];
+  return `<div class="proposal${low?" proposal--low":""}" data-group="${esc(g.key)}">
+    <div class="proposal__meta">
+      <span class="badge badge--neutral">${esc(g.form)}</span>
+      <span class="badge badge--${tone}">${esc(g.confidence)} confidence</span>
+      <span class="badge badge--neutral">${esc(g.method)}</span>
+    </div>
+    <p class="proposal__q">${esc(g.question)}</p>
+    ${why}
+    <fieldset class="proposal__choices" style="border:0;margin:0;padding:var(--s3) 0 0">
+      <legend class="hidden">Decision for ${esc(g.question)}</legend>
+      <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="confirm"${low?"":" checked"}>
+        Confirm &ldquo;${esc(g.value)}&rdquo;</label>
+      <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="edit">
+        Change to <input type="text" id="gv-${esc(g.key)}" value="No" aria-label="Replacement answer"></label>
+      <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="reject"${low?" checked":""}>
+        Leave blank</label>
+    </fieldset>
+    <p class="proposal__cite">Found in ${cites.map(esc).join(" &middot; ")}</p>
+  </div>`;
+}
+
+function wireReview(){
+  const touched = new Set();
+  const update = () => {
+    const total = S.groups.length;
+    $("rv-done").textContent = touched.size;
+    $("rv-bar").style.width = total ? (touched.size / total * 100) + "%" : "0%";
+  };
+  document.querySelectorAll(".proposal").forEach(card => {
+    card.addEventListener("change", () => {
+      touched.add(card.dataset.group);
+      card.dataset.decided = "true";
+      update();
+    });
+  });
+  $("rv-confirm-strong").addEventListener("click", () => {
+    // The common case: everything with a real diagnosis behind it is correct.
+    // One click instead of dozens, and the weak tier is untouched.
+    S.groups.filter(g => g.confidence !== "low").forEach(g => {
+      const el = document.querySelector(
+        `input[name="g-${CSS.escape(g.key)}"][value="confirm"]`);
+      if (el) { el.checked = true; touched.add(g.key); }
+      const card = document.querySelector(`.proposal[data-group="${CSS.escape(g.key)}"]`);
+      if (card) card.dataset.decided = "true";
+    });
+    update();
+  });
+  update();
+}
+
 function renderReview(){
   $("file-table").innerHTML =
     `<div class="table-scroll"><table class="table"><thead><tr><th>File</th><th>Pages</th><th>Extraction</th><th>Found</th></tr></thead><tbody>` +
@@ -477,6 +538,8 @@ function renderReview(){
     `</tbody></table></div>`;
 
   S.groups = groupProposals(S.proposals);
+  const strong = S.groups.filter(g => g.confidence !== "low");
+  const weak   = S.groups.filter(g => g.confidence === "low");
   $("prop-heading").textContent = `Proposed answers (${S.groups.length})`;
 
   if (!S.groups.length){
@@ -487,37 +550,27 @@ function renderReview(){
       diagnoses, or it is a scan whose text could not be recovered. You can still
       continue: both forms will be filled with the details you entered.</p></div>`;
   } else {
-    $("proposals").innerHTML = S.groups.map(g=>{
-      const low = g.confidence === "low";
-      const tone = low ? "err" : (g.confidence === "medium" ? "warn" : "ok");
-      const why = g.members.length === 1
-        ? `<p class="proposal__why">${esc(g.members[0].rationale)}</p>`
-        : `<p class="proposal__why">${g.members.length} conditions in your records
-             point to this question:</p>
-           <ul class="proposal__why" style="margin:0 0 var(--s4);padding-left:var(--s5)">
-             ${g.members.map(m=>`<li>${esc(m.rationale)}</li>`).join("")}</ul>`;
-      const cites = [...new Set(g.members.map(m =>
-        m.doc + (m.page ? " \u00b7 page " + m.page : "")))];
-      return `<div class="proposal${low?" proposal--low":""}">
-        <div class="proposal__meta">
-          <span class="badge badge--neutral">${esc(g.form)}</span>
-          <span class="badge badge--${tone}">${esc(g.confidence)} confidence</span>
-          <span class="badge badge--neutral">${esc(g.method)}</span>
-        </div>
-        <p class="proposal__q">${esc(g.question)}</p>
-        ${why}
-        <fieldset class="proposal__choices" style="border:0;margin:0;padding:var(--s3) 0 0">
-          <legend class="hidden">Decision for ${esc(g.question)}</legend>
-          <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="confirm"${low?"":" checked"}>
-            Confirm &ldquo;${esc(g.value)}&rdquo;</label>
-          <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="edit">
-            Change to <input type="text" id="gv-${esc(g.key)}" value="No" aria-label="Replacement answer"></label>
-          <label class="choice"><input type="radio" name="g-${esc(g.key)}" value="reject"${low?" checked":""}>
-            Leave blank</label>
-        </fieldset>
-        <p class="proposal__cite">Found in ${cites.map(esc).join(" &middot; ")}</p>
-      </div>`;
-    }).join("");
+    $("proposals").innerHTML =
+      `<div class="reviewbar">
+         <span class="reviewbar__count"><b id="rv-done">0</b> of ${S.groups.length} decided</span>
+         <span class="progressbar"><span class="progressbar__fill" id="rv-bar" style="width:0%"></span></span>
+         <span class="reviewbar__actions">
+           <button type="button" class="btn btn--secondary" id="rv-confirm-strong">
+             Confirm all ${strong.length} likely answers</button>
+         </span>
+       </div>` +
+      strong.map(renderGroup).join("") +
+      (weak.length ? `<details class="tier-group">
+         <summary>${weak.length} weaker match${weak.length===1?"":"es"} — no diagnosis behind
+           them, left blank unless you say otherwise</summary>
+         <div>
+           <p class="help">These are words appearing near a question in your records, not
+           findings. They stay blank if you skip them, so you can safely ignore this
+           section — it is here in case one of them is something you would answer yes to.</p>
+           ${weak.map(renderGroup).join("")}
+         </div></details>` : "");
+
+    wireReview();
   }
 
   $("unmapped").innerHTML = S.unmapped && S.unmapped.length
