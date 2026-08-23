@@ -456,3 +456,20 @@ details.tier-group > div { padding-top: var(--s3); }
 }
 /* Anything that could carry an unbreakable string. */
 .card__title, .card__desc, .proposal__q, .download__name { overflow-wrap: anywhere; }
+
+/* An inline destructive action inside body text. Reads as a link because it
+   sits mid-sentence, but it is a button: it acts, it doesn't navigate. */
+.linkbtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.linkbtn:hover { color: var(--accent-ink); }
+.linkbtn:focus-visible {
+  outline: 3px solid var(--brand-600);
+  outline-offset: 2px;
+}

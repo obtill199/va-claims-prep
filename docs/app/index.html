@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VA Claims Prep</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="../assets/base.css?v=0df6aa5bbb">
+<link rel="stylesheet" href="../assets/base.css?v=066ab91b97">
 <style>
 /* App-specific only. Everything shared lives in assets/base.css. */
 .dropzone {
@@ -100,10 +100,29 @@
     loads and the whole thing still works.</p>
   </div>
 
+  <div class="note note--warn" id="resume-banner" hidden>
+    <span class="note__title">You have saved progress on this device.</span>
+    <p id="resume-detail"></p>
+    <p><button type="button" class="btn" id="resume-go">Pick up where I left off</button>
+       <button type="button" class="btn btn--secondary" id="resume-discard">Start over</button></p>
+  </div>
+
+  <div class="note note--warn">
+    <span class="note__title">Check your records have selectable text first.</span>
+    <p>Open your record PDF and try to select a line of text. If you can, this will
+    work. If the page behaves like a photograph, it is a scan — this browser version
+    cannot read scans, and you would fill everything in for nothing. Use the desktop
+    version for those; it reads them.</p>
+  </div>
+
   <div class="note">
     <span class="note__title">Social Security Number and DoD ID are not collected.</span>
-    <p>They are intentionally left blank on both forms. Fill them in by hand in a
-    PDF reader before you hand the package to your VSO.</p>
+    <p>They are intentionally left blank. You fill them in by hand before handing the
+    package over. Both forms ask for each of them more than once — eight boxes in
+    four places:</p>
+    <p class="help"><strong>DD 2807-1:</strong> items 2a and 2b on page 1, then the SSN
+    and DoD ID boxes in the header of page 2, and again in the header of page 3.
+    <strong>SHA Part A:</strong> the SSN and DoD ID fields in section 1.</p>
   </div>
 
   <div id="intake-errors" class="note note--err hidden"></div>
@@ -137,6 +156,30 @@
     browser can't run. Scanned files will say so rather than silently producing
     nothing.</p>
   </div>
+
+  <details class="tier-group" style="margin:0 0 var(--s4)">
+    <summary>I don&rsquo;t have my records yet</summary>
+    <div>
+      <p class="help">Request these first — some take weeks to arrive. All are free
+      and official.</p>
+      <div class="cards">
+        <a class="card" href="https://milconnect.dmdc.osd.mil/milconnect/" target="_blank" rel="noopener">
+          <span class="card__title">milConnect</span>
+          <span class="card__desc">DD-214, service treatment records and personnel file.
+          Fastest route if you served recently.</span></a>
+        <a class="card" href="https://patientportal.mhsgenesis.health.mil/" target="_blank" rel="noopener">
+          <span class="card__title">MHS Genesis Patient Portal</span>
+          <span class="card__desc">Your DoD medical record. This export is the one this
+          tool reads best.</span></a>
+        <a class="card" href="https://www.va.gov/records/get-military-service-records/" target="_blank" rel="noopener">
+          <span class="card__title">VA: request service records</span>
+          <span class="card__desc">Which route applies to you, by service era.</span></a>
+      </div>
+      <p class="help">Ask for the <strong>complete</strong> file, including scanned and
+      paper documents — duty-limiting profiles and AF Form 469s usually live only
+      there, and they are often the strongest evidence you have.</p>
+    </div>
+  </details>
 
   <div id="upload-errors" class="note note--err hidden"></div>
   <div class="dropzone">
@@ -172,6 +215,16 @@
   empty rather than making a claim.</p>
   <div id="proposals"></div>
   <div id="unmapped"></div>
+
+  <div class="note">
+    <span class="note__title" id="saved-note">Progress saves automatically on this device</span>
+    <p class="help">Your decisions, the conditions found, and the dates attached to them
+    are kept in this browser&rsquo;s storage on this computer only &mdash; nothing is
+    uploaded, and your record files themselves are never stored. Close the tab and you
+    can pick up here without uploading again. Saved progress is discarded after 14 days.
+    <button type="button" class="linkbtn" id="clear-saved">Clear saved progress now</button></p>
+  </div>
+
   <button class="btn btn--lg" id="to-explain">Save decisions →</button>
 </section>
 
@@ -186,9 +239,11 @@
     They deliberately don't characterise severity, cause, or service connection — that's
     your and your VSO's judgement, not this tool's.</p>
   </div>
+  <div class="note note--warn" id="item29-todo" hidden></div>
   <h2>DD 2807-1 — Item 29</h2>
   <textarea id="item29" rows="14"></textarea>
   <div id="sha-explains"></div>
+  <p class="help" id="saved-note-2">Your edits here save automatically on this device.</p>
   <button class="btn btn--lg" id="to-package">Continue to your package →</button>
 </section>
 
@@ -197,21 +252,34 @@
   <h1>Your VSO package</h1>
   <p class="lede" id="package-lede"></p>
 
-  <div class="note note--warn">
-    <span class="note__title">Two things to do by hand before you hand this over.</span>
-    <p>Social Security Number and DoD ID are intentionally left blank — fill them in
-    yourself in a PDF reader.</p>
-    <p>Both forms are also <strong>unsigned by design</strong> — sign and date them.</p>
-  </div>
-
   <div id="building" class="status-row"><span class="spinner"></span>
     <div><span class="note__title">Building your documents…</span></div></div>
   <div id="downloads"></div>
 
-  <h2>Then what?</h2>
-  <p>Take this package to an accredited Veterans Service Officer. They're free, and
-  they're accredited to advise on what to claim — this tool isn't and doesn't.
-  VA's directory: <span class="help">va.gov/get-help-from-accredited-representative</span></p>
+  <h2>What to do next</h2>
+  <ol class="stack" style="padding-left:var(--s5)">
+    <li><strong>Do not sign anything yet.</strong> Both forms are unsigned on purpose.
+      Sign them after your VSO has read them, not before.</li>
+    <li><strong>Fill in your SSN and DoD ID by hand.</strong> This tool never collects
+      them, so both are blank in eight boxes across four places: DD 2807-1 items 2a and
+      2b on page 1, the header of page 2, the header of page 3, and section 1 of
+      SHA Part A.</li>
+    <li id="next-item29" hidden><strong>Finish Item 29.</strong> <span id="next-item29-detail"></span></li>
+    <li><strong>Book a free accredited VSO.</strong> They are free, they do this daily,
+      and they are the ones accredited to advise on what to claim.
+      <a href="https://www.va.gov/get-help-from-accredited-representative/" target="_blank" rel="noopener">Find one at VA&rsquo;s directory</a>.</li>
+    <li><strong>Bring:</strong> this whole package, your DD-214, your complete service
+      treatment records, and any private medical records VA does not already hold.</li>
+    <li><strong>Ask them:</strong> which conditions are worth claiming, whether any are
+      presumptive for your service, whether anything is missing, and — if you are still
+      serving — whether you are inside the 180-to-90-day BDD window.</li>
+  </ol>
+  <div class="note">
+    <span class="note__title">The conditions worksheet is the part to hand over first.</span>
+    <p>It lists everything found in your records with the page it came from, including
+    the conditions this tool could not match to a form question. That list is exactly
+    what a VSO needs to spot what you have missed.</p>
+  </div>
 </section>
 
 </main>
@@ -277,8 +345,73 @@ function show(n){
   if (heading) { heading.setAttribute("tabindex","-1"); heading.focus({preventScroll:true}); }
 }
 
-// -------------------------------------------------------------- step 1
+// ------------------------------------------------------- saved progress
+// Only the questionnaire used to survive a closed tab. Everything after it
+// -- the extraction, every review decision, the drafted Item 29 -- was lost,
+// so an interruption twenty minutes in meant starting over. That is the
+// costliest failure in the flow, because the person simply does not come
+// back. This persists the work as it happens.
+//
+// It stays on this device, like everything else here. It does contain
+// condition names and dates, so it is disclosed on the review screen and
+// clearable in one click, and it expires on its own after 14 days.
 const DRAFT_KEY = "va-claims-prep:intake:v1";
+const SESSION_KEY = "va-claims-prep:session:v1";
+const SESSION_TTL_DAYS = 14;
+// Bump when the saved shape changes. A save written by an older build would
+// otherwise reach the extractor missing a key and throw there instead of
+// being discarded here -- which is how the member learns their saved
+// progress is gone: an error, not a clean restart.
+const SESSION_SHAPE = 1;
+
+function saveSession(){
+  try {
+    localStorage.setItem(SESSION_KEY, JSON.stringify({
+      v: SESSION_SHAPE,
+      savedAt: Date.now(),
+      answers: S.answers,
+      perFile: S.perFile,
+      conditions: S.conditions,
+      unmapped: S.unmapped,
+      decisions: collectDecisions(true),
+      touched: S.touched ? [...S.touched] : [],
+      item29: S.item29,
+      shaExplains: S.shaExplains
+    }));
+    const el = $("saved-note");
+    if (el) el.textContent = "Progress saved on this device";
+  } catch (e) { /* quota or private mode: proceed without saving */ }
+}
+
+function loadSession(){
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (s.v !== SESSION_SHAPE) { localStorage.removeItem(SESSION_KEY); return null; }
+    const ageDays = (Date.now() - (s.savedAt || 0)) / 86400000;
+    if (ageDays > SESSION_TTL_DAYS) { localStorage.removeItem(SESSION_KEY); return null; }
+    return s.conditions ? s : null;
+  } catch (e) { return null; }
+}
+
+function clearSession(){
+  localStorage.removeItem(SESSION_KEY);
+  const el = $("saved-note");
+  if (el) el.textContent = "Saved progress cleared";
+}
+
+function collectDecisions(quiet){
+  const out = {};
+  (S.groups || []).forEach(g=>{
+    const sel = document.querySelector(`input[name="g-${CSS.escape(g.key)}"]:checked`);
+    if (!sel && quiet) return;
+    const choice = sel ? sel.value : "reject";
+    const el = document.getElementById("gv-" + g.key);
+    out[g.key] = { choice, value: choice === "edit" ? ((el && el.value) || "No") : g.value };
+  });
+  return out;
+}
 
 function renderIntake(){
   let saved = {};
@@ -347,10 +480,17 @@ if (document.readyState === "complete") boot();
 else window.addEventListener("load", boot);
 
 // -------------------------------------------------------------- step 2
-let booting = false;
-async function boot(){
-  if (py || booting) return;
-  booting = true;
+// Boot starts on page load and takes ~30s. Anything that needs the engine
+// must await the SAME boot, not skip past an in-flight one -- an early
+// `return` here let the resume path run against a Pyodide that existed but
+// had no modules on its filesystem yet, which surfaced as
+// "No module named 'web_pipeline'".
+let bootPromise = null;
+function boot(){
+  if (!bootPromise) bootPromise = doBoot();
+  return bootPromise;
+}
+async function doBoot(){
   try {
     $("boot-detail").textContent = "Downloading the Python runtime…";
     py = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/" });
@@ -386,7 +526,88 @@ import web_pipeline
        <p class="help">${esc(err.message||err)}</p>
        <p class="help">This build needs a browser with WebAssembly. If you are offline,
        the first load needs a connection; after that it is cached.</p></div>`;
-  } finally { booting = false; }
+  }
+}
+
+// DD 2807-1 asks what treatment you received. That lives in narrative notes
+// this tool does not read, so every entry carries a placeholder. Uncounted,
+// a member could submit a form with thirteen "[Add treatment received]"
+// markers still in it -- so count them, and count down as they are filled.
+function updateItem29Todo(){
+  const box = $("item29"), note = $("item29-todo");
+  if (!box || !note) return;
+  const pending = (box.value.match(/\[Add treatment received\]/g) || []).length;
+  note.hidden = pending === 0;
+  if (pending === 0) { note.innerHTML = ""; return; }
+  note.innerHTML =
+    `<span class="note__title">${pending} place${pending===1?"":"s"} still need your input.</span>
+     <p>The form asks what treatment you received. Your records do not state it in a
+     way this tool can read, so it left a marker instead of guessing. Find each
+     <strong>[Add treatment received]</strong> below and replace it &mdash; physical
+     therapy, medication, surgery, an injection, or &ldquo;no treatment&rdquo; if that
+     is the truth.</p>
+     <p class="help">You can leave them for your VSO to help word, but the form is not
+     finished until they are gone.</p>`;
+}
+
+async function resumeFrom(saved){
+  $("processing").classList.remove("hidden");
+  $("proc-msg").textContent = "Restoring your saved progress\u2026";
+  try {
+    S.answers = saved.answers || S.answers;
+    S.perFile = saved.perFile;
+    S.conditions = saved.conditions;
+    S.unmapped = saved.unmapped || [];
+    py.globals.set("js_conditions", JSON.stringify(S.conditions));
+    py.globals.set("js_birth_sex", S.answers.birth_sex || null);
+    const result = await py.runPythonAsync(`
+import json, web_pipeline
+conditions = json.loads(js_conditions)
+proposals, unmapped = web_pipeline.build_review(conditions, [], js_birth_sex)
+_state = {"per_file": [], "conditions": conditions,
+          "proposals": proposals, "unmapped": unmapped}
+json.dumps([
+  {"id":p.id,"question_text":p.question_text,"rationale":p.rationale,
+   "confidence":p.confidence,"method":p.extraction_method,"form":p.target_form,
+   "value":p.proposed_value,"doc":p.source_document,"page":p.source_page}
+  for p in proposals])
+`);
+    S.proposals = JSON.parse(result);
+    py.globals.set("js_perfile", py.toPy(S.perFile || []));
+    await py.runPythonAsync('_state["per_file"] = [dict(x) for x in js_perfile]');
+    renderReview();
+    // Put the radio selections back -- all of them, including the ones that
+    // were pre-selected...
+    Object.entries(saved.decisions || {}).forEach(([key, d])=>{
+      const el = document.querySelector(
+        `input[name="g-${CSS.escape(key)}"][value="${d.choice}"]`);
+      if (el) el.checked = true;
+      if (d.choice === "edit") {
+        const t = document.getElementById("gv-" + key);
+        if (t) t.value = d.value;
+      }
+    });
+    // ...but only mark as decided the ones they actually acted on.
+    // Mutate in place: wireReview holds a reference to this exact Set, so
+    // reassigning it here would silently orphan every later click.
+    S.touched.clear();
+    (saved.touched || []).forEach(k => S.touched.add(k));
+    S.touched.forEach(key=>{
+      const card = document.querySelector(`.proposal[data-group="${CSS.escape(key)}"]`);
+      if (card) card.dataset.decided = "true";
+    });
+    updateReviewProgress();
+    S.resumedItem29 = saved.item29 || null;
+    S.resumedSha = saved.shaExplains || null;
+    show(3);
+  } catch (err) {
+    $("upload-errors").innerHTML =
+      `<span class="note__title">Could not restore your saved progress.</span>
+       <p class="help">Start again by uploading your records. ${esc(err.message||err)}</p>`;
+    $("upload-errors").classList.remove("hidden");
+  } finally {
+    $("processing").classList.add("hidden");
+  }
 }
 
 $("process").addEventListener("click", async ()=>{
@@ -433,6 +654,7 @@ json.dumps({
     S.perFile = data.per_file; S.conditions = data.conditions;
     S.proposals = data.proposals; S.unmapped = data.unmapped;
     renderReview();
+    saveSession();
     show(3);
   } catch (err){
     errs.innerHTML = `<span class="note__title">Something went wrong reading those files.</span>
@@ -502,18 +724,28 @@ function renderGroup(g){
   </div>`;
 }
 
+// "N of M decided" counts questions the member actually looked at and acted
+// on -- not the ones that arrived pre-selected. That distinction is the whole
+// value of the counter, so it has to survive a resume: restoring every saved
+// radio and calling them all "decided" would tell someone they had reviewed
+// items they never saw, on a form carrying a false-statement penalty.
+function updateReviewProgress(){
+  const total = (S.groups || []).length;
+  const done = S.touched ? S.touched.size : 0;
+  const el = $("rv-done"); if (!el) return;
+  el.textContent = done;
+  $("rv-bar").style.width = total ? (done / total * 100) + "%" : "0%";
+}
+
 function wireReview(){
-  const touched = new Set();
-  const update = () => {
-    const total = S.groups.length;
-    $("rv-done").textContent = touched.size;
-    $("rv-bar").style.width = total ? (touched.size / total * 100) + "%" : "0%";
-  };
+  const touched = S.touched;
+  const update = updateReviewProgress;
   document.querySelectorAll(".proposal").forEach(card => {
     card.addEventListener("change", () => {
       touched.add(card.dataset.group);
       card.dataset.decided = "true";
       update();
+      saveSession();
     });
   });
   $("rv-confirm-strong").addEventListener("click", () => {
@@ -527,6 +759,7 @@ function wireReview(){
       if (card) card.dataset.decided = "true";
     });
     update();
+    saveSession();
   });
   update();
 }
@@ -541,6 +774,7 @@ function renderReview(){
     `</tbody></table></div>`;
 
   S.groups = groupProposals(S.proposals);
+  if (!S.touched) S.touched = new Set();
   const strong = S.groups.filter(g => g.confidence !== "low");
   const weak   = S.groups.filter(g => g.confidence === "low");
   $("prop-heading").textContent = `Proposed answers (${S.groups.length})`;
@@ -624,16 +858,44 @@ json.dumps({"item29": _state["item29"],
             "confirmed": len(confirmed)})
 `);
   const data = JSON.parse(out);
-  S.item29 = data.item29; S.shaExplains = data.sha; S.shaLabels = data.labels;
+  // A resumed session may carry text the member already wrote into these --
+  // treatment details the tool could never regenerate. Their edits win.
+  S.item29 = S.resumedItem29 || data.item29;
+  S.shaExplains = (S.resumedSha && Object.keys(S.resumedSha).length)
+    ? Object.assign({}, data.sha, S.resumedSha) : data.sha;
+  S.shaLabels = data.labels;
+  S.resumedItem29 = null; S.resumedSha = null;
   S.confirmedCount = data.confirmed;
   $("item29").value = S.item29;
+  updateItem29Todo();
   $("sha-explains").innerHTML = Object.keys(S.shaExplains).length
     ? "<h2>SHA Part A — per-question explanations</h2>" +
       Object.entries(S.shaExplains).map(([f,t])=>
         `<div class="field"><label>${esc(S.shaLabels[f]||f)}</label>
          <textarea id="sha-${esc(f)}" rows="3">${esc(t)}</textarea></div>`).join("")
     : "";
+  Object.keys(S.shaExplains).forEach(f=>{
+    const el = $("sha-" + f);
+    if (el) el.addEventListener("input", ()=>{
+      S.shaExplains[f] = el.value; saveSession();
+    });
+  });
+  saveSession();
   show(4);
+});
+
+$("clear-saved").addEventListener("click", ()=>{
+  if (!confirm("Clear your saved progress on this device? You would need to upload "
+             + "your records again to get back here.")) return;
+  clearSession();
+});
+
+// Count the treatment placeholders down as they are filled in, and keep the
+// member's own wording -- the one thing here the tool cannot regenerate.
+$("item29").addEventListener("input", ()=>{
+  updateItem29Todo();
+  S.item29 = $("item29").value;
+  saveSession();
 });
 
 // -------------------------------------------------------------- step 4
@@ -642,6 +904,13 @@ $("to-package").addEventListener("click", async ()=>{
   Object.keys(S.shaExplains).forEach(f=>{
     const el = $("sha-"+f); if (el) S.shaExplains[f] = el.value;
   });
+  const left = (S.item29.match(/\[Add treatment received\]/g) || []).length;
+  const li = $("next-item29");
+  li.hidden = left === 0;
+  if (left) $("next-item29-detail").textContent =
+    `${left} “[Add treatment received]” marker${left===1?"":"s"} ${left===1?"is":"are"} `
+    + `still in the Item 29 text on page 2. Go back a step to replace `
+    + `${left===1?"it":"them"}, or write ${left===1?"it":"them"} on the printed form.`;
   show(5);
   await buildOutputs();
 });
@@ -709,6 +978,30 @@ v if isinstance(v, bytes) else v.encode("utf-8")
 }
 
 renderIntake();
+
+// Offer to resume before they retype anything.
+(function(){
+  const saved = loadSession();
+  if (!saved) return;
+  const when = new Date(saved.savedAt);
+  const n = (saved.conditions && saved.conditions.clinical || []).length;
+  $("resume-detail").textContent =
+    `Saved ${when.toLocaleDateString()} at ${when.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"})}` +
+    ` — ${n} condition${n===1?"":"s"} already extracted, plus your decisions. ` +
+    `You will not need to upload your records again.`;
+  $("resume-banner").hidden = false;
+  $("resume-go").addEventListener("click", async ()=>{
+    S.answers = saved.answers || {};
+    show(2);
+    await boot();
+    await resumeFrom(saved);
+  });
+  $("resume-discard").addEventListener("click", ()=>{
+    if (!confirm("Discard your saved progress and start over?")) return;
+    clearSession();
+    $("resume-banner").hidden = true;
+  });
+})();
 </script>
 </body>
 </html>

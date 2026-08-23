@@ -32,18 +32,44 @@ tool does not decide, advise, or predict what you should claim or what
 you are entitled to -- that is your VSO's job, and they are accredited to
 do it. Every entry needs their review before it goes anywhere.
 
-BEFORE YOU HAND THIS OVER
--------------------------
-1. Fill in your Social Security Number and DoD ID by hand on both forms.
-   This tool never collects or writes those. Every other identity field
-   is filled from what you entered.
-2. Sign and date both forms. They are unsigned by design.
-3. Read every checked "Yes" box and its explanation. You affirmed each of
-   these during review, but read them once more -- DD Form 2807-1 carries
-   a federal false-statement warning (up to 5 years confinement or a
-   $10,000 fine).
-4. Give the buddy-letter templates to people who actually witnessed what
-   they are describing.
+STILL TO DO -- THIS PACKAGE IS NOT FINISHED
+-------------------------------------------
+[ ] 1. Social Security Number and DoD ID, by hand. Both forms ask for
+       each of them more than once -- EIGHT boxes across FOUR places:
+       DD 2807-1  - items 2a and 2b on page 1        (SSN, DoD ID)
+       DD 2807-1  - the header of page 2             (SSN, DoD ID)
+       DD 2807-1  - the header of page 3             (SSN, DoD ID)
+       SHA Part A - section 1                        (SSN, DoD ID)
+       This tool never collects or writes those. Every other identity
+       field is already filled from what you entered.
+
+[ ] 2. Replace every "[Add treatment received]" in Item 29 on page 2.
+       The form asks what treatment you had; your records do not state it
+       in a form this tool can read. Physical therapy, medication,
+       surgery, an injection -- or "no treatment" if that is true.
+
+[ ] 3. Read every checked "Yes" and its explanation once more. You
+       affirmed each during review, but DD Form 2807-1 carries a federal
+       false-statement warning: up to 5 years confinement or a $10,000
+       fine.
+
+[ ] 4. Answer any question this tool left blank. It only proposes an
+       answer when your records support one. A blank is not a "no" -- it
+       means nothing in your records spoke to it, and you may well have
+       an answer it could not see.
+
+[ ] 5. Sign and date both forms -- AFTER your VSO has reviewed them.
+       They are unsigned by design.
+
+[ ] 6. Send the buddy-letter templates to people who actually witnessed
+       what they describe.
+
+WHAT TO ASK YOUR VSO
+--------------------
+- Which of these conditions are worth claiming?
+- Are any of them presumptive for where and when I served?
+- What is missing from this file?
+- If still serving: am I inside the 180-to-90-day BDD window?
 
 CONTENTS
 --------
