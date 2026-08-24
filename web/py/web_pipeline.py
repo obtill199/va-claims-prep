@@ -26,6 +26,7 @@ yielding nothing.
 
 import io
 import json
+import schema
 
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import BooleanObject, NameObject
@@ -154,9 +155,9 @@ def build_review(conditions, corpus, birth_sex=None):
 
     weak = proposals_from_prompts(
         sorted(found.values(), key=lambda p: (-p["mentions"], p["item"])))
-    order = {"high": 0, "medium": 1, "low": 2}
+    rank = schema.confidence_rank
     merged = sorted(proposals + weak,
-                    key=lambda p: (order[p.confidence], p.target_form,
+                    key=lambda p: (rank(p.confidence), p.target_form,
                                    p.question_text))
     return merged, unmapped
 
@@ -238,14 +239,22 @@ def build_outputs(answers, proposals, conditions, per_file, item29,
     }
 
     sources = [f["name"] for f in per_file]
+    package_bundle.annotate_reached(conditions["clinical"], confirmed)
     out["conditions_worksheet.md"] = package_bundle.build_worksheet(
         conditions["clinical"], conditions["administrative"], sources, None)
     out["evidence_index.md"] = package_bundle.build_evidence_index(
         conditions["clinical"], None)
 
     confirmed_refs = {p.condition_ref for p in confirmed}
+    # Self-reported conditions get a letter whether or not they reached a
+    # form question. The ones that reached nothing are exactly the ones with
+    # no other evidence anywhere -- gating them behind a confirmed proposal
+    # would drop the only claim a lay statement could still support.
     letter_conditions = [c for c in conditions["clinical"]
-                         if (c["icd10"] or c["condition"]) in confirmed_refs]
+                         if c.get("self_reported")
+                         or (c["icd10"] or c["condition"]) in confirmed_refs]
+    letter_conditions.sort(key=lambda c: (not c.get("self_reported"),
+                                          c.get("condition", "")))
     for name, text in _buddy_letters(answers.get("full_name", ""),
                                      letter_conditions).items():
         out[f"buddy_letters/{name}"] = text
@@ -287,7 +296,23 @@ def _buddy_letters(member_name, conditions):
                  "## Your information", "", "- Full name: ",
                  "- Relationship to the veteran: ", "- Address: ",
                  "- Phone: ", "- Email: ", ""]
-        if cond:
+        if cond and cond.get("self_reported"):
+            # This is the letter that decides something. A documented
+            # condition has a clinician's note carrying it; this one has
+            # nothing but the member's word, and somebody who saw it is the
+            # only evidence that will ever exist. Say so, so the person
+            # writing it knows it is not a formality.
+            lines += ["## Why this letter matters more than the others", "",
+                      f"There is no medical record for "
+                      f"{cond['condition'].lower()}. It was never written "
+                      f"down at the time — which is ordinary, and is not "
+                      f"evidence it did not happen. What you personally saw "
+                      f"is the evidence.", "",
+                      "Be specific: dates, places, what changed, what they "
+                      "stopped being able to do. Do not guess at a diagnosis "
+                      "or use medical words — describe what you observed and "
+                      "let the doctors name it.", ""]
+        elif cond:
             icd = f" ({cond['icd10']})" if cond.get("icd10") else ""
             span = (cond["first_seen"] if cond["first_seen"] == cond["last_seen"]
                     else f"{cond['first_seen']} to {cond['last_seen']}")
@@ -311,5 +336,6 @@ def _buddy_letters(member_name, conditions):
     out = {"buddy_letter_GENERAL.md": one()}
     for c in conditions:
         slug = re.sub(r"[^A-Za-z0-9]+", "_", c["condition"]).strip("_")[:50]
-        out[f"buddy_letter_{slug}.md"] = one(c)
+        prefix = "NEEDED_" if c.get("self_reported") else ""
+        out[f"buddy_letter_{prefix}{slug}.md"] = one(c)
     return out

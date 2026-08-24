@@ -10,8 +10,10 @@ shared modules.
     python tools/build_web.py
 """
 
+import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 
@@ -33,6 +35,7 @@ SHARED_MODULES = [
     "condition_library.py",
     "coded_records.py",
     "timing.py",
+    "self_report.py",
 ]
 
 DATA = [
@@ -91,6 +94,41 @@ def sync_questions():
               f"({len(intake.QUESTIONS)} questions)")
 
 
+PY_VERSION_MARK = "const PY_BUILD ="
+
+
+def stamp_python_build():
+    """Cache-bust the Python module fetches.
+
+    The stylesheet has been cache-busted since the first deploy; the Python
+    modules never were. They are fetched by plain name at boot, so a
+    returning visitor could run last week's extractor against this week's
+    page -- which is exactly what happened in testing: new HTML calling a
+    stale field_map that still assumed every condition carried a date, and
+    a TypeError with a traceback pointing at a line that no longer exists.
+
+    Hash every module that ships, and hang that on the fetch URLs.
+    """
+    h = hashlib.sha256()
+    for mod in sorted(SHARED_MODULES) + ["web_pipeline.py"]:
+        path = os.path.join(OUT, "py", mod)
+        if os.path.exists(path):
+            with open(path, "rb") as fh:
+                h.update(fh.read())
+    digest = h.hexdigest()[:10]
+
+    path = os.path.join(OUT, "index.html")
+    html = open(path, encoding="utf-8").read()
+    new = re.sub(r'const PY_BUILD = "[^"]*";',
+                 f'const PY_BUILD = "{digest}";', html)
+    if new == html:
+        print("  WARNING: no PY_BUILD marker in index.html; modules uncached")
+        return
+    if new != html:
+        open(path, "w", encoding="utf-8").write(new)
+    print(f"  python modules -> ?v={digest}")
+
+
 def main():
     for sub in ("py", "data", "forms"):
         os.makedirs(os.path.join(OUT, sub), exist_ok=True)
@@ -121,6 +159,7 @@ def main():
     manifest = SHARED_MODULES + ["web_pipeline.py"]
     with open(os.path.join(OUT, "py", "MANIFEST.txt"), "w") as fh:
         fh.write("\n".join(manifest) + "\n")
+    stamp_python_build()
     print(f"  manifest: {len(manifest)} modules")
 
 

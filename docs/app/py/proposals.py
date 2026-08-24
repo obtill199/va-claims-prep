@@ -16,6 +16,7 @@ import argparse
 import hashlib
 
 from field_map import build_mapping
+import self_report
 from schema import Proposal, proposals_to_json
 
 
@@ -47,6 +48,18 @@ def _fmt_date(iso):
         return f"{int(d)} {months[int(m) - 1]} {y}"
     except Exception:
         return iso
+
+
+def _self_reported_rationale(condition):
+    """No dates, no encounter count, no problem list -- none of that exists
+    for something the member typed. Saying "0 encounters" would read as a
+    weak finding rather than what it is: a statement from the person who
+    would know."""
+    return (f"You told us about this on the previous screen. It was not "
+            f"found anywhere in the records you uploaded, so there is no "
+            f"page to cite \u2014 which does not make it less true, and this "
+            f"form asks you rather than your records. Confirm the wording "
+            f"below is a fair description of what you meant.")
 
 
 def _rationale(condition):
@@ -86,18 +99,25 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path,
         conditions_path, dd2807_crosswalk_path, sha_fields_path, birth_sex)
 
     proposals = []
+    unmatched = list(unmatched)
     for m in matched:
         cond = m["condition"]
         condition_ref = cond["icd10"] or cond["condition"]
+        produced = 0
         for target in m["targets"]:
+            question = target.get("question_text") or target["target_field"]
+            # A symptom the member typed answers "do you have X". It cannot
+            # answer "did someone treat you for X" -- see self_report.py.
+            if cond.get("self_reported") and \
+                    not self_report.answerable_from_self_report(question):
+                continue
             proposals.append(Proposal(
                 id=_stable_id(condition_ref, cond["condition"],
                               target["target_form"], target["target_field"]),
                 condition_ref=condition_ref,
                 target_form=target["target_form"],
                 target_field=target["target_field"],
-                question_text=(target.get("question_text")
-                               or target["target_field"]),
+                question_text=question,
                 proposed_value="Yes",
                 source_document=cond["source_document"],
                 source_page=cond["source_page"],
@@ -108,16 +128,26 @@ def build_proposals(conditions_path, dd2807_crosswalk_path, sha_fields_path,
                 # A library rule carries its own confidence: acute symptom
                 # codes mapped to chronic-condition questions are "low" and
                 # therefore default to Leave blank on the review screen.
-                confidence=(target.get("library_confidence")
-                            or ("medium" if target.get("inferred") else "high")),
+                confidence=("self-reported" if cond.get("self_reported")
+                            else (target.get("library_confidence")
+                                  or ("medium" if target.get("inferred") else "high"))),
                 extraction_method="structured",
                 rationale=(
-                    _rationale(cond)
+                    _self_reported_rationale(cond) if cond.get("self_reported")
+                    else _rationale(cond)
                     + (" This one is an inference rather than something your "
                        "records state directly: " + target["inferred"] + "."
                        if target.get("inferred") else "")
                 ),
             ))
+            produced += 1
+
+        # Every target was suppressed -- a self-report whose only form
+        # questions asked about treatment it never had. It must still reach
+        # the worksheet: dropping it here would lose the one thing the
+        # member went out of their way to tell us, and lose it silently.
+        if not produced:
+            unmatched.append(cond)
     for rl in record_level:
         proposals.append(Proposal(
             id=_stable_id("RECORD-LEVEL", rl["target_field"],

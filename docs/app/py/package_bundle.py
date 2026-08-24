@@ -43,10 +43,13 @@ STILL TO DO -- THIS PACKAGE IS NOT FINISHED
        This tool never collects or writes those. Every other identity
        field is already filled from what you entered.
 
-[ ] 2. Replace every "[Add treatment received]" in Item 29 on page 2.
-       The form asks what treatment you had; your records do not state it
-       in a form this tool can read. Physical therapy, medication,
-       surgery, an injection -- or "no treatment" if that is true.
+[ ] 2. Replace every "[Add ...]" marker in Item 29 on page 2. Each one is
+       something the form asks for that no record could supply.
+         "[Add treatment received]"  -- physical therapy, medication,
+            surgery, an injection, or "no treatment" if that is true.
+         "[Add approximate dates...]" -- appears on conditions you told us
+            about yourself, which have no documented dates. Approximate
+            is fine; "since about 2019, a few times a month" is an answer.
 
 [ ] 3. Read every checked "Yes" and its explanation once more. You
        affirmed each during review, but DD Form 2807-1 carries a federal
@@ -102,9 +105,36 @@ or service connection.
 """
 
 
+def annotate_reached(conditions, proposals):
+    """Record which form question each self-reported condition reached.
+
+    Without this the worksheet can say a member reported something but not
+    whether it landed anywhere on the forms -- which is the first thing a
+    VSO looks for, and the difference between "already covered" and "needs
+    to go somewhere else".
+    """
+    by_ref = {}
+    for p in proposals:
+        by_ref.setdefault(p.condition_ref, set()).add(p.question_text)
+    for c in conditions:
+        if not c.get("self_reported"):
+            continue
+        ref = c.get("icd10") or c.get("condition")
+        reached = sorted(by_ref.get(ref, ()))
+        c["_reached"] = "; ".join(reached) if reached else ""
+    return conditions
+
+
 def build_worksheet(conditions, administrative, sources, findings=None):
     today = date.today().isoformat()
     out = [WORKSHEET_HEADER.format(today=today, sources=", ".join(sources))]
+
+    # Documented and self-reported are different kinds of evidence and a VSO
+    # needs to tell them apart at a glance. Mixed into one table -- with
+    # empty date and encounter columns -- a self-report reads as a parsing
+    # failure rather than as the member speaking.
+    self_reported = [c for c in conditions if c.get("self_reported")]
+    conditions = [c for c in conditions if not c.get("self_reported")]
 
     for c in conditions:
         cite = c.get("source_document") or ""
@@ -114,6 +144,25 @@ def build_worksheet(conditions, administrative, sources, findings=None):
             f"| {c['first_seen']} | {c['last_seen']} | {c['encounters']} "
             f"| {'Active' if c['active'] else 'Inactive'} "
             f"| {'Yes' if c['on_problem_list'] else '—'} | {cite}{page} |")
+
+    if self_reported:
+        out.append("\n## Reported by the member, not found in the records\n")
+        out.append(
+            "These came from the member directly. Nothing in the uploaded "
+            "records documents them, which is ordinary -- people routinely "
+            "do not seek care for what they are managing -- and is not "
+            "evidence against them. They are listed separately so the "
+            "difference in evidence is visible, not buried.\n")
+        out.append(
+            "Each one has a buddy-letter template in this package, prefixed "
+            "NEEDED_. For these, a lay statement from somebody who saw it is "
+            "the strongest evidence available, and in most cases the only "
+            "evidence there will ever be.\n")
+        out.append("| Reported as | Form question it reached |")
+        out.append("|---|---|")
+        for c in self_reported:
+            reached = c.get("_reached") or "no matching question — discuss"
+            out.append(f"| {c['condition']} | {reached} |")
 
     if administrative:
         out.append("\n## Administrative / encounter codes "

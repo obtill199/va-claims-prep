@@ -26,6 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import intake
 import package_bundle
+import schema
 from app import pipeline
 from buddy_letter import write_letters
 from explanations import (conditions_by_ref, draft_dd2807_item_29,
@@ -155,10 +156,10 @@ def upload():
         # Merge the weak tier into the same review list. One pass, one
         # mechanism -- rather than a second list the member works by hand.
         from proposals import proposals_from_prompts
-        order = {"high": 0, "medium": 1, "low": 2}
+        rank = schema.confidence_rank
         state["proposals"] = sorted(
             proposals + proposals_from_prompts(prompts),
-            key=lambda p: (order[p.confidence], p.target_form, p.question_text))
+            key=lambda p: (rank(p.confidence), p.target_form, p.question_text))
         if run_ocr:
             state["findings"] = pipeline.run_reconciliation(conditions, per_file)
 
@@ -290,6 +291,7 @@ def download():
 
     conditions = state["conditions"]
     sources = [f["name"] for f in state["per_file"]]
+    package_bundle.annotate_reached(conditions["clinical"], confirmed)
     worksheet = package_bundle.build_worksheet(
         conditions["clinical"], conditions["administrative"], sources,
         state["findings"])

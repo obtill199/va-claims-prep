@@ -84,6 +84,19 @@ def _fmt(iso):
         return iso
 
 
+def _chronological(cond):
+    """Sort key that tolerates a condition with no dates.
+
+    Self-reported entries carry none. Sorting them with the documented ones
+    used to raise TypeError from inside a lambda, which surfaced as the
+    whole Item 29 draft coming back empty with no explanation. They sort
+    last: the documented history reads as a timeline, and the member's own
+    additions follow it.
+    """
+    return (cond.get("first_seen") is None, cond.get("first_seen") or "")
+
+
+DATES_PROMPT = "[Add approximate dates this started and how often it happens]"
 TREATMENT_PROMPT = "[Add treatment received]"
 
 
@@ -97,6 +110,20 @@ def _condition_sentence(cond):
     entry carries an explicit prompt for the member to fill in.
     """
     icd = f" ({cond['icd10']})" if cond.get("icd10") else ""
+
+    # A self-reported condition has no dates, no encounter count, no provider
+    # and no problem-list entry, because no clinician ever wrote it down.
+    # Printing "0 documented encounters" would read as a weak finding and
+    # invite a reviewer to discount it; what it actually needs is a plain
+    # statement that the member is the source and a prompt for the dates
+    # only they know.
+    if cond.get("self_reported"):
+        bits = [f"{cond['condition']}{icd}",
+                "Not documented in my service treatment records",
+                "Reported by me",
+                DATES_PROMPT]
+        return ". ".join(b for b in bits if b) + f". {TREATMENT_PROMPT}"
+
     span = (_fmt(cond["first_seen"]) if cond["first_seen"] == cond["last_seen"]
             else f"{_fmt(cond['first_seen'])} to {_fmt(cond['last_seen'])}")
 
@@ -151,7 +178,7 @@ def draft_sha_explanations(confirmed_props, conditions_by_ref, sha_field_names):
         explain_field = sha_explain_field_for(response_field, sha_field_names)
         if not explain_field:
             continue
-        conds = sorted(_dedupe(conds), key=lambda c: c["first_seen"])
+        conds = sorted(_dedupe(conds), key=_chronological)
         drafts[explain_field] = " ".join(_condition_sentence(c) for c in conds)
     return drafts
 
@@ -198,7 +225,7 @@ def draft_dd2807_item_29(confirmed_props, conditions_by_ref, dd_crosswalk,
     lines = []
     for (label, question), conds in sorted(
             by_item.items(), key=lambda kv: (int(re.match(r"\d+", kv[0][0]).group()), kv[0][0])):
-        conds = sorted(_dedupe(conds), key=lambda c: c["first_seen"])
+        conds = sorted(_dedupe(conds), key=_chronological)
         header = f"Item {label}" + (f" ({question})" if question else "") + ":"
         body = " ".join(_condition_sentence(c) + _onset_note(c, findings_by_ref)
                         for c in conds)
@@ -225,7 +252,7 @@ def _dedupe(conds):
     """Same condition reached via two proposals shouldn't be stated twice."""
     seen, out = set(), []
     for c in conds:
-        key = (c.get("icd10"), c["condition"], c["first_seen"])
+        key = (c.get("icd10"), c["condition"], c.get("first_seen"))
         if key not in seen:
             seen.add(key)
             out.append(c)

@@ -13,7 +13,24 @@ from dataclasses import asdict, dataclass, field
 from typing import Optional
 
 VALID_FORMS = ("DD2807-1", "SHA_PART_A")
-VALID_CONFIDENCE = ("high", "medium", "low")
+# "self-reported" is not a weaker reading of a record -- it is a different
+# kind of claim entirely: the member said it, and no document backs it.
+# It gets its own tier so the review screen, the worksheet and the VSO can
+# all tell the two apart at a glance, rather than a self-report borrowing
+# the badge of something with a page number behind it.
+VALID_CONFIDENCE = ("high", "medium", "low", "self-reported")
+
+# Sort order for review. Defined here, next to the tiers themselves, because
+# three separate modules were each keeping their own copy of it -- and adding
+# a fourth tier broke two of them with a KeyError at runtime rather than at
+# import. A self-report sorts with the strong tier: it is not a weak reading
+# of a record, it is a statement from the person who would know.
+CONFIDENCE_ORDER = {"high": 0, "self-reported": 0, "medium": 1, "low": 2}
+
+
+def confidence_rank(confidence):
+    """Never raise on an unknown tier -- sort it last instead."""
+    return CONFIDENCE_ORDER.get(confidence, len(CONFIDENCE_ORDER))
 VALID_METHOD = ("structured", "ocr")
 VALID_STATUS = ("pending", "confirmed", "edited", "rejected")
 

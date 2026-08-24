@@ -473,3 +473,22 @@ details.tier-group > div { padding-top: var(--s3); }
   outline: 3px solid var(--brand-600);
   outline-offset: 2px;
 }
+
+
+/* A tick-list row. The audience includes people with tremor and with one
+   hand on a phone, so the whole row is the target, not the 13px box. */
+.checkrow {
+  display: flex;
+  gap: var(--s3);
+  align-items: flex-start;
+  padding: var(--s3);
+  border-radius: 6px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.checkrow:hover { background: var(--n-50); }
+.checkrow:focus-within { outline: 3px solid var(--brand-600); outline-offset: -3px; }
+.checkrow input { margin-top: 0.2em; width: 20px; height: 20px; flex: none; }
+.checkrow > span { display: block; }
+.checkrow .help { display: block; margin: var(--s1) 0 0; }
+.checkrow:has(input:checked) { background: var(--brand-50); }

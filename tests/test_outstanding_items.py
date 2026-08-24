@@ -37,15 +37,29 @@ def test_readme_names_the_placeholder_explanations_actually_writes():
     assert explanations.TREATMENT_PROMPT in package_bundle.README
 
 
-def test_the_browser_app_counts_the_placeholder_that_is_written():
-    # The counter regex is written with escaped brackets in JS source.
-    escaped = re.escape(explanations.TREATMENT_PROMPT).replace("/", r"\/")
-    literal = explanations.TREATMENT_PROMPT.replace("[", r"\[").replace("]", r"\]")
+def all_prompts():
+    """Every "[Add ...]" marker explanations.py can put on a form."""
+    return [v for k, v in vars(explanations).items()
+            if k.endswith("_PROMPT") and isinstance(v, str) and v.startswith("[")]
+
+
+def test_there_is_more_than_one_kind_of_prompt():
+    """Guards the assumption the next test rests on. A second kind appeared
+    the moment self-reported conditions did -- they carry no dates -- and a
+    counter that knew about only one would read zero with markers still on
+    the form."""
+    assert len(all_prompts()) >= 2
+
+
+def test_the_browser_app_counts_every_prompt_that_can_be_written():
     html = app_html()
-    assert literal in html, (
-        f"the app no longer matches {explanations.TREATMENT_PROMPT!r}; "
-        "the outstanding-items counter will silently report zero")
-    assert escaped or True
+    pattern = re.search(r"box\.value\.match\(/(.+?)/g\)", html)
+    assert pattern, "the outstanding-items counter regex is gone"
+    counter = re.compile(pattern.group(1).replace("\\\\", "\\"))
+    for prompt in all_prompts():
+        assert counter.search(prompt), (
+            f"the app's counter does not match {prompt!r}; it would report "
+            "zero while that marker is still on the form")
 
 
 def test_the_app_tells_the_member_the_same_string_to_search_for():

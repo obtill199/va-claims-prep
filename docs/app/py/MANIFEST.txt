@@ -9,4 +9,5 @@ package_bundle.py
 condition_library.py
 coded_records.py
 timing.py
+self_report.py
 web_pipeline.py

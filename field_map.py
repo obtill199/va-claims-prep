@@ -93,10 +93,23 @@ RULES = {
 # when it fires, or None. These are the items a member almost always answers
 # Yes to but that no single ICD-10 code maps onto.
 
+def _documented(conditions):
+    """Only conditions with a date behind them.
+
+    Self-reported entries carry no dates, and they must not feed these
+    rules anyway: "have you been treated in the last five years" is a
+    question about treatment, and a member telling us their back hurts is
+    not evidence that anyone treated it. Answering Yes on their behalf
+    from a symptom report would be the tool making a claim they did not.
+    """
+    return [c for c in conditions
+            if c.get("last_seen") and not c.get("self_reported")]
+
+
 def _treated_within_5_years(clinical, administrative):
     from datetime import date, timedelta
     cutoff = (date.today() - timedelta(days=5 * 365)).isoformat()
-    recent = [c for c in clinical if c["last_seen"] >= cutoff]
+    recent = [c for c in _documented(clinical) if c["last_seen"] >= cutoff]
     if not recent:
         return None
     return (f"{len(recent)} condition(s) in your records were seen by a "
