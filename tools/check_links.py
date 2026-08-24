@@ -57,7 +57,12 @@ def main():
         print(f"\n{os.path.relpath(page, REPO)} — {len(found)} external link(s)")
         for url in found:
             status = check(url)
-            ok = status == 200 or (status == 403 and url in BOT_BLOCKED)
+            # 429 is rate limiting, not a dead link: hitting github.com
+            # several times in one pass is enough to earn one. Treating it as
+            # broken sends somebody hunting for a URL that works fine.
+            ok = (status == 200
+                  or status == 429
+                  or (status == 403 and url in BOT_BLOCKED))
             print(f"  {str(status):<6} {url}")
             if not ok:
                 bad.append((url, status))
