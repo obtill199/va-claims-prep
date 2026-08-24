@@ -189,8 +189,10 @@
 
   <div id="upload-errors" class="note note--err hidden"></div>
   <div class="dropzone">
-    <input type="file" id="files" accept="application/pdf" multiple>
-    <p class="help">PDF only. Nothing leaves this page.</p>
+    <label class="field__label" for="files">Choose your record PDFs</label>
+    <input type="file" id="files" accept="application/pdf" multiple
+           aria-describedby="files-help">
+    <p class="help" id="files-help">PDF only. Nothing leaves this page.</p>
   </div>
   <button class="btn btn--lg" id="process" disabled>Process records →</button>
   <div id="processing" class="status-row hidden">
@@ -281,8 +283,9 @@
     your and your VSO's judgement, not this tool's.</p>
   </div>
   <div class="note note--warn" id="item29-todo" hidden></div>
-  <h2>DD 2807-1 — Item 29</h2>
-  <textarea id="item29" rows="14"></textarea>
+  <h2 id="item29-heading">DD 2807-1 — Item 29</h2>
+  <textarea id="item29" rows="14" aria-labelledby="item29-heading"
+            aria-describedby="item29-todo"></textarea>
   <div id="sha-explains"></div>
   <p class="help" id="saved-note-2">Your edits here save automatically on this device.</p>
   <button class="btn btn--lg" id="to-package">Continue to your package →</button>
@@ -419,7 +422,7 @@ const PRESUMPTIVE_REVIEWED = "August 2026";
 // Set by tools/build_web.py from a hash of the shipped modules. Without it
 // a returning visitor boots this page against whatever Python their browser
 // cached last time.
-const PY_BUILD = "1bda923329";
+const PY_BUILD = "b671ea13f1";
 
 function saveSession(){
   try {
@@ -1216,8 +1219,9 @@ json.dumps({"item29": _state["item29"],
   $("sha-explains").innerHTML = Object.keys(S.shaExplains).length
     ? "<h2>SHA Part A — per-question explanations</h2>" +
       Object.entries(S.shaExplains).map(([f,t])=>
-        `<div class="field"><label>${esc(S.shaLabels[f]||f)}</label>
-         <textarea id="sha-${esc(f)}" rows="3">${esc(t)}</textarea></div>`).join("")
+        `<div class="field">
+           <label class="field__label" for="sha-${esc(f)}">${esc(S.shaLabels[f]||f)}</label>
+           <textarea id="sha-${esc(f)}" rows="3">${esc(t)}</textarea></div>`).join("")
     : "";
   Object.keys(S.shaExplains).forEach(f=>{
     const el = $("sha-" + f);

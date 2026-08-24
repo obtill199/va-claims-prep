@@ -1,0 +1,101 @@
+# Continuous checks for va-claims-prep.
+#
+# This project ships to veterans, is public, and is built around other
+# people's medical records. Three classes of failure matter more here than
+# a broken build:
+#
+#   PHI reaching a commit. It has nearly happened twice.
+#   The browser build silently diverging from the source it was generated
+#   from -- an unterminated string once shipped to production with a green
+#   local suite, because nothing imports the module outside Pyodide.
+#   Data going stale on a calendar: presumptive lists change by statute,
+#   ICD-10 every October, and the forms get new editions that rename the
+#   fields this tool writes to.
+#
+# The scheduled run exists for the third: nobody pushes to a repository on
+# the day a list becomes wrong.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Monthly. Catches the freshness checks without waiting for a commit.
+    - cron: "17 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        # The tool is used on whatever the member already owns. Windows is
+        # the common case and was a late port; it stays covered.
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.11", "3.12"]
+        exclude:
+          - {os: windows-latest, python: "3.11"}
+          - {os: macos-latest, python: "3.11"}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The repo-hygiene tests read git history, not just the worktree.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Tests
+        run: python -m pytest tests/ -q
+
+  build-is-current:
+    # docs/app/py is generated. If someone edits a module and pushes without
+    # rebuilding, the site serves the old one and nothing says so.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Rebuild the browser bundle
+        run: python tools/build_web.py
+      - name: Fail if the committed build is out of date
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::The committed browser build is stale."
+            echo "Run 'python tools/build_web.py && python tools/stamp_assets.py' and commit the result."
+            git --no-pager diff --stat
+            exit 1
+          fi
+          echo "Browser build matches the source."
+
+  links:
+    # Government URLs move. They moved four times in one week during
+    # development. A dead link on the dashboard sends somebody to a 404 at
+    # the exact moment they were willing to act.
+    runs-on: ubuntu-latest
+    continue-on-error: true   # an external outage is not this repo's fault
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip}
+      - run: pip install -r requirements.txt
+      - run: python tools/check_links.py

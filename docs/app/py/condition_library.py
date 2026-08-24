@@ -63,6 +63,14 @@ def _in_range(code, start, end):
         return False
 
 
+# ICD-10-CM is revised every 1 October: codes are added, deleted and
+# reassigned. A deleted code does not raise here, it simply stops matching,
+# and the condition it used to catch quietly disappears from every package
+# built afterwards. Bump this when the rules below have been re-checked
+# against the current release.
+REVIEWED = "2026-08"
+
+
 def _prefix(code, *prefixes):
     c = _norm(code)
     return any(c.startswith(p.upper()) for p in prefixes)

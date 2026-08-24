@@ -19,20 +19,28 @@ the useful one; scanned AF forms and legacy STRs work too, with OCR.
 
 ![Record upload](docs/screenshots/2-upload.png)
 
-**3. Review** — every proposed answer, with the condition behind it, the doctor
+**3. What's missing** — the part your records cannot answer. A checklist of the
+things people commonly live with and never report, because the conditions that
+go uncompensated are usually the ones nobody wrote down. Nothing you tick here
+checks a box on its own; it becomes a proposal you confirm on the next screen,
+worded the way the form words it.
+
+**4. Review** — every proposed answer, with the condition behind it, the doctor
 who diagnosed it, and the page it came from. Confirm, change, or leave blank.
 Nothing reaches a form until you confirm it. Answers are sorted strongest first;
 weak ones start as *Leave blank*, so skipping a decision never makes a claim.
 
 ![Review screen](docs/screenshots/3-review.png)
 
-**4. Explanations** — DD 2807-1 requires every "Yes" to be explained in Item 29.
+**5. Explanations** — DD 2807-1 requires every "Yes" to be explained in Item 29.
 Drafts are prepared from your records; edit them freely.
 
 ![Explanations](docs/screenshots/4-explain.png)
 
-**5. Package** — download both filled forms, a conditions worksheet, an evidence
-index, and buddy-letter templates.
+**6. Package** — download both filled forms, a conditions worksheet, an evidence
+index, and buddy-letter templates. Plus the two things a first-time filer most
+often misses: which filing deadline you are actually inside, and which
+presumptive and secondary questions your own records raise for your VSO.
 
 ![Package](docs/screenshots/5-package.png)
 
@@ -52,6 +60,9 @@ every single answer before anything is written.
 - It does not advise you on what to claim or what you are owed. That is your
   VSO's job and they are accredited to do it.
 - It does not send your records anywhere. Everything runs on your computer.
+- It does not decide that two of your conditions are related, or that a
+  presumption applies to you. It reports what your records contain and hands
+  the question to someone qualified to answer it.
 
 ## Setup
 
