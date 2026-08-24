@@ -1,0 +1,29 @@
+# Runtime dependencies.
+#
+# Kept deliberately small. This runs on a veteran's own laptop, often over a
+# slow connection, and every added dependency is one more thing that can fail
+# between them and a filed claim.
+#
+# Note that the browser build does not use this file. Pyodide installs only
+# pypdf via micropip, so nothing below can break the version most people use.
+
+pypdf>=4.2
+pdfplumber>=0.11
+PyMuPDF>=1.24
+python-docx>=1.1
+Flask>=3.0
+requests>=2.31
+
+# Not imported anywhere in this project. It arrives transitively:
+#
+#   pdfplumber -> pdfminer.six -> cryptography
+#
+# pdfminer needs it to open encrypted PDFs, which real record exports
+# sometimes are. The upper bound is the point of this line: cryptography 49
+# and 50 ship no wheel for Python 3.11 on x86_64 macOS, so pip falls back to
+# building from source, which needs a Rust toolchain and OpenSSL headers. On
+# a clean machine that ends in a wall of compiler output and no working tool.
+#
+# 48.0.1 ships cp311-abi3 universal2 wheels. Raise this bound only after
+# checking that wheels exist for every Python in the CI matrix.
+cryptography>=42,<49

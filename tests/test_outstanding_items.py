@@ -82,8 +82,14 @@ def test_readme_accounts_for_every_field_left_blank_by_design():
         f"{boxes} boxes across {places} places are blank by design, but the "
         "README and the app both say eight across four; update all three together")
     assert "EIGHT boxes across FOUR places" in package_bundle.README
-    assert "eight boxes in\n    four places" in app_html()
-    assert "eight boxes across four places" in app_html()
+    # Matched on substance, not on line breaks: this assertion has broken
+    # twice on rewording that changed nothing a member would notice.
+    page = " ".join(app_html().split())
+    assert "Eight boxes in four places" in page or \
+           "eight boxes in four places" in page, \
+        "the app no longer tells the member how many boxes to fill by hand"
+    assert "eight boxes across four places" in page, \
+        "the final checklist no longer says where the blanks are"
 
 
 def test_readme_marks_the_package_as_unfinished_not_complete():

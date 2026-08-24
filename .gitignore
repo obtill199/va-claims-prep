@@ -11,7 +11,20 @@
 !docs/app/forms/*.pdf
 !web/forms/*.pdf
 !docs/app/py/MANIFEST.txt
+# Blanket-ignore .txt because that is what the record artifacts are: raw
+# extracted text, page sidecars, PII literal lists. Keeping it broad means a
+# future extracted_whatever.txt cannot reach a commit by accident.
+#
+# The cost is that a NEEDED .txt gets silently dropped instead -- which has
+# now happened three times, most recently to requirements.txt, so a commit
+# pushed green while CI could not install anything. Every exception below is
+# a generated or hand-written file with no personal data in it, and
+# tests/test_repo_hygiene.py fails if one of them stops being tracked.
 *.txt
+!requirements.txt
+!forms/FORM_VERSIONS.txt
+!pii_literals.example.txt
+!tools/sample_record.txt
 conditions.json
 
 # Python

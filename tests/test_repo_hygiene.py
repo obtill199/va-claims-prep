@@ -232,3 +232,32 @@ def test_the_vendored_forms_have_not_silently_changed():
             "tools/inspect_fields.py, confirm every field name in "
             "field_map.py and intake.py still exists, then re-pin with "
             "tools/pin_forms.py.")
+
+
+# --------------------------------------- files the project cannot work without
+
+# Ignore rules protect this repo from committing records. They have also, three
+# times, silently dropped a file the build needs -- most recently
+# requirements.txt, so a commit pushed green while CI could not install
+# anything and every job died at setup. `git add -A` reports nothing when a
+# file is ignored, so the omission is invisible until something far away
+# breaks.
+REQUIRED_FILES = [
+    "requirements.txt",              # CI installs from it; users install from it
+    "forms/FORM_VERSIONS.txt",       # pins the form editions
+    "docs/app/py/MANIFEST.txt",      # the browser build's module list
+    "tools/sample_record.txt",       # the synthetic record fixture
+    ".github/workflows/ci.yml",
+    "ARCHITECTURE.md",
+    "LICENSE",
+    "README.md",
+]
+
+
+@pytest.mark.parametrize("rel", REQUIRED_FILES)
+def test_required_files_are_actually_tracked(rel):
+    assert os.path.exists(os.path.join(REPO, rel)), f"{rel} is missing on disk"
+    assert rel in tracked_files(), (
+        f"{rel} exists but is NOT committed — almost certainly swallowed by a "
+        f".gitignore rule. Check `git check-ignore -v {rel}` and add an "
+        f"exception.")

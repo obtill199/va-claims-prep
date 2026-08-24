@@ -89,19 +89,16 @@
 <main class="wrap" id="main" style="padding:var(--s6) var(--s5) var(--s8)">
 
 <!-- ---------------------------------------------------------- step 1 -->
-<section id="step-1">
-  <h1>About you</h1>
-  <p class="lede">These are the things your medical records can't tell us. They go
-  straight onto both forms — you're the source, so there's nothing to review later.</p>
-
-  <div class="note">
-    <span class="note__title">This all runs inside your browser tab.</span>
-    <p>Your records are read on this computer and never sent anywhere — there is no
-    server to send them to. You can disconnect from the internet after this page
-    loads and the whole thing still works.</p>
-  </div>
-
-  <div id="timing-panel" hidden></div>
+<!-- ---------------------------------------------------------- step 0 -->
+<!-- The door, not a step. Everything here used to sit stacked above the
+     first form field: four notice blocks a member had to scroll past before
+     they could type their name. Nobody reads the fourth one, and the ones
+     that matter most were competing with the ones that matter least. On its
+     own screen each is read once, and step 1 starts with a question. -->
+<section id="step-0">
+  <h1>Before you start</h1>
+  <p class="lede">Four things worth thirty seconds. Then the whole thing takes
+  about twenty minutes.</p>
 
   <div class="note note--warn" id="resume-banner" hidden>
     <span class="note__title">You have saved progress on this device.</span>
@@ -110,23 +107,60 @@
        <button type="button" class="btn btn--secondary" id="resume-discard">Start over</button></p>
   </div>
 
-  <div class="note note--warn">
-    <span class="note__title">Check your records have selectable text first.</span>
-    <p>Open your record PDF and try to select a line of text. If you can, this will
-    work. If the page behaves like a photograph, it is a scan — this browser version
-    cannot read scans, and you would fill everything in for nothing. Use the desktop
-    version for those; it reads them.</p>
+  <div class="note">
+    <span class="note__title">This is not a VA website, and it does not file anything.</span>
+    <p>It is an independent tool with no connection to the Department of Veterans
+    Affairs or the Department of Defense. It does not submit a claim, and it does
+    not advise you on what to claim or what you are owed &mdash; that is an
+    accredited Veterans Service Officer&rsquo;s job, and they are free.</p>
+    <p class="help">What it does: reads your own health records, fills in as much of
+    DD Form 2807-1 and the SHA as the evidence honestly supports, and hands you a
+    package to take to that appointment.</p>
   </div>
 
   <div class="note">
-    <span class="note__title">Social Security Number and DoD ID are not collected.</span>
-    <p>They are intentionally left blank. You fill them in by hand before handing the
-    package over. Both forms ask for each of them more than once — eight boxes in
-    four places:</p>
-    <p class="help"><strong>DD 2807-1:</strong> items 2a and 2b on page 1, then the SSN
-    and DoD ID boxes in the header of page 2, and again in the header of page 3.
-    <strong>SHA Part A:</strong> the SSN and DoD ID fields in section 1.</p>
+    <span class="note__title">Your records never leave this computer.</span>
+    <p>Everything runs inside this browser tab. There is no server to send them to.
+    You can disconnect from the internet once this page has loaded and the whole
+    thing still works.</p>
   </div>
+
+  <div class="note">
+    <span class="note__title">Your SSN and DoD ID are never asked for.</span>
+    <p>Both forms want them in eight places, and every one is left blank for you to
+    fill in by hand. Nothing here stores or transmits them, because nothing here
+    ever sees them.</p>
+  </div>
+
+  <div class="note note--warn">
+    <span class="note__title">Check your records are text, not photographs.</span>
+    <p>Open your record PDF and try to select a line of text. If you can, this will
+    work. If the page behaves like a picture, it is a scan &mdash; this browser
+    version cannot read scans, and you would fill everything in for nothing. The
+    desktop version reads them.</p>
+  </div>
+
+  <button class="btn btn--lg" id="to-intake">Start &rarr;</button>
+  <p class="help">Nothing is submitted anywhere at any point. You download the
+  finished package at the end.</p>
+</section>
+
+<section id="step-1" class="hidden">
+  <h1>About you</h1>
+  <p class="lede">These are the things your medical records can't tell us. They go
+  straight onto both forms — you're the source, so there's nothing to review later.</p>
+
+  <div id="timing-panel" hidden></div>
+
+  <details class="tier-group" style="margin:0 0 var(--s4)">
+    <summary>Where the SSN and DoD ID boxes are, for later</summary>
+    <div>
+      <p class="help">Eight boxes in four places, all left blank for you.
+      <strong>DD 2807-1:</strong> items 2a and 2b on page 1, the SSN and DoD ID boxes
+      in the header of page 2, and again in the header of page 3.
+      <strong>SHA Part A:</strong> the SSN and DoD ID fields in section 1.</p>
+    </div>
+  </details>
 
   <div id="intake-errors" class="note note--err hidden"></div>
   <div id="intake-fields"></div>
@@ -377,8 +411,24 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s==null?"":s).replace(/[&<>"']/g,
   c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-const STEP_COUNT = document.querySelectorAll("section[id^='step-']").length;
+// step-0 is the door, not a step: it carries the disclaimers and is walked
+// through once. Counting it would make the flow read "1 of 7" and put a
+// progress bar on a screen with no progress to make.
+const STEP_COUNT =
+  document.querySelectorAll("section[id^='step-']").length - 1;
+
 function show(n){
+  const nav = document.querySelector(".steps");
+  if (nav) nav.hidden = (n === 0);
+  const zero = $("step-0");
+  if (zero) zero.classList.toggle("hidden", n !== 0);
+  if (n === 0) {
+    window.scrollTo(0, 0);
+    for (let i=1;i<=STEP_COUNT;i++) $("step-"+i).classList.add("hidden");
+    const h = zero && zero.querySelector("h1");
+    if (h) { h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); }
+    return;
+  }
   for (let i=1;i<=STEP_COUNT;i++){
     $("step-"+i).classList.toggle("hidden", i!==n);
     const nav = $("nav-"+i);
@@ -1346,6 +1396,12 @@ v if isinstance(v, bytes) else v.encode("utf-8")
 }
 
 renderIntake();
+// The markup starts on the door, but show() owns the stepper's visibility,
+// so it has to run once or the progress nav renders above a screen that has
+// no progress to show.
+show(0);
+
+$("to-intake").addEventListener("click", ()=> show(1));
 
 // Offer to resume before they retype anything.
 (function(){
