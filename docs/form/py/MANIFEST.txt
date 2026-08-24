@@ -12,4 +12,5 @@ timing.py
 self_report.py
 secondary.py
 presumptives.py
+report_html.py
 web_pipeline.py

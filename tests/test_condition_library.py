@@ -112,7 +112,14 @@ def test_prechecked_tier_has_no_false_positives_on_real_records():
     """Measured against a real completed DD 2807-1. If this ever fails, a
     rule is proposing a Yes the member did not give."""
     import json
-    path = os.path.join(REPO, "conditions.json")
+    # tests/fixtures/, not the repository root. The root copy sat exactly
+    # where web_pipeline.build_review used to write its scratch file, so
+    # running the pipeline from a checkout silently replaced the golden
+    # data with whatever had just been processed -- and being gitignored,
+    # correctly, there was no copy to restore. build_review writes to a
+    # temp file now; this moves the fixture out of reach as well, because
+    # one fix for a data-loss bug is not enough.
+    path = os.path.join(REPO, "tests", "fixtures", "real_conditions.json")
     if not os.path.exists(path):
         pytest.skip("real records not present (gitignored, by design)")
 

@@ -42,6 +42,7 @@ SHARED_MODULES = [
     "self_report.py",
     "secondary.py",
     "presumptives.py",
+    "report_html.py",
 ]
 
 DATA = [

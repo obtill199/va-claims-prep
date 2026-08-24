@@ -424,7 +424,7 @@ const PYPDF_WHEEL = "pypdf-6.16.2-py3-none-any.whl";
 // Set by tools/build_web.py from a hash of the shipped modules. Without it
 // a returning visitor boots this page against whatever Python their browser
 // cached last time.
-const PY_BUILD = "a899a8f7b0";
+const PY_BUILD = "a6a8a679d9";
 
 function saveSession(){
   try {
@@ -1319,16 +1319,24 @@ v = _outputs[js_name]
 v if isinstance(v, bytes) else v.encode("utf-8")
 `);
       const bytes = data.toJs ? data.toJs() : data;
-      const blob = new Blob([bytes], {type: isPdf ? "application/pdf" : "text/plain"});
+      const blob = new Blob([bytes], {type:
+        isPdf ? "application/pdf"
+        : name.endsWith(".html") ? "text/html"
+        : name.endsWith(".rtf") ? "application/rtf"
+        : "text/plain"});
       const url = URL.createObjectURL(blob);
       const label = {
         "dd2807-1_FILLED.pdf": "DD Form 2807-1 — Report of Medical History, prefilled",
         "sha_part_a_FILLED.pdf": "SHA Part A — Separation Health Assessment, prefilled",
-        "conditions_worksheet.md": "Every condition found, with citations",
-        "evidence_index.md": "Where each condition came from, page by page",
+        "conditions_worksheet.html": "Every condition found, with citations — opens in your browser, prints to PDF",
+        "evidence_index.html": "Where each condition came from, page by page",
         "README.txt": "What this package is, and what it isn't",
-      }[name] || (name.startsWith("buddy_letters/") ? "Editable buddy-letter template" : "");
-      const ext = isPdf ? "PDF" : (name.endsWith(".md") ? "MD" : "TXT");
+      }[name] || (name.startsWith("buddy_letters/")
+        ? "Editable buddy-letter template — opens in Word, Pages or Google Docs" : "");
+      const ext = isPdf ? "PDF"
+        : name.endsWith(".html") ? "WEB"
+        : name.endsWith(".rtf") ? "DOC"
+        : "TXT";
       const row = `<a class="download" href="${url}" download="${esc(name.replace("buddy_letters/",""))}">
         <span class="download__icon" aria-hidden="true">${ext}</span>
         <span><span class="download__name">${esc(name)}</span>

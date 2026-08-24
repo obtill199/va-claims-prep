@@ -362,10 +362,10 @@ def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
         arcnames[path] = arc
         contents.append(f"  {arc}  —  {label}, prefilled and unsigned")
 
-    contents.append("  conditions_worksheet.md  —  every condition found, with citations")
-    contents.append("  evidence_index.md  —  where each condition came from")
+    contents.append("  conditions_worksheet.html  —  every condition found, with citations")
+    contents.append("  evidence_index.html  —  where each condition came from")
     if prompts_text:
-        contents.append("  questions_to_check.md  —  items to review and mark by hand")
+        contents.append("  questions_to_check.html  —  items to review and mark by hand")
     for path in buddy_letter_paths:
         contents.append(f"  buddy_letters/{os.path.basename(path)}")
 
@@ -387,10 +387,21 @@ def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
 
     with zipfile.ZipFile(out_zip, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr("README.txt", readme)
-        z.writestr("conditions_worksheet.md", worksheet_text)
-        z.writestr("evidence_index.md", evidence_text)
+        # HTML, not Markdown. Double-clicking a .md on a government
+        # desktop opens Notepad and shows pipe characters instead of a
+        # table; HTML opens in any browser and prints to PDF from the
+        # browser's own dialog, which is what a VSO appointment needs.
+        import report_html
+        z.writestr("conditions_worksheet.html",
+                   report_html.to_html(worksheet_text, "Conditions worksheet",
+                                       member_name))
+        z.writestr("evidence_index.html",
+                   report_html.to_html(evidence_text, "Evidence index",
+                                       member_name))
         if prompts_text:
-            z.writestr("questions_to_check.md", prompts_text)
+            z.writestr("questions_to_check.html",
+                       report_html.to_html(prompts_text,
+                                           "Questions to check", member_name))
         for path, arc in arcnames.items():
             z.write(path, arc)
         for path in buddy_letter_paths:

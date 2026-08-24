@@ -70,3 +70,6 @@ evidence_index.md
 work/
 uploads/
 records/
+
+# Golden fixtures derived from real records — PHI, never committed.
+tests/fixtures/real_conditions.json

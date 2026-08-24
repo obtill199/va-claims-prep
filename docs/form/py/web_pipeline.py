@@ -30,6 +30,7 @@ yielding nothing.
 
 import io
 import json
+import os
 import schema
 
 from pypdf import PdfReader, PdfWriter
@@ -145,13 +146,36 @@ def process_files(files):
 
 
 def build_review(conditions, corpus, birth_sex=None):
-    """conditions + corpus -> (proposals, unmapped) ready for review."""
-    with open("conditions.json", "w", encoding="utf-8") as fh:
-        json.dump(conditions, fh)
+    """conditions + corpus -> (proposals, unmapped) ready for review.
 
-    proposals, unmapped = build_proposals(
-        "conditions.json", "dd2807_crosswalk.json", "field_names_sha.json",
-        birth_sex=birth_sex)
+    build_proposals() takes a path, so the conditions have to be written
+    somewhere. That used to be "conditions.json" in the current working
+    directory, which is harmless inside Pyodide's virtual filesystem and
+    actively destructive anywhere else: running this from a checkout
+    overwrote the repository's own conditions.json -- a gitignored file
+    holding real extracted conditions, used as the golden fixture for the
+    false-positive test. There was no committed copy to restore, because
+    correctly there never is one for anything derived from real records.
+
+    A temp file now. Nothing this function does should be able to reach a
+    file somebody else owns.
+    """
+    import tempfile
+
+    tmp = tempfile.NamedTemporaryFile(
+        mode="w", suffix=".json", prefix="conditions-",
+        delete=False, encoding="utf-8")
+    try:
+        json.dump(conditions, tmp)
+        tmp.close()
+        proposals, unmapped = build_proposals(
+            tmp.name, "dd2807_crosswalk.json", "field_names_sha.json",
+            birth_sex=birth_sex)
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
     with open("dd2807_crosswalk.json", encoding="utf-8") as fh:
         rows = json.load(fh)
 
@@ -257,11 +281,16 @@ def build_outputs(answers, proposals, conditions, per_file, item29,
 
     sources = [f["name"] for f in per_file]
     package_bundle.annotate_reached(conditions["clinical"], confirmed)
-    out["conditions_worksheet.md"] = package_bundle.build_worksheet(
+    import report_html
+    _worksheet_md = package_bundle.build_worksheet(
         conditions["clinical"], conditions["administrative"], sources, None,
         exposures=answers.get("exposures"))
-    out["evidence_index.md"] = package_bundle.build_evidence_index(
-        conditions["clinical"], None)
+    _member = answers.get("full_name") or "(name not provided)"
+    out["conditions_worksheet.html"] = report_html.to_html(
+        _worksheet_md, "Conditions worksheet", _member)
+    out["evidence_index.html"] = report_html.to_html(
+        package_bundle.build_evidence_index(conditions["clinical"], None),
+        "Evidence index", _member)
 
     confirmed_refs = {p.condition_ref for p in confirmed}
     # Self-reported conditions get a letter whether or not they reached a
@@ -275,7 +304,11 @@ def build_outputs(answers, proposals, conditions, per_file, item29,
                                           c.get("condition", "")))
     for name, text in _buddy_letters(answers.get("full_name", ""),
                                      letter_conditions).items():
-        out[f"buddy_letters/{name}"] = text
+        # .rtf, not .md: a buddy letter exists to be written IN, by
+        # somebody who is not the veteran and may not be technical. RTF
+        # opens editable in Word, Pages, Google Docs and WordPad.
+        out[f"buddy_letters/{name[:-3]}.rtf" if name.endswith(".md")
+            else f"buddy_letters/{name}"] = report_html.to_rtf(text)
 
     import timing as _timing
     _assess = _timing.assess(answers.get("separation_date"),
