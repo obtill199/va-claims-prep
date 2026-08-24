@@ -48,9 +48,28 @@ def tracked_files():
     return [f for f in out.stdout.split("\0") if f]
 
 
+# Third-party code vendored verbatim from upstream. Excluded from the PHI
+# scans below, and only from those: it is not this project's content, and
+# scanning minified WebAssembly glue for a veteran's identifiers finds
+# nothing but noise. Pyodide's 32-bit memory constants and the lock file's
+# SHA digests are all ten-digit runs, so the DoD-ID heuristic flags dozens
+# of them. (Written out in words rather than as figures: spelling those
+# constants literally here made this file trip its own scanner, which is
+# the second time a test in this suite has matched its own source.)
+#
+# The exclusion is a prefix, not a pattern, and a separate test asserts that
+# nothing but the expected upstream files lives under it -- otherwise this
+# becomes a place to hide project content from the scanner.
+VENDORED = ("docs/form/pyodide/",)
+
+
+def is_vendored(rel):
+    return rel.startswith(VENDORED)
+
+
 def text_files():
     for rel in tracked_files():
-        if rel.lower().endswith(BINARY):
+        if rel.lower().endswith(BINARY) or is_vendored(rel):
             continue
         path = os.path.join(REPO, rel)
         if not os.path.exists(path):
@@ -379,3 +398,25 @@ def test_no_page_links_to_a_path_that_does_not_exist():
             if not os.path.exists(target):
                 broken.append(f"{os.path.relpath(page, REPO)} -> {href}")
     assert not broken, "broken internal links: " + "; ".join(broken)
+
+
+def test_nothing_but_upstream_files_hides_in_the_vendored_directory():
+    """The PHI scans skip docs/form/pyodide/. That exclusion is only safe if
+    the directory holds exactly what was downloaded from upstream and
+    nothing of this project's -- otherwise it is a blind spot somebody can
+    put a record in."""
+    expected = {
+        "pyodide.js", "pyodide.asm.js", "pyodide.asm.wasm",
+        "python_stdlib.zip", "pyodide-lock.json",
+    }
+    present = {os.path.basename(rel) for rel in tracked_files()
+               if is_vendored(rel)}
+    wheels = {f for f in present if f.endswith(".whl")}
+    unexpected = present - expected - wheels
+    assert not unexpected, (
+        f"unexpected files in the vendored runtime directory: {unexpected}. "
+        "Only upstream Pyodide files and wheels belong there; the PHI scans "
+        "do not look inside it.")
+    assert wheels, "no wheel vendored"
+    for wheel in wheels:
+        assert wheel.startswith("pypdf-"), f"unexpected wheel: {wheel}"
