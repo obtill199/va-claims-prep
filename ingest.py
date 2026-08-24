@@ -32,7 +32,7 @@ def ingest(pdf_path, output_path):
     # Sidecar, not a second copy of the PHI itself — just character offsets,
     # so extract_conditions.py can turn a match position into a page number.
     pages_path = output_path + ".pages.json"
-    with open(pages_path, "w") as fh:
+    with open(pages_path, "w", encoding="utf-8") as fh:
         json.dump({
             "source_document": os.path.basename(pdf_path),
             "page_starts": page_starts,

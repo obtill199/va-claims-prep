@@ -159,14 +159,14 @@ def main():
     ap.add_argument("-o", "--output", default="reconciliation.json")
     args = ap.parse_args()
 
-    with open(args.conditions_json) as fh:
+    with open(args.conditions_json, encoding="utf-8") as fh:
         conditions = json.load(fh)["clinical"]
-    with open(args.ocr_json) as fh:
+    with open(args.ocr_json, encoding="utf-8") as fh:
         ocr_results = json.load(fh)
 
     findings = reconcile(conditions, ocr_results)
 
-    with open(args.output, "w") as fh:
+    with open(args.output, "w", encoding="utf-8") as fh:
         json.dump(findings, fh, indent=2)
 
     print(f"{len(findings)} condition(s) with evidence predating the structured record "

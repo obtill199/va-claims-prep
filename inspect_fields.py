@@ -84,7 +84,7 @@ def main():
     args = ap.parse_args()
 
     fields = dump_fields(args.pdf)
-    with open(args.output, "w") as fh:
+    with open(args.output, "w", encoding="utf-8") as fh:
         json.dump(fields, fh, indent=2)
 
     print(f"{args.pdf}: {len(fields)} fields -> {args.output}")

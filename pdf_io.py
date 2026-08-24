@@ -3,7 +3,7 @@
 pdf_io.py — shared PDF open/decrypt/extract helpers.
 
 Both real record files and dd2807-1.pdf use an empty user password
-(BUILD_BRIEF.md section 6). PyMuPDF handles this transparently on open() —
+(BUILD_BRIEF.md section 6). PyMuPDF handles this transparently on open(, encoding="utf-8") —
 no need for pypdf's decrypt() (which needs the `cryptography` package,
 unavailable to build on this machine — see inspect_fields.py).
 """

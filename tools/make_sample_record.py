@@ -218,9 +218,9 @@ def write_pdf(text, path):
 def main():
     text, page_starts = build()
     os.makedirs(os.path.dirname(OUT_TXT), exist_ok=True)
-    with open(OUT_TXT, "w") as fh:
+    with open(OUT_TXT, "w", encoding="utf-8") as fh:
         fh.write(text)
-    with open(OUT_TXT + ".pages.json", "w") as fh:
+    with open(OUT_TXT + ".pages.json", "w", encoding="utf-8") as fh:
         json.dump({"source_document": "SAMPLE_RECORD (fictional demo).pdf",
                    "page_starts": page_starts}, fh, indent=2)
     pdf_path = OUT_TXT.replace(".txt", ".pdf")

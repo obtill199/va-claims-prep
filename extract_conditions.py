@@ -232,7 +232,7 @@ def main():
         page_starts, source_document = None, os.path.basename(path)
         pages_path = path + ".pages.json"
         if os.path.exists(pages_path):
-            with open(pages_path) as fh:
+            with open(pages_path, encoding="utf-8") as fh:
                 sidecar = json.load(fh)
             page_starts = sidecar["page_starts"]
             source_document = sidecar["source_document"]
@@ -247,7 +247,7 @@ def main():
     clinical = [r for r in records if not r["administrative"]]
     admin = [r for r in records if r["administrative"]]
 
-    with open(args.output, "w") as fh:
+    with open(args.output, "w", encoding="utf-8") as fh:
         json.dump({"clinical": clinical, "administrative": admin},
                   fh, indent=2)
 

@@ -74,7 +74,7 @@ def process_files(paths, work_dir, run_ocr=True, progress=None):
         sidecar_path = txt_path + ".pages.json"
         page_starts, source_document = None, name
         if os.path.exists(sidecar_path):
-            with open(sidecar_path) as fh:
+            with open(sidecar_path, encoding="utf-8") as fh:
                 sidecar = json.load(fh)
             page_starts = sidecar["page_starts"]
             source_document = sidecar["source_document"]
@@ -155,7 +155,7 @@ def find_record_prompts(corpus, proposals):
     proposal doesn't also get flagged as a maybe.
     """
     from prompts import find_prompts
-    with open(DD_CROSSWALK) as fh:
+    with open(DD_CROSSWALK, encoding="utf-8") as fh:
         rows = json.load(fh)
     already = {p.target_field for p in proposals}
     found = {}
@@ -176,7 +176,7 @@ def find_record_prompts(corpus, proposals):
 def build_session_proposals(conditions, work_dir, birth_sex=None):
     """conditions dict -> (proposals, unmapped). Reuses proposals.py."""
     conditions_path = os.path.join(work_dir, "conditions.json")
-    with open(conditions_path, "w") as fh:
+    with open(conditions_path, "w", encoding="utf-8") as fh:
         json.dump(conditions, fh, indent=2)
     return build_proposals(conditions_path, DD_CROSSWALK, SHA_FIELDS,
                            birth_sex=birth_sex)

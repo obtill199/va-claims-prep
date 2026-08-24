@@ -40,7 +40,7 @@ def main():
     ap.add_argument("keywords", nargs="+")
     args = ap.parse_args()
 
-    with open(args.ocr_json) as fh:
+    with open(args.ocr_json, encoding="utf-8") as fh:
         results = json.load(fh)
 
     hits = search(results, args.keywords)

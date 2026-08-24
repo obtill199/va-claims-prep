@@ -92,7 +92,7 @@ def scrub_generic(text, redact_providers=False):
 
 
 def load_literals(path):
-    with open(path) as fh:
+    with open(path, encoding="utf-8") as fh:
         lines = [ln.strip() for ln in fh if ln.strip() and not ln.startswith("#")]
     # Longest first so e.g. a full name is replaced before a substring of it.
     return sorted(set(lines), key=len, reverse=True)

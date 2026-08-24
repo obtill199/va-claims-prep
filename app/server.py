@@ -225,9 +225,9 @@ def explain():
 
     by_ref = conditions_by_ref(state["conditions"]["clinical"])
     import json
-    with open(os.path.join(REPO, "field_names_sha.json")) as fh:
+    with open(os.path.join(REPO, "field_names_sha.json"), encoding="utf-8") as fh:
         sha_names = list(json.load(fh).keys())
-    with open(os.path.join(REPO, "dd2807_crosswalk.json")) as fh:
+    with open(os.path.join(REPO, "dd2807_crosswalk.json"), encoding="utf-8") as fh:
         crosswalk = json.load(fh)
 
     if request.method == "POST":

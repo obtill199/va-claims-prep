@@ -135,13 +135,13 @@ RECORD_LEVEL_RULES = [
 
 
 def load_dd2807_crosswalk(path):
-    with open(path) as fh:
+    with open(path, encoding="utf-8") as fh:
         rows = json.load(fh)
     return {(r["item"], r["letter"]): r for r in rows}
 
 
 def load_sha_fields(path):
-    with open(path) as fh:
+    with open(path, encoding="utf-8") as fh:
         return json.load(fh)
 
 
@@ -182,7 +182,7 @@ def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path,
     """Returns (matched, unmatched) where matched is a list of dicts ready
     for proposals.py, and unmatched lists conditions with no rule (printed
     for visibility, not an error — see module docstring)."""
-    with open(conditions_path) as fh:
+    with open(conditions_path, encoding="utf-8") as fh:
         conditions = json.load(fh)["clinical"]
 
     crosswalk = load_dd2807_crosswalk(dd2807_crosswalk_path)
@@ -260,7 +260,7 @@ def build_mapping(conditions_path, dd2807_crosswalk_path, sha_fields_path,
         matched.append({"condition": cond, "targets": targets})
 
     record_level = []
-    with open(conditions_path) as fh:
+    with open(conditions_path, encoding="utf-8") as fh:
         blob = json.load(fh)
     for rl in RECORD_LEVEL_RULES:
         reason = rl["predicate"](blob["clinical"], blob["administrative"])

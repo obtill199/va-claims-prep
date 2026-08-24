@@ -129,13 +129,13 @@ def process_files(files):
 
 def build_review(conditions, corpus, birth_sex=None):
     """conditions + corpus -> (proposals, unmapped) ready for review."""
-    with open("conditions.json", "w") as fh:
+    with open("conditions.json", "w", encoding="utf-8") as fh:
         json.dump(conditions, fh)
 
     proposals, unmapped = build_proposals(
         "conditions.json", "dd2807_crosswalk.json", "field_names_sha.json",
         birth_sex=birth_sex)
-    with open("dd2807_crosswalk.json") as fh:
+    with open("dd2807_crosswalk.json", encoding="utf-8") as fh:
         rows = json.load(fh)
 
     already = {p.target_field for p in proposals}

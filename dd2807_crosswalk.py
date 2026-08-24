@@ -112,7 +112,7 @@ FIELD_NAME_RE = re.compile(r"^(Yes|No)(\d{1,2})([A-Za-z]*)\[0\]$")
 
 def parse_field_names(field_dump_json):
     """Return {(item:int, letter:str|None): {"yes_field": leaf_path, "no_field": leaf_path}}."""
-    with open(field_dump_json) as fh:
+    with open(field_dump_json, encoding="utf-8") as fh:
         dump = json.load(fh)
 
     by_key = {}
@@ -164,7 +164,7 @@ def main():
     args = ap.parse_args()
 
     rows = build_crosswalk(args.pdf, args.field_dump_json)
-    with open(args.output, "w") as fh:
+    with open(args.output, "w", encoding="utf-8") as fh:
         json.dump(rows, fh, indent=2)
 
     unmatched = [r for r in rows if not r["question_text"] or not (r["yes_field"] or r["no_field"])]

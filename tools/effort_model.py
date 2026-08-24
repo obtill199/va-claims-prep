@@ -55,9 +55,9 @@ def count_form_fields():
 
 def count_questions():
     """Distinct yes/no questions a human must read and answer."""
-    rows = json.load(open(os.path.join(REPO, "dd2807_crosswalk.json")))
+    rows = json.load(open(os.path.join(REPO, "dd2807_crosswalk.json"), encoding="utf-8"))
     dd = [r for r in rows if r.get("yes_field") and r.get("question_text")]
-    sha_fields = json.load(open(os.path.join(REPO, "field_names_sha.json")))
+    sha_fields = json.load(open(os.path.join(REPO, "field_names_sha.json"), encoding="utf-8"))
     sha = [k for k in sha_fields if k.endswith("_Question_YesNo_Response")]
     return {"DD 2807-1 items": len(dd), "SHA yes/no questions": len(sha)}
 

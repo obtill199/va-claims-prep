@@ -125,7 +125,7 @@ def main():
 
     results = ocr_pdf(args.pdf, dpi=args.dpi, page_range=_parse_page_range(args.pages))
 
-    with open(args.output, "w") as fh:
+    with open(args.output, "w", encoding="utf-8") as fh:
         json.dump(results, fh, indent=2)
 
     low = [r["page"] for r in results if r["confidence"] == "low"]

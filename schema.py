@@ -66,12 +66,12 @@ class Proposal:
 
 
 def proposals_to_json(proposals, path):
-    with open(path, "w") as fh:
+    with open(path, "w", encoding="utf-8") as fh:
         json.dump([asdict(p) for p in proposals], fh, indent=2)
 
 
 def proposals_from_json(path):
-    with open(path) as fh:
+    with open(path, encoding="utf-8") as fh:
         rows = json.load(fh)
     return [Proposal(**row) for row in rows]
 

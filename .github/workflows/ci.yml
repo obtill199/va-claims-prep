@@ -59,8 +59,26 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
+      # Failures are echoed as ::error:: so they appear in the run's
+      # Annotations, which are readable without signing in. Without this the
+      # only record of what broke is in the log, and reading the log of a
+      # public repository still requires an account -- so a maintainer
+      # without one, or anyone helping them, is reduced to guessing from a
+      # red tick and a job name.
       - name: Tests
-        run: python -m pytest tests/ -q
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest tests/ -q --tb=line -rf 2>&1 | tee pytest.out || {
+            echo "::error title=Tests failed on ${{ matrix.os }} py${{ matrix.python }}::$(grep -c '^FAILED' pytest.out || echo '?') test(s) failed"
+            grep '^FAILED' pytest.out | head -20 | while read -r line; do
+              echo "::error::$line"
+            done
+            grep -E '^/.*Error|^E  ' pytest.out | head -10 | while read -r line; do
+              echo "::error::$line"
+            done
+            exit 1
+          }
 
   build-is-current:
     # docs/app/py is generated. If someone edits a module and pushes without

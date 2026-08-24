@@ -180,7 +180,7 @@ def main():
     print(f"  {len(FORMS)} blank forms -> docs/app/forms/")
 
     manifest = SHARED_MODULES + ["web_pipeline.py"]
-    with open(os.path.join(OUT, "py", "MANIFEST.txt"), "w") as fh:
+    with open(os.path.join(OUT, "py", "MANIFEST.txt"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(manifest) + "\n")
     stamp_presumptive_date()
     stamp_python_build()
