@@ -103,6 +103,33 @@ def sync_questions():
 PY_VERSION_MARK = "const PY_BUILD ="
 
 
+def stamp_pypdf_wheel():
+    """Point the page at whichever pypdf wheel is vendored.
+
+    The runtime used to install pypdf from pypi.org at boot. It is a file in
+    docs/form/pyodide/ now, and this keeps the filename in the page tied to
+    the file on disk -- a mismatch is a 404 at boot, which presents as the
+    whole tool being broken.
+    """
+    vendor = os.path.join(OUT, "pyodide")
+    wheels = sorted(f for f in os.listdir(vendor)) if os.path.isdir(vendor) else []
+    wheels = [f for f in wheels if f.startswith("pypdf-") and f.endswith(".whl")]
+    if len(wheels) != 1:
+        print(f"  WARNING: expected exactly one pypdf wheel, found {wheels}")
+        return
+
+    path = os.path.join(OUT, "index.html")
+    html = open(path, encoding="utf-8").read()
+    if not re.search(r'const PYPDF_WHEEL = "[^"]*";', html):
+        print("  WARNING: no PYPDF_WHEEL marker in index.html")
+        return
+    new = re.sub(r'const PYPDF_WHEEL = "[^"]*";',
+                 f'const PYPDF_WHEEL = "{wheels[0]}";', html)
+    if new != html:
+        open(path, "w", encoding="utf-8").write(new)
+    print(f"  pypdf wheel -> {wheels[0]}")
+
+
 def stamp_presumptive_date():
     """Keep the date shown in the browser tied to the list it describes."""
     import datetime
@@ -186,6 +213,7 @@ def main():
     manifest = SHARED_MODULES + ["web_pipeline.py"]
     with open(os.path.join(OUT, "py", "MANIFEST.txt"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(manifest) + "\n")
+    stamp_pypdf_wheel()
     stamp_presumptive_date()
     stamp_python_build()
     print(f"  manifest: {len(manifest)} modules")

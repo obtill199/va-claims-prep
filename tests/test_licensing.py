@@ -134,3 +134,44 @@ def test_contributing_takes_an_inbound_commercial_grant():
     licensing, and a commercial licence becomes impossible to offer."""
     text = read(os.path.join(REPO, "CONTRIBUTING.md"))
     assert "commercially" in text.lower()
+
+
+# ------------------------------------------------------ offline capability
+
+def test_the_tool_fetches_nothing_from_outside_its_own_origin():
+    """The disclaimer page tells a veteran their records never leave the
+    computer, and that the tool keeps working with the network off. Both
+    were true of the RECORDS and neither was true of the ENGINE: Pyodide
+    came from cdn.jsdelivr.net and pypdf was installed from pypi.org at
+    boot -- two hosts that government and DoD networks routinely block, on
+    which the tool did not degrade but simply failed to start.
+
+    Everything is vendored now. This fails if an external host creeps back
+    in, because the claim on the disclaimer page depends on it.
+    """
+    body = read(FORM_HTML)
+    stripped = re.sub(r"<!--.*?-->|//[^\n]*|/\*.*?\*/", "", body, flags=re.S)
+    for host in ("cdn.jsdelivr.net", "pypi.org", "unpkg.com", "cdnjs",
+                 "googleapis.com", "jsdelivr"):
+        assert host not in stripped, f"{host} is fetched at runtime again"
+
+
+def test_the_runtime_is_actually_vendored():
+    from conftest import FORM_DIR
+    vendor = os.path.join(FORM_DIR, "pyodide")
+    assert os.path.isdir(vendor), "docs/form/pyodide is missing"
+    present = set(os.listdir(vendor))
+    for required in ("pyodide.js", "pyodide.asm.js", "pyodide.asm.wasm",
+                     "python_stdlib.zip", "pyodide-lock.json"):
+        assert required in present, f"{required} not vendored"
+    wheels = [f for f in present if f.startswith("pypdf-") and f.endswith(".whl")]
+    assert len(wheels) == 1, f"expected one pypdf wheel, found {wheels}"
+
+
+def test_the_page_names_the_wheel_that_is_actually_there():
+    """A mismatch is a 404 at boot, which presents as the whole tool being
+    broken rather than as a missing file."""
+    from conftest import FORM_DIR
+    named = re.search(r'const PYPDF_WHEEL = "([^"]+)";', read(FORM_HTML))
+    assert named, "PYPDF_WHEEL marker is gone"
+    assert os.path.exists(os.path.join(FORM_DIR, "pyodide", named.group(1)))

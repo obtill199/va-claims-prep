@@ -338,7 +338,7 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="pyodide/pyodide.js"></script>
 <script>
 "use strict";
 
@@ -418,6 +418,9 @@ const SESSION_SHAPE = 1;
 // member can see how old the list is: presumptive lists are law and they
 // change, and a stale one is worse than none because it reads as current.
 const PRESUMPTIVE_REVIEWED = "August 2026";
+// Written by tools/build_web.py from whatever wheel is vendored in
+// docs/form/pyodide/, so bumping the file is the only step.
+const PYPDF_WHEEL = "pypdf-6.16.2-py3-none-any.whl";
 // Set by tools/build_web.py from a hash of the shipped modules. Without it
 // a returning visitor boots this page against whatever Python their browser
 // cached last time.
@@ -579,16 +582,34 @@ function boot(){
 }
 async function doBoot(){
   try {
-    $("boot-detail").textContent = "Downloading the Python runtime…";
-    py = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/" });
-    $("boot-detail").textContent = "Installing the PDF library…";
-    await py.loadPackage("micropip");
+    // Everything the engine needs ships from this site. It used to come
+    // from cdn.jsdelivr.net, with pypdf installed from pypi.org at run
+    // time -- two external hosts, both of which government and DoD networks
+    // routinely block. On such a network the tool did not degrade, it
+    // simply failed at "Downloading the Python runtime", which is a bad way
+    // to discover the problem in front of an audience.
+    //
+    // Vendored, the offline claim on the disclaimer page is also literally
+    // true: after the first load nothing outside this origin is contacted,
+    // and on a blocked network the first load works too.
+    const v = "?v=" + PY_BUILD;
+    $("boot-detail").textContent = "Starting the Python runtime\u2026";
+    py = await loadPyodide({ indexURL: "pyodide/" });
+
+    // pypdf is pure Python with no dependencies on 3.12, so it is unzipped
+    // straight onto the filesystem. That removes micropip as well: one less
+    // package to fetch, and no resolver reaching for PyPI.
+    $("boot-detail").textContent = "Loading the PDF library\u2026";
+    const whl = await (await fetch("pyodide/" + PYPDF_WHEEL + v)).arrayBuffer();
+    py.FS.writeFile("/tmp/pypdf.whl", new Uint8Array(whl));
     await py.runPythonAsync(`
-import micropip
-await micropip.install("pypdf")
+import sys, zipfile
+zipfile.ZipFile("/tmp/pypdf.whl").extractall("/home/pyodide/_wheels")
+if "/home/pyodide/_wheels" not in sys.path:
+    sys.path.insert(0, "/home/pyodide/_wheels")
+import pypdf
 `);
     $("boot-detail").textContent = "Loading the extraction engine…";
-    const v = "?v=" + PY_BUILD;
     const manifest = (await (await fetch("py/MANIFEST.txt" + v)).text())
       .split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
     for (const mod of manifest){
