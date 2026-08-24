@@ -70,11 +70,20 @@ jobs:
         run: |
           set -o pipefail
           python -m pytest tests/ -q --tb=line -rf 2>&1 | tee pytest.out || {
-            echo "::error title=Tests failed on ${{ matrix.os }} py${{ matrix.python }}::$(grep -c '^FAILED' pytest.out || echo '?') test(s) failed"
-            grep '^FAILED' pytest.out | head -20 | while read -r line; do
+            echo "::error title=Tests failed on ${{ matrix.os }} py${{ matrix.python }}::see annotations"
+            # Named failures first, when there are any.
+            grep -E '^(FAILED|ERROR)' pytest.out | head -20 | while read -r line; do
               echo "::error::$line"
             done
-            grep -E '^/.*Error|^E  ' pytest.out | head -10 | while read -r line; do
+            grep -E '^E  ' pytest.out | head -10 | while read -r line; do
+              echo "::error::$line"
+            done
+            # A collection error or an interpreter-level crash produces no
+            # FAILED lines at all, and the first version of this reported
+            # only "0" -- true, useless, and unreadable without an account
+            # to open the log with. Always emit the tail.
+            echo "::error::--- last lines of output ---"
+            tail -25 pytest.out | while read -r line; do
               echo "::error::$line"
             done
             exit 1
