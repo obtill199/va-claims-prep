@@ -315,6 +315,8 @@
       presumptive for your service, whether anything is missing, and — if you are still
       serving — whether you are inside the 180-to-90-day BDD window.</li>
   </ol>
+  <div id="secondary-panel" hidden></div>
+
   <div class="note">
     <span class="note__title">The conditions worksheet is the part to hand over first.</span>
     <p>It lists everything found in your records with the page it came from, including
@@ -411,7 +413,7 @@ const SESSION_SHAPE = 1;
 // Set by tools/build_web.py from a hash of the shipped modules. Without it
 // a returning visitor boots this page against whatever Python their browser
 // cached last time.
-const PY_BUILD = "ca8f9d34d6";
+const PY_BUILD = "d448e60849";
 
 function saveSession(){
   try {
@@ -643,6 +645,47 @@ json.dumps(_t)
     el.innerHTML = html;
     el.hidden = a.state === "unknown";
   });
+}
+
+// VA can service-connect a condition caused or aggravated by another one,
+// including by the medication for another one. Most first-time filers have
+// never heard of it. These are questions for a VSO and a clinician -- this
+// tool cannot determine that two conditions are related, and does not try.
+async function renderSecondary(){
+  const el = $("secondary-panel");
+  if (!el || !py) return;
+  let items;
+  try {
+    items = JSON.parse(await py.runPythonAsync(`
+import json, secondary
+json.dumps(secondary.find(_state["conditions"]["clinical"]))
+`));
+  } catch (e) { return; }
+  if (!items.length) { el.hidden = true; return; }
+
+  const row = i => `
+    <li><strong>${esc(i.ask)}</strong>${i.both_present
+        ? ` <span class="badge badge--ok">both already documented</span>` : ""}
+      <p>${esc(i.question)}</p>
+      <p class="help">Raised by: ${esc(i.because)}${
+        i.partner_because ? " &middot; alongside: " + esc(i.partner_because) : ""}</p></li>`;
+
+  el.innerHTML = `
+    <div class="note">
+      <span class="note__title">Ask your VSO how these connect.</span>
+      <p>VA can service-connect a condition that was caused or made worse by
+      another one &mdash; including by the <em>medication</em> for another one.
+      It is worth as much as any other grant, and it is one of the most common
+      things missed on a first claim.</p>
+      <p class="help"><strong>These are questions, not findings.</strong> Whether
+      two conditions are actually related is a medical opinion and it needs a
+      clinician. This tool only noticed the pairing in your own records so the
+      question can get asked. Nothing here changed any answer on your forms.</p>
+      <ul class="stack">${items.map(row).join("")}</ul>
+      <p class="help">All of this is also in your conditions worksheet, under
+      &ldquo;Questions about how these conditions connect&rdquo;.</p>
+    </div>`;
+  el.hidden = false;
 }
 
 async function resumeFrom(saved){
@@ -1130,6 +1173,7 @@ $("to-package").addEventListener("click", async ()=>{
   Object.keys(S.shaExplains).forEach(f=>{
     const el = $("sha-"+f); if (el) S.shaExplains[f] = el.value;
   });
+  renderSecondary();
   const left = (S.item29.match(/\[Add [^\]]+\]/g) || []).length;
   const li = $("next-item29");
   li.hidden = left === 0;
@@ -1165,7 +1209,7 @@ _outputs = web_pipeline.build_outputs(
 json.dumps(sorted(_outputs.keys()))
 `);
     const files = JSON.parse(names);
-    const links = [];
+    const links = [], letters = [];
     for (const name of files){
       const isPdf = name.endsWith(".pdf");
       py.globals.set("js_name", name);
@@ -1184,15 +1228,32 @@ v if isinstance(v, bytes) else v.encode("utf-8")
         "README.txt": "What this package is, and what it isn't",
       }[name] || (name.startsWith("buddy_letters/") ? "Editable buddy-letter template" : "");
       const ext = isPdf ? "PDF" : (name.endsWith(".md") ? "MD" : "TXT");
-      links.push(`<a class="download" href="${url}" download="${esc(name.replace("buddy_letters/",""))}">
+      const row = `<a class="download" href="${url}" download="${esc(name.replace("buddy_letters/",""))}">
         <span class="download__icon" aria-hidden="true">${ext}</span>
         <span><span class="download__name">${esc(name)}</span>
-        ${label?`<span class="download__desc">${esc(label)}</span>`:""}</span></a>`);
+        ${label?`<span class="download__desc">${esc(label)}</span>`:""}</span></a>`;
+      (name.startsWith("buddy_letters/") ? letters : links).push(
+        name.startsWith("buddy_letters/") ? [name, row] : row);
       if (data.destroy) data.destroy();
     }
+    // The ones that need a person to write something come out of the fold;
+    // the rest collapse, so the guidance under this list stays reachable.
+    const needed = letters.filter(([n]) => n.includes("NEEDED_"));
+    const rest = letters.filter(([n]) => !n.includes("NEEDED_"));
     $("downloads").innerHTML =
-      `<h2>Your documents (${files.length})</h2>` + links.join("") +
-      `<p class="help">Each file downloads from this page — they were built here, in your
+      `<h2>Your documents (${files.length})</h2>` + links.join("")
+      + (needed.length
+        ? `<h3>Buddy letters to send &mdash; these are the ones with no record behind them</h3>
+           <p class="help">A statement from somebody who saw it is the strongest evidence
+           these conditions will ever have.</p>`
+          + needed.map(([, r]) => r).join("")
+        : "")
+      + (rest.length
+        ? `<details class="tier-group"><summary>${rest.length} more buddy-letter
+             template${rest.length===1?"":"s"}, for conditions already in your records</summary>
+           <div>${rest.map(([, r]) => r).join("")}</div></details>`
+        : "")
+      + `<p class="help">Each file downloads from this page — they were built here, in your
        browser, and were never sent anywhere.</p>`;
   } catch (err){
     $("downloads").innerHTML = `<div class="note note--err">

@@ -266,6 +266,8 @@ def build_outputs(answers, proposals, conditions, per_file, item29,
     _assess["caveat"] = _timing.bdd_eligibility_caveat(
         answers.get("component"), answers.get("duty_status"))
     out["README.txt"] = package_bundle.README.format(
+        secondary_questions=package_bundle.format_secondary_questions(
+            conditions["clinical"]),
         timing_block=package_bundle.format_timing(_assess),
         today=__import__("datetime").date.today().isoformat(),
         member_name=answers.get("full_name") or "(name not provided)",

@@ -36,6 +36,7 @@ SHARED_MODULES = [
     "coded_records.py",
     "timing.py",
     "self_report.py",
+    "secondary.py",
 ]
 
 DATA = [

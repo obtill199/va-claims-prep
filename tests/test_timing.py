@@ -137,8 +137,8 @@ def test_the_deadline_leads_the_readme():
     import package_bundle
     block = package_bundle.format_timing(at(150))
     readme = package_bundle.README.format(
-        timing_block=block, today="2026-08-23", member_name="DOE, JOHN A",
-        contents="  (files)", unmapped_note="none")
+        timing_block=block, secondary_questions="", today="2026-08-23",
+        member_name="DOE, JOHN A", contents="  (files)", unmapped_note="none")
     assert "BDD WINDOW" in readme
     assert readme.index("BDD WINDOW") < readme.index("WHAT THIS IS"), \
         "the deadline is below the explainer; a member reads the top"

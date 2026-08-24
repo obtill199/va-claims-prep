@@ -313,7 +313,8 @@ def download():
         {k: v[1] for k, v in filled.items()},
         worksheet, evidence, letters, state["unmapped"],
         prompts_text=package_bundle.build_prompts_doc(state.get("prompts", [])),
-        timing=_timing_for(answers))
+        timing=_timing_for(answers),
+        conditions=conditions["clinical"])
 
     return send_file(out_zip, as_attachment=True,
                      download_name=os.path.basename(out_zip))

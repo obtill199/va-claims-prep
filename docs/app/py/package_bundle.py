@@ -73,6 +73,14 @@ WHAT TO ASK YOUR VSO
 - Are any of them presumptive for where and when I served?
 - What is missing from this file?
 - If still serving: am I inside the 180-to-90-day BDD window?
+{secondary_questions}
+  VA can service-connect a condition caused or aggravated by another one,
+  including by the MEDICATION for another one. It is worth as much as any
+  other grant and is routinely missed on a first claim. The conditions
+  worksheet lists the pairings your own records raise, under "Questions
+  about how these conditions connect". They are questions for your VSO and
+  a clinician, not findings -- this tool cannot determine that two
+  conditions are related, and does not try.
 
 CONTENTS
 --------
@@ -163,6 +171,11 @@ def build_worksheet(conditions, administrative, sources, findings=None):
         for c in self_reported:
             reached = c.get("_reached") or "no matching question — discuss"
             out.append(f"| {c['condition']} | {reached} |")
+
+    import secondary
+    section = secondary.worksheet_section(conditions + self_reported)
+    if section:
+        out.append(section)
 
     if administrative:
         out.append("\n## Administrative / encounter codes "
@@ -271,9 +284,23 @@ def format_timing(assessment):
     return "\n".join(lines)
 
 
+def format_secondary_questions(conditions):
+    """The two or three secondary questions worth an appointment, inline in
+    the README so they are read rather than looked up."""
+    import secondary
+    items = secondary.find(conditions or [])
+    if not items:
+        return ""
+    lines = [""]
+    for i in items[:6]:
+        mark = "**" if i["both_present"] else ""
+        lines.append(f"  - Ask about {mark}{i['ask']}{mark}: {i['because']}")
+    return "\n".join(lines)
+
+
 def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
                  evidence_text, buddy_letter_paths, unmapped_conditions=None,
-                 prompts_text=None, timing=None):
+                 prompts_text=None, timing=None, conditions=None):
     contents, arcnames = [], {}
 
     for label, path in filled_forms.items():
@@ -300,6 +327,7 @@ def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
         unmapped_note = "All extracted conditions were matched to a form question."
 
     readme = README.format(
+        secondary_questions=format_secondary_questions(conditions),
         timing_block=format_timing(timing),
         today=date.today().isoformat(),
         member_name=member_name or "(name not provided)",
