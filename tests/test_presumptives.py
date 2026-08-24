@@ -138,8 +138,8 @@ def test_the_list_carries_its_own_age():
 
 
 def test_the_review_date_is_shown_in_the_browser_too():
-    html = open(os.path.join(REPO, "docs", "app", "index.html"),
-                encoding="utf-8").read()
+    from conftest import FORM_HTML, read
+    html = read(FORM_HTML)
     year = pres.REVIEWED.split("-")[0]
     assert "PRESUMPTIVE_REVIEWED" in html
     assert year in re.search(

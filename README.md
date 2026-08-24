@@ -7,6 +7,18 @@ promise about any claim outcome. Use it to organize your own records, then
 take the result to an accredited Veterans Service Officer. Provided as-is,
 without warranty — see LICENSE.
 
+## The site
+
+| URL | What it is |
+|---|---|
+| [`/disclaimer`](https://obtill199.github.io/va-claims-prep/disclaimer/) | What this is, what it is not, and what happens to your records. Everyone starts here. |
+| [`/home`](https://obtill199.github.io/va-claims-prep/home/) | Every link you need, in the order you need it — records requests, VSO lookup, DD-214, the forms themselves. |
+| [`/form`](https://obtill199.github.io/va-claims-prep/form/) | The tool. Six steps, entirely in your browser. |
+
+The bare address redirects to the disclaimer, so nobody lands in a medical
+form without knowing what the site is. The tool's previous address, `/app/`,
+still redirects to `/form/`.
+
 ## What it looks like
 
 **1. About you** — the things your records can't tell us. Saved in your browser as

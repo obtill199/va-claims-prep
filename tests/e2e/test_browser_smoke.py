@@ -67,7 +67,7 @@ def page(server):
         pg = browser.new_page()
         errors = []
         pg.on("pageerror", lambda e: errors.append(str(e)))
-        pg.goto(f"{server}/app/index.html")
+        pg.goto(f"{server}/form/index.html")
         pg.errors = errors
         yield pg
         browser.close()

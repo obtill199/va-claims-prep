@@ -16,8 +16,13 @@ import urllib.error
 import urllib.request
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGES = [os.path.join(REPO, "docs", "index.html"),
-         os.path.join(REPO, "docs", "app", "index.html")]
+# Every published page. Listing the directories rather than the files means
+# a new page is covered the moment it exists, instead of the first time
+# somebody remembers to add it here.
+PAGES = sorted(
+    os.path.join(REPO, "docs", d, "index.html")
+    for d in ("disclaimer", "home", "form")
+    if os.path.exists(os.path.join(REPO, "docs", d, "index.html")))
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36")

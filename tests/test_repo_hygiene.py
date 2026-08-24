@@ -245,7 +245,7 @@ def test_the_vendored_forms_have_not_silently_changed():
 REQUIRED_FILES = [
     "requirements.txt",              # CI installs from it; users install from it
     "forms/FORM_VERSIONS.txt",       # pins the form editions
-    "docs/app/py/MANIFEST.txt",      # the browser build's module list
+    "docs/form/py/MANIFEST.txt",      # the browser build's module list
     "tools/sample_record.txt",       # the synthetic record fixture
     ".github/workflows/ci.yml",
     "ARCHITECTURE.md",
@@ -315,3 +315,63 @@ def test_no_text_file_is_opened_without_an_explicit_encoding():
     assert not problems, (
         "these calls open text with no encoding= and will use cp1252 on "
         "Windows: " + ", ".join(sorted(problems)))
+
+
+# --------------------------------------------------------- the published site
+
+def test_the_three_published_pages_exist():
+    """/disclaimer, /home and /form are the site. Each is a directory with an
+    index.html so the URL has no extension."""
+    from conftest import DISCLAIMER_HTML, FORM_HTML, HOME_HTML
+    for path in (DISCLAIMER_HTML, HOME_HTML, FORM_HTML):
+        assert os.path.exists(path), f"{os.path.relpath(path, REPO)} is missing"
+        assert os.path.relpath(path, REPO).replace(os.sep, "/") in tracked_files()
+
+
+def test_the_entry_point_sends_people_to_the_disclaimer_first():
+    """Landing on the bare domain must not drop somebody straight into a
+    medical form with no idea what the site is."""
+    from conftest import read
+    root = os.path.join(REPO, "docs", "index.html")
+    assert os.path.exists(root), "docs/index.html is the entry point"
+    body = read(root)
+    assert "disclaimer/" in body
+    # Works without JavaScript, and offers a visible link either way.
+    assert 'http-equiv="refresh"' in body
+    assert re.search(r'<a[^>]+href="disclaimer/"', body)
+
+
+def test_the_old_tool_url_still_works():
+    """/app/ was shared with real people before the move. Breaking it would
+    strand exactly the users who were asked to try this first."""
+    from conftest import read
+    legacy = os.path.join(REPO, "docs", "app", "index.html")
+    assert os.path.exists(legacy), (
+        "docs/app/index.html is the redirect for the previously shared link")
+    body = read(legacy)
+    assert "../form/" in body
+    assert 'http-equiv="refresh"' in body
+
+
+def test_no_page_links_to_a_path_that_does_not_exist():
+    """Internal links, checked locally. tools/check_links.py covers external
+    URLs; nothing covered the site's own links, and every one of them changed
+    in the move."""
+    from conftest import DISCLAIMER_HTML, DOCS, FORM_HTML, HOME_HTML, read
+
+    broken = []
+    for page in (DISCLAIMER_HTML, HOME_HTML, FORM_HTML,
+                 os.path.join(DOCS, "index.html"),
+                 os.path.join(DOCS, "app", "index.html")):
+        here = os.path.dirname(page)
+        for href in re.findall(r'(?:href|src)="([^"]+)"', read(page)):
+            if href.startswith(("http://", "https://", "#", "data:", "mailto:")):
+                continue
+            if "${" in href:          # built at runtime
+                continue
+            target = os.path.normpath(os.path.join(here, href.split("?")[0]))
+            if os.path.isdir(target):
+                target = os.path.join(target, "index.html")
+            if not os.path.exists(target):
+                broken.append(f"{os.path.relpath(page, REPO)} -> {href}")
+    assert not broken, "broken internal links: " + "; ".join(broken)

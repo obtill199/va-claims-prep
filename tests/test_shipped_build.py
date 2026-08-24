@@ -21,7 +21,7 @@ import pytest
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
-WEB = os.path.join(REPO, "docs", "app")
+from conftest import FORM_DIR as WEB  # noqa: E402
 PY_DIR = os.path.join(WEB, "py")
 
 
@@ -51,12 +51,12 @@ def test_the_manifest_matches_what_was_copied():
 
 @pytest.mark.parametrize("module", [m for m in manifest() if m != "web_pipeline.py"])
 def test_shipped_copies_match_the_source(module):
-    """docs/app/py is generated. A hand-edit there is silently reverted by
+    """docs/form/py is generated. A hand-edit there is silently reverted by
     the next build, which is a confusing way to lose an afternoon."""
     shipped = open(os.path.join(PY_DIR, module), encoding="utf-8").read()
     source = open(os.path.join(REPO, module), encoding="utf-8").read()
     assert shipped == source, (
-        f"{module} in docs/app/py differs from the repo root. Edit the root "
+        f"{module} in docs/form/py differs from the repo root. Edit the root "
         "copy and run tools/build_web.py.")
 
 

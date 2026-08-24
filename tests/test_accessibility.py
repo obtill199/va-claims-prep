@@ -21,7 +21,8 @@ import pytest
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
-PAGES = ["docs/index.html", "docs/app/index.html"]
+PAGES = ["docs/home/index.html", "docs/form/index.html",
+         "docs/disclaimer/index.html"]
 
 
 def html(rel):
@@ -89,7 +90,7 @@ def test_the_page_declares_a_language(rel):
 @pytest.mark.parametrize("rel", PAGES)
 def test_there_is_one_h1_per_visible_screen(rel):
     page = html(rel)
-    if rel.endswith("app/index.html"):
+    if rel.endswith("form/index.html"):
         # One <h1> per step section; only one section is visible at a time.
         sections = re.findall(r'<section id="step-\d".*?</section>', page, re.S)
         assert sections
@@ -100,7 +101,7 @@ def test_there_is_one_h1_per_visible_screen(rel):
 
 
 def test_a_skip_link_exists_on_the_app():
-    assert "skip-link" in html("docs/app/index.html")
+    assert "skip-link" in html("docs/form/index.html")
 
 
 # ------------------------------------------------------ motor and vision
@@ -135,6 +136,6 @@ def test_colour_is_never_the_only_signal():
     """Confidence tiers drive a colour AND a word. If the badge ever became
     a bare coloured dot, the whole review screen would stop working for a
     colour-blind user."""
-    page = html("docs/app/index.html")
+    page = html("docs/form/index.html")
     assert "confidence</span>" in page or 'esc(g.confidence)' in page, \
         "the confidence badge no longer carries text"

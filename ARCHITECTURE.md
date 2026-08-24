@@ -92,11 +92,38 @@ worksheet and README.
 | `package_bundle.py` | The zip, the README, the worksheet |
 | `buddy_letter.py` | Lay-statement templates |
 
+## The published site
+
+Three pages, each a directory with an `index.html` so the URL carries no
+extension:
+
+```
+docs/index.html          -> redirects to disclaimer/   (the bare address)
+docs/disclaimer/         -> what this is and is not
+docs/home/               -> every link, in order of use
+docs/form/               -> the tool
+docs/app/index.html      -> redirects to ../form/      (the previously shared link)
+```
+
+The disclaimer is a page rather than a panel inside the tool because it used
+to be four notice blocks stacked above the first form field, and nobody read
+the fourth one. `/form` keeps one compact line pointing back at it, for
+anyone who bookmarked or was sent that URL directly.
+
+Both redirects are `<meta http-equiv="refresh">` with a visible link
+underneath, not JavaScript. They are the entry points and must not depend on
+scripting being on.
+
+Test paths live in `tests/conftest.py`. When these pages moved the first
+time, six test files had the old location written into them as a string, and
+two of those used `os.path.join("docs", "app", ...)` -- so a search for the
+literal path found four of six and the suite went red on the rest.
+
 ## Two front ends, one pipeline
 
 There are two ways to run this and they are not equivalent:
 
-**`docs/app/`** — the browser build. Python runs in Pyodide via WebAssembly.
+**`docs/form/`** — the browser build. Python runs in Pyodide via WebAssembly.
 Records never leave the tab; there is no server to send them to. This is what
 people actually use. It cannot OCR, because the OCR backends are native.
 
@@ -105,7 +132,7 @@ development and for scanned records.
 
 `web/py/web_pipeline.py` is the browser's replacement for `ingest.py` and
 `pdf_io.py`. Everything else is shared, and shared by *copying*:
-`tools/build_web.py` copies the modules into `docs/app/py/` and writes
+`tools/build_web.py` copies the modules into `docs/form/py/` and writes
 `MANIFEST.txt`.
 
 **Copying is the sharp edge in this design.** Three separate failures came
@@ -127,9 +154,9 @@ CI fails if you forget.
 
 ## Generated, do not hand-edit
 
-- `docs/app/py/*` — copied from the repo root
-- `docs/app/py/MANIFEST.txt` — the module list
-- The `QUESTIONS` array in `docs/app/index.html` — generated from
+- `docs/form/py/*` — copied from the repo root
+- `docs/form/py/MANIFEST.txt` — the module list
+- The `QUESTIONS` array in `docs/form/index.html` — generated from
   `intake.QUESTIONS`, between the `GENERATED QUESTIONS` markers. It used to be
   a hand-kept duplicate, which is how a question got added everywhere except
   the page people use

@@ -162,8 +162,8 @@ def test_the_browser_questionnaire_matches_intake_py():
 
     import intake
 
-    html = open(os.path.join(REPO, "docs", "app", "index.html"),
-                encoding="utf-8").read()
+    from conftest import FORM_HTML, read
+    html = read(FORM_HTML)
     block = re.search(r"const QUESTIONS = \[(.*?)\n\];", html, re.S)
     assert block, "the generated questionnaire block is gone"
 

@@ -3,7 +3,7 @@ The package tells the member what is still unfinished. Three separate places
 name the same placeholder string, and two name the same six blank fields:
 
   explanations.py   writes  "[Add treatment received]" into Item 29
-  docs/app/...      counts  that exact string, and counts it down live
+  docs/form/...     counts  that exact string, and counts it down live
   package_bundle.py tells   the member to search for it in the README
 
 If the wording in one drifts, the other two point at nothing -- and the
@@ -24,7 +24,7 @@ import explanations  # noqa: E402
 import intake  # noqa: E402
 import package_bundle  # noqa: E402
 
-APP = os.path.join(REPO, "docs", "app", "index.html")
+from conftest import FORM_HTML as APP  # noqa: E402
 
 
 def app_html():

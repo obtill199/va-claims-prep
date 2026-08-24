@@ -81,7 +81,7 @@ jobs:
           }
 
   build-is-current:
-    # docs/app/py is generated. If someone edits a module and pushes without
+    # docs/form/py is generated. If someone edits a module and pushes without
     # rebuilding, the site serves the old one and nothing says so.
     runs-on: ubuntu-latest
     steps:
