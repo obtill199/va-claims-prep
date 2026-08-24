@@ -50,15 +50,33 @@ US_DATE_RE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(\d{4})\b")
 # Column headers and billing vocabulary that can trail a description. Used
 # to trim, so "Low back pain, unspecified    2019-06-11 Active" doesn't
 # become part of the condition name.
+# Structural noise: column padding, and runs of billing figures. Neither is
+# word-based, so case does not enter into it.
 TRAILING_NOISE = re.compile(
     r"\s{2,}.*$|"
+    r"\s+\d+\.\d{2}\b.*$",
+    re.IGNORECASE)
+
+# Clinic and category tails, which records write as ALL CAPS column values:
+# "M54.50 Low back pain PRIMARY CARE", "G47.33 Sleep apnea SLEEP LAB".
+#
+# Case-SENSITIVE, and that is the entire point. This list was IGNORECASE
+# until a synthetic C-file caught what that does: every one of these words
+# also occurs lowercase INSIDE real diagnosis names, and the pattern ate the
+# name from that word onward. Five of thirteen common diagnoses were being
+# destroyed --
+#
+#     "Obstructive sleep apnea (adult)"      -> "Obstructive"
+#     "Unilateral primary osteoarthritis"    -> "Unilateral"
+#     "Adjustment disorder with chronic ..." -> "Adjustment disorder with"
+#
+# -- and sleep apnea is among the most frequently claimed VA conditions.
+# A worksheet handed to a VSO listing "Obstructive" is worse than useless.
+DEPARTMENT_TAIL = re.compile(
     r"\s+(?:PRIM|PRIMARY|SECONDARY|ACTIVE|CHRONIC|RESOLVED|INACTIVE|"
     r"REHAB|IMAGING|AUDIOLOGY|SLEEP|LAB|PHARMACY|SVCS?|ORTHOPEDICS|"
     r"NEUROLOGY|CARDIOLOGY|BEHAVIORAL|SPECIALTY|LABORATORY|RADIOLOGY|"
-    r"DENTAL|OPTOMETRY|ENT)\b.*$|"
-    # a run of billing figures ("1845.00 1339.46") ends the description
-    r"\s+\d+\.\d{2}\b.*$",
-    re.IGNORECASE)
+    r"DENTAL|OPTOMETRY|ENT)\b.*$")
 
 # Department and category tails are ALL CAPS ("PRIMARY CARE", "SLEEP LAB").
 # Deliberately a separate, case-SENSITIVE pattern: TRAILING_NOISE above is
@@ -67,6 +85,29 @@ TRAILING_NOISE = re.compile(
 CAPS_TAIL = re.compile(r"\s+(?:[A-Z]{3,}\s+){0,3}[A-Z]{3,}\s*$")
 
 STATUS_RE = re.compile(r"\b(Active|Chronic|Resolved|Inactive)\b", re.IGNORECASE)
+
+# A status word sitting at the END of a description is a column value, not
+# part of the name: "Low back pain, unspecified   2019-06-11 Active".
+#
+# Anchored to the end on purpose, and that anchor is the whole design.
+# "Chronic" is a status AND the first word of "Chronic obstructive pulmonary
+# disease"; "chronic" appears mid-name in "Adjustment disorder with chronic
+# depressed mood". Only a trailing occurrence is safely removable.
+STATUS_TAIL = re.compile(
+    r"\s+(?:Active|Chronic|Resolved|Inactive|Ongoing|Historical)\s*$",
+    re.IGNORECASE)
+
+# Codes introduced by an accounting label are account, claim and reference
+# numbers that happen to satisfy the ICD-10 shape. "ACCOUNT M12.345
+# STATEMENT BALANCE FORWARD" was being reported as a condition named
+# "STATEMENT". A false positive is the worse failure of the two available
+# here: it puts a condition the veteran does not have onto a form carrying
+# a federal false-statement penalty, whereas a miss can still be caught by
+# the member on the self-report screen.
+ACCOUNTING_LABEL = re.compile(
+    r"\b(?:ACCOUNT|ACCT|CLAIM|CLM|INVOICE|REF|REFERENCE|AUTH|AUTHORIZATION|"
+    r"POLICY|MEMBER|GROUP|BATCH|CHECK|VOUCHER|DRG|NDC|CPT|HCPCS)"
+    r"[\s#:.]*$", re.IGNORECASE)
 
 # Lines that are table headers or legends, not data.
 HEADER_RE = re.compile(
@@ -105,6 +146,7 @@ def _clean_description(text):
     # deleted the entire description on any column-aligned table.
     text = text.lstrip()
     text = TRAILING_NOISE.sub("", text)
+    text = DEPARTMENT_TAIL.sub("", text)
     stripped = CAPS_TAIL.sub("", text)
     # Never let tail-trimming empty a description that is legitimately an
     # acronym ("GERD", "PTSD").
@@ -113,7 +155,14 @@ def _clean_description(text):
     text = ISO_DATE_RE.sub("", text)
     text = US_DATE_RE.sub("", text)
     text = re.sub(r"\s+", " ", text).strip(" .,-|")
-    return text
+    # After the date is gone the status word is the new tail, so this runs
+    # last -- and twice, because "2019-06-11 Active Resolved" happens.
+    for _ in range(2):
+        stripped = STATUS_TAIL.sub("", text)
+        if stripped == text:
+            break
+        text = stripped
+    return text.strip(" .,-|")
 
 
 def parse_coded_lines(text, page_starts=None, source_document=None):
@@ -131,6 +180,10 @@ def parse_coded_lines(text, page_starts=None, source_document=None):
 
         for m in ICD10_RE.finditer(line):
             code = m.group("code")
+            # What comes immediately before decides whether this is a
+            # diagnosis code or an account number that looks like one.
+            if ACCOUNTING_LABEL.search(line[:m.start()]):
+                continue
             description = _clean_description(line[m.end():])
             if len(description) < 3:
                 continue

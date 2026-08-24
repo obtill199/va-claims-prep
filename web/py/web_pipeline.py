@@ -89,15 +89,28 @@ def process_files(files):
             text, page_starts, name))
         problems = list(extract_conditions.parse_problems(text))
 
-        # MHS Genesis is one layout among many. Fall back to the generic
-        # coded-record parser for CCD-A exports, claims and pharmacy ledgers.
+        # MHS Genesis is one layout among many, and a single document can
+        # contain several. A VA claims file is the extreme case: service
+        # treatment records in the MHS layout, a consolidated problem list
+        # as a column table, and payer claims with the code mid-line, all
+        # in one PDF.
+        #
+        # This used to be a fallback -- run the generic parser only if the
+        # MHS one found nothing. On a claims file that means whichever
+        # format appears first wins and the rest of the document is
+        # silently ignored. Both parsers run now; aggregate() dedupes by
+        # code, so a mention found twice collapses rather than doubling.
+        import coded_records
         narrative = False
-        if not diagnoses:
-            import coded_records
-            if coded_records.looks_narrative(text):
-                narrative = True
-            else:
-                diagnoses = coded_records.extract(text, page_starts, name)
+        coded = []
+        if coded_records.looks_narrative(text) and not diagnoses:
+            narrative = True
+        else:
+            coded = coded_records.extract(text, page_starts, name)
+
+        seen = {(d.get("code"), d.get("date")) for d in diagnoses}
+        diagnoses = diagnoses + [c for c in coded
+                                 if (c.get("code"), c.get("date")) not in seen]
         all_diag += diagnoses
         all_prob += problems
         corpus.append({"text": text, "page_starts": page_starts,
