@@ -241,7 +241,8 @@ def build_outputs(answers, proposals, conditions, per_file, item29,
     sources = [f["name"] for f in per_file]
     package_bundle.annotate_reached(conditions["clinical"], confirmed)
     out["conditions_worksheet.md"] = package_bundle.build_worksheet(
-        conditions["clinical"], conditions["administrative"], sources, None)
+        conditions["clinical"], conditions["administrative"], sources, None,
+        exposures=answers.get("exposures"))
     out["evidence_index.md"] = package_bundle.build_evidence_index(
         conditions["clinical"], None)
 
@@ -265,14 +266,13 @@ def build_outputs(answers, proposals, conditions, per_file, item29,
                              duty_status=answers.get("duty_status"))
     _assess["caveat"] = _timing.bdd_eligibility_caveat(
         answers.get("component"), answers.get("duty_status"))
-    out["README.txt"] = package_bundle.README.format(
-        secondary_questions=package_bundle.format_secondary_questions(
-            conditions["clinical"]),
-        timing_block=package_bundle.format_timing(_assess),
-        today=__import__("datetime").date.today().isoformat(),
-        member_name=answers.get("full_name") or "(name not provided)",
+    out["README.txt"] = package_bundle.render_readme(
+        member_name=answers.get("full_name"),
         contents="\n".join(f"  {k}" for k in sorted(out)),
-        unmapped_note="See conditions_worksheet.md for everything found.")
+        unmapped_note="See conditions_worksheet.md for everything found.",
+        timing=_assess,
+        conditions=conditions["clinical"],
+        exposures=answers.get("exposures"))
     return out
 
 

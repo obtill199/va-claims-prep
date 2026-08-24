@@ -37,6 +37,7 @@ SHARED_MODULES = [
     "timing.py",
     "self_report.py",
     "secondary.py",
+    "presumptives.py",
 ]
 
 DATA = [
@@ -98,6 +99,25 @@ def sync_questions():
 PY_VERSION_MARK = "const PY_BUILD ="
 
 
+def stamp_presumptive_date():
+    """Keep the date shown in the browser tied to the list it describes."""
+    import datetime
+    import presumptives
+    y, m = presumptives.REVIEWED.split("-")
+    pretty = datetime.date(int(y), int(m), 1).strftime("%B %Y")
+
+    path = os.path.join(OUT, "index.html")
+    html = open(path, encoding="utf-8").read()
+    if not re.search(r'const PRESUMPTIVE_REVIEWED = "[^"]*";', html):
+        print("  WARNING: no PRESUMPTIVE_REVIEWED marker in index.html")
+        return
+    new = re.sub(r'const PRESUMPTIVE_REVIEWED = "[^"]*";',
+                 f'const PRESUMPTIVE_REVIEWED = "{pretty}";', html)
+    if new != html:
+        open(path, "w", encoding="utf-8").write(new)
+    print(f"  presumptive list reviewed -> {pretty}")
+
+
 def stamp_python_build():
     """Cache-bust the Python module fetches.
 
@@ -120,11 +140,13 @@ def stamp_python_build():
 
     path = os.path.join(OUT, "index.html")
     html = open(path, encoding="utf-8").read()
-    new = re.sub(r'const PY_BUILD = "[^"]*";',
-                 f'const PY_BUILD = "{digest}";', html)
-    if new == html:
+    # Test for the marker, not for a change: an unchanged hash is the normal
+    # case and used to warn that caching was broken when it was not.
+    if not re.search(r'const PY_BUILD = "[^"]*";', html):
         print("  WARNING: no PY_BUILD marker in index.html; modules uncached")
         return
+    new = re.sub(r'const PY_BUILD = "[^"]*";',
+                 f'const PY_BUILD = "{digest}";', html)
     if new != html:
         open(path, "w", encoding="utf-8").write(new)
     print(f"  python modules -> ?v={digest}")
@@ -160,6 +182,7 @@ def main():
     manifest = SHARED_MODULES + ["web_pipeline.py"]
     with open(os.path.join(OUT, "py", "MANIFEST.txt"), "w") as fh:
         fh.write("\n".join(manifest) + "\n")
+    stamp_presumptive_date()
     stamp_python_build()
     print(f"  manifest: {len(manifest)} modules")
 

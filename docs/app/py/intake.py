@@ -17,6 +17,12 @@ inspect_fields.py.
 
 from datetime import date
 
+
+def _presumptive_exposures():
+    """Imported lazily so intake.py stays importable on its own."""
+    import presumptives
+    return presumptives.EXPOSURES
+
 # ---------------------------------------------------------------- schema
 
 # (key, label, type, options, help_text)
@@ -47,6 +53,16 @@ QUESTIONS = [
     # decides an effective date counts from this one date, and without it
     # the tool cannot tell a member with 120 days left from one with 80.
     # See timing.py.
+    # The one question that unlocks presumptive service connection. Branch,
+    # component and duty status say nothing about whether somebody breathed
+    # a burn pit in Balad or spent thirty days at Camp Lejeune in 1985, and
+    # a presumption is the single biggest shortcut in the system. Not
+    # written to either form -- see presumptives.py.
+    ("exposures", "Where did you serve?", "multi",
+     [(e["id"], e["label"], e["hint"]) for e in _presumptive_exposures()],
+     "Tick everything that applies. Some places and periods carry "
+     "presumptions \u2014 conditions VA connects to your service without "
+     "you having to prove the link. This is not written to either form."),
     ("separation_date", "Separation or retirement date", "date", None,
      "Your actual or expected date. If you are already out, the date you "
      "separated. Approximate is fine \u2014 it is used to work out which "

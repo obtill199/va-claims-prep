@@ -294,7 +294,7 @@ def download():
     package_bundle.annotate_reached(conditions["clinical"], confirmed)
     worksheet = package_bundle.build_worksheet(
         conditions["clinical"], conditions["administrative"], sources,
-        state["findings"])
+        state["findings"], exposures=answers.get("exposures"))
 
     ocr_results = next((f.get("ocr_results") for f in state["per_file"]
                         if f.get("ocr_results")), None)
@@ -314,7 +314,8 @@ def download():
         worksheet, evidence, letters, state["unmapped"],
         prompts_text=package_bundle.build_prompts_doc(state.get("prompts", [])),
         timing=_timing_for(answers),
-        conditions=conditions["clinical"])
+        conditions=conditions["clinical"],
+        exposures=answers.get("exposures"))
 
     return send_file(out_zip, as_attachment=True,
                      download_name=os.path.basename(out_zip))

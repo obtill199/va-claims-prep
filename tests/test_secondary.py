@@ -149,9 +149,9 @@ def test_a_busy_record_does_not_produce_an_unreadable_list():
 def test_the_questions_reach_the_readme():
     block = package_bundle.format_secondary_questions([RHINITIS, APNEA])
     assert "apnea" in block
-    readme = package_bundle.README.format(
-        timing_block="", secondary_questions=block, today="2026-08-23",
-        member_name="DOE, J", contents="  (files)", unmapped_note="none")
+    readme = package_bundle.render_readme(
+        member_name="DOE, J", contents="  (files)",
+        conditions=[RHINITIS, APNEA])
     assert "medication" in readme.lower()
     assert "does not try" in readme
 

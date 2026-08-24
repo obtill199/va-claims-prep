@@ -73,7 +73,7 @@ WHAT TO ASK YOUR VSO
 - Are any of them presumptive for where and when I served?
 - What is missing from this file?
 - If still serving: am I inside the 180-to-90-day BDD window?
-{secondary_questions}
+{presumptive_questions}{secondary_questions}
   VA can service-connect a condition caused or aggravated by another one,
   including by the MEDICATION for another one. It is worth as much as any
   other grant and is routinely missed on a first claim. The conditions
@@ -133,7 +133,8 @@ def annotate_reached(conditions, proposals):
     return conditions
 
 
-def build_worksheet(conditions, administrative, sources, findings=None):
+def build_worksheet(conditions, administrative, sources, findings=None,
+                    exposures=None):
     today = date.today().isoformat()
     out = [WORKSHEET_HEADER.format(today=today, sources=", ".join(sources))]
 
@@ -172,7 +173,15 @@ def build_worksheet(conditions, administrative, sources, findings=None):
             reached = c.get("_reached") or "no matching question — discuss"
             out.append(f"| {c['condition']} | {reached} |")
 
+    import presumptives
     import secondary
+    # Presumptives first: a presumption removes the need to argue the
+    # connection at all, which outranks a question about how two conditions
+    # relate to each other.
+    section = presumptives.worksheet_section(conditions + self_reported,
+                                             exposures)
+    if section:
+        out.append(section)
     section = secondary.worksheet_section(conditions + self_reported)
     if section:
         out.append(section)
@@ -284,6 +293,46 @@ def format_timing(assessment):
     return "\n".join(lines)
 
 
+def render_readme(member_name=None, contents="", unmapped_note="",
+                  timing=None, conditions=None, exposures=None, today=None):
+    """Fill the README.
+
+    README.format() was called from three places with a hand-kept list of
+    keys, so every new section broke the other two callers with a KeyError
+    -- and broke them at runtime, in the one file the member actually
+    reads. One function, defaults for everything, nothing to keep in sync.
+    """
+    return README.format(
+        today=today or date.today().isoformat(),
+        member_name=member_name or "(name not provided)",
+        contents=contents,
+        unmapped_note=unmapped_note,
+        timing_block=format_timing(timing),
+        presumptive_questions=format_presumptives(conditions, exposures),
+        secondary_questions=format_secondary_questions(conditions),
+    )
+
+
+def format_presumptives(conditions, exposures):
+    """The presumptive overlaps, at the top of what to ask. A presumption
+    removes the need to argue the connection at all."""
+    import presumptives
+    found = presumptives.find(conditions or [], exposures)
+    if not found["exposures"]:
+        return ""
+    lines = ["", "  PRESUMPTIVE — ASK ABOUT THIS FIRST",
+             "  " + presumptives.HEADLINE.replace(". ", ".\n  ")]
+    for m in found["matches"]:
+        lines.append(f"  - {m['name']}, from service in {m['exposure']}:")
+        lines.append(f"      {m['because']}")
+    for st in found["standing"]:
+        lines.append(f"  - {st['short']}: nothing in the records lines up yet, "
+                     "but the service still counts if something appears later.")
+    lines.append("  " + presumptives.DISCLAIMER.replace(". ", ".\n  "))
+    lines.append("  " + presumptives.FRESHNESS)
+    return "\n".join(lines)
+
+
 def format_secondary_questions(conditions):
     """The two or three secondary questions worth an appointment, inline in
     the README so they are read rather than looked up."""
@@ -300,7 +349,8 @@ def format_secondary_questions(conditions):
 
 def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
                  evidence_text, buddy_letter_paths, unmapped_conditions=None,
-                 prompts_text=None, timing=None, conditions=None):
+                 prompts_text=None, timing=None, conditions=None,
+                 exposures=None):
     contents, arcnames = [], {}
 
     for label, path in filled_forms.items():
@@ -326,13 +376,10 @@ def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
     else:
         unmapped_note = "All extracted conditions were matched to a form question."
 
-    readme = README.format(
-        secondary_questions=format_secondary_questions(conditions),
-        timing_block=format_timing(timing),
-        today=date.today().isoformat(),
-        member_name=member_name or "(name not provided)",
-        contents="\n".join(contents),
-        unmapped_note=unmapped_note)
+    readme = render_readme(
+        member_name=member_name, contents="\n".join(contents),
+        unmapped_note=unmapped_note, timing=timing,
+        conditions=conditions, exposures=exposures)
 
     with zipfile.ZipFile(out_zip, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr("README.txt", readme)
