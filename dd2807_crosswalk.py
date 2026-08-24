@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Copyright (c) 2026 Oliver Tillinghast.
+# Licensed under the PolyForm Noncommercial License 1.0.0.
+# Free for veterans, VSOs, nonprofits and government. Commercial use
+# requires a separate licence -- see LICENSE, NOTICE.md, COMMERCIAL.md.
 """
 dd2807_crosswalk.py — builds the item-number/letter <-> field-name <-> question-text
 crosswalk for DD 2807-1.

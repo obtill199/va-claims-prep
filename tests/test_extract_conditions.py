@@ -1,3 +1,7 @@
+# Copyright (c) 2026 Oliver Tillinghast.
+# Licensed under the PolyForm Noncommercial License 1.0.0.
+# Free for veterans, VSOs, nonprofits and government. Commercial use
+# requires a separate licence -- see LICENSE, NOTICE.md, COMMERCIAL.md.
 """
 Golden-output regression test for extract_conditions.py, per BUILD_BRIEF.md
 section 8: the developer's own records are the test fixture, so accuracy

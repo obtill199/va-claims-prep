@@ -4,8 +4,7 @@
 Veterans Affairs or the Department of Defense.** This is an independent tool.
 It does not file claims, does not give legal or medical advice, and makes no
 promise about any claim outcome. Use it to organize your own records, then
-take the result to an accredited Veterans Service Officer. Provided as-is,
-without warranty — see LICENSE.
+take the result to an accredited Veterans Service Officer. Provided as-is, without warranty.
 
 ## The site
 
@@ -186,3 +185,21 @@ is one data point. If you run it on your own records, what it gets wrong is
 genuinely useful — open an issue.
 
 Do not attach your health records, or anyone's, to an issue.
+
+## Licence
+
+[PolyForm Noncommercial 1.0.0](LICENSE). In plain English
+([NOTICE.md](NOTICE.md)):
+
+- **Veterans and service members** — free, forever, for your own claim.
+- **Accredited VSOs, nonprofits, schools, clinics, government** — free, named
+  explicitly in the licence, regardless of funding.
+- **Reading, forking, fixing, learning from the code** — go ahead.
+- **Selling it, or charging for a service built on it** — needs a separate
+  licence. See [COMMERCIAL.md](COMMERCIAL.md).
+
+Versions published before 24 August 2026 were MIT and remain so; see
+[LICENSE-HISTORY.md](LICENSE-HISTORY.md).
+
+Contributions are welcome under the terms in
+[CONTRIBUTING.md](CONTRIBUTING.md).

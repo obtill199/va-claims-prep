@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Copyright (c) 2026 Oliver Tillinghast.
+# Licensed under the PolyForm Noncommercial License 1.0.0.
+# Free for veterans, VSOs, nonprofits and government. Commercial use
+# requires a separate licence -- see LICENSE, NOTICE.md, COMMERCIAL.md.
 """
 pii_scrub.py — Milestone 2: produce a de-identified copy of a record's
 extracted text, so a demo file can exist without anyone handling real PHI
