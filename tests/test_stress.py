@@ -110,13 +110,22 @@ def test_a_page_of_pure_billing_yields_nothing():
 
 # ------------------------------------------------------------ degenerate
 
+# Named ids, because pytest writes the test id into PYTEST_CURRENT_TEST and
+# Windows caps an environment variable at 32,767 characters. Ten thousand
+# em dashes inline become a sixty-thousand-character id and every test in
+# the session errors at setup -- on Windows only, silently green everywhere
+# else. CI caught it; three local runs did not.
 @pytest.mark.parametrize("text", [
-    "", " ", "\n" * 5000, "\x00\x01\x02", "M54.50",
-    "M54.50 " * 5000,
-    "—" * 10000,
-    "Diagnosis:",
-    "Diagnosis: " * 2000,
-    "Diagnosis Date: " * 2000,
+    pytest.param("", id="empty"),
+    pytest.param(" ", id="one-space"),
+    pytest.param("\n" * 5000, id="blank-pages"),
+    pytest.param("\x00\x01\x02", id="control-bytes"),
+    pytest.param("M54.50", id="bare-code"),
+    pytest.param("M54.50 " * 5000, id="code-repeated-5000x"),
+    pytest.param("—" * 10000, id="separator-rule"),
+    pytest.param("Diagnosis:", id="anchor-alone"),
+    pytest.param("Diagnosis: " * 2000, id="anchor-repeated-2000x"),
+    pytest.param("Diagnosis Date: " * 2000, id="date-anchor-repeated-2000x"),
 ])
 def test_degenerate_input_returns_rather_than_raises(text):
     """These reach the parsers from real PDFs: empty pages, separator rules,

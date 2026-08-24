@@ -420,3 +420,29 @@ def test_nothing_but_upstream_files_hides_in_the_vendored_directory():
     assert wheels, "no wheel vendored"
     for wheel in wheels:
         assert wheel.startswith("pypdf-"), f"unexpected wheel: {wheel}"
+
+
+def test_no_test_id_is_long_enough_to_break_windows():
+    """pytest writes the current test id into the PYTEST_CURRENT_TEST
+    environment variable, and Windows refuses one longer than 32,767
+    characters -- at which point every test in the session errors during
+    setup, on Windows only, with the suite green on macOS and Linux.
+
+    A parametrized case carrying ten thousand em dashes inline did exactly
+    that here. The fix is pytest.param(..., id="..."); this is the guard
+    that says so before CI has to.
+    """
+    import subprocess
+
+    out = subprocess.run(
+        [sys.executable, "-m", "pytest", "--collect-only", "-q",
+         "--no-header", "-p", "no:cacheprovider"],
+        cwd=REPO, capture_output=True, text=True)
+    ids = [l for l in out.stdout.splitlines() if "::" in l]
+    assert ids, "collected nothing — the id check is not actually running"
+
+    # Well under the limit: the id is one part of what pytest stores.
+    too_long = [l[:90] + "…" for l in ids if len(l) > 4000]
+    assert not too_long, (
+        "these test ids are long enough to risk the Windows environment "
+        f"variable limit; give them explicit ids: {too_long}")
