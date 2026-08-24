@@ -8,4 +8,5 @@ schema.py
 package_bundle.py
 condition_library.py
 coded_records.py
+timing.py
 web_pipeline.py

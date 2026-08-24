@@ -10,8 +10,10 @@ shared modules.
     python tools/build_web.py
 """
 
+import json
 import os
 import shutil
+import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, "docs", "app")
@@ -30,6 +32,7 @@ SHARED_MODULES = [
     "package_bundle.py",
     "condition_library.py",
     "coded_records.py",
+    "timing.py",
 ]
 
 DATA = [
@@ -43,6 +46,51 @@ FORMS = [
 ]
 
 
+sys.path.insert(0, REPO)
+import intake  # noqa: E402  (after REPO is on the path)
+
+QUESTIONS_BEGIN = "// <<< GENERATED QUESTIONS -- edit intake.py, not this"
+QUESTIONS_END = "// >>> END GENERATED QUESTIONS"
+
+
+def render_questions():
+    """The browser build needs the questionnaire in JS. It used to be a hand-
+    kept copy of intake.QUESTIONS, which is a copy that drifts: a question
+    added to the Python was simply absent from the page people actually use,
+    with nothing failing to say so. Generate it instead."""
+    rows = []
+    for key, label, kind, opts, help_text in intake.QUESTIONS:
+        rows.append("  " + json.dumps(
+            [key, label, kind, opts, help_text, key in intake.REQUIRED],
+            ensure_ascii=False))
+    return (QUESTIONS_BEGIN + "\nconst QUESTIONS = [\n"
+            + ",\n".join(rows) + "\n];\n" + QUESTIONS_END)
+
+
+def sync_questions():
+    path = os.path.join(OUT, "index.html")
+    html = open(path, encoding="utf-8").read()
+    block = render_questions()
+
+    if QUESTIONS_BEGIN in html:
+        start = html.index(QUESTIONS_BEGIN)
+        end = html.index(QUESTIONS_END) + len(QUESTIONS_END)
+        new = html[:start] + block + html[end:]
+    else:
+        # First run: replace the hand-written array with the generated one.
+        start = html.index("const QUESTIONS = [")
+        end = html.index("\n];", start) + len("\n];")
+        new = html[:start] + block + html[end:]
+
+    if new != html:
+        open(path, "w", encoding="utf-8").write(new)
+        print(f"  questionnaire -> {len(intake.QUESTIONS)} questions "
+              "generated from intake.py")
+    else:
+        print(f"  questionnaire already in sync "
+              f"({len(intake.QUESTIONS)} questions)")
+
+
 def main():
     for sub in ("py", "data", "forms"):
         os.makedirs(os.path.join(OUT, sub), exist_ok=True)
@@ -53,6 +101,7 @@ def main():
             raise SystemExit(f"missing shared module: {mod}")
         shutil.copy2(src, os.path.join(OUT, "py", mod))
     print(f"  {len(SHARED_MODULES)} shared modules -> docs/app/py/")
+    sync_questions()
 
     shutil.copy2(os.path.join(REPO, "web", "py", "web_pipeline.py"),
                  os.path.join(OUT, "py", "web_pipeline.py"))

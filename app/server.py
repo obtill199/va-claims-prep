@@ -310,10 +310,23 @@ def download():
         out_zip, answers.get("full_name", ""),
         {k: v[1] for k, v in filled.items()},
         worksheet, evidence, letters, state["unmapped"],
-        prompts_text=package_bundle.build_prompts_doc(state.get("prompts", [])))
+        prompts_text=package_bundle.build_prompts_doc(state.get("prompts", [])),
+        timing=_timing_for(answers))
 
     return send_file(out_zip, as_attachment=True,
                      download_name=os.path.basename(out_zip))
+
+
+def _timing_for(answers):
+    """Where the member sits relative to the filing deadlines. Guidance only
+    -- nothing here reaches a form field."""
+    import timing
+    a = timing.assess(answers.get("separation_date"),
+                      component=answers.get("component"),
+                      duty_status=answers.get("duty_status"))
+    a["caveat"] = timing.bdd_eligibility_caveat(
+        answers.get("component"), answers.get("duty_status"))
+    return a
 
 
 def main():

@@ -43,6 +43,14 @@ QUESTIONS = [
      "SHA Part A only."),
     ("purpose", "Purpose of this exam", "choice",
      ["Separation", "Retirement", "Medical Board", "Retention"], None),
+    # Not written to either form. It is here because every deadline that
+    # decides an effective date counts from this one date, and without it
+    # the tool cannot tell a member with 120 days left from one with 80.
+    # See timing.py.
+    ("separation_date", "Separation or retirement date", "date", None,
+     "Your actual or expected date. If you are already out, the date you "
+     "separated. Approximate is fine \u2014 it is used to work out which "
+     "filing deadlines apply to you, and is not written to either form."),
     ("position", "Position (title, grade, component)", "text", None, None),
     ("occupation", "Usual occupation / day-to-day job", "text", None, None),
     ("exam_location", "Examining location and address", "textarea", None,

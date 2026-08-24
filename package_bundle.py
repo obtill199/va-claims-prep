@@ -18,7 +18,7 @@ from datetime import date
 README = """VA CLAIMS PREP PACKAGE
 Generated {today}
 For: {member_name}
-
+{timing_block}
 WHAT THIS IS
 ------------
 An organized starting point for an appointment with an accredited
@@ -200,9 +200,31 @@ def build_evidence_index(conditions, ocr_results=None):
     return "\n".join(lines) + "\n"
 
 
+def format_timing(assessment):
+    """The deadline, as the first thing in the README rather than a footnote.
+    A member who reads this file once reads the top of it."""
+    if not assessment or assessment.get("state") == "unknown":
+        return ""
+    rule = "=" * 68
+    lines = ["", rule, "  " + assessment["headline"].upper(), rule, ""]
+    for chunk in assessment["detail"].split(". "):
+        chunk = chunk.strip()
+        if chunk:
+            lines.append("  " + chunk.rstrip(".") + ".")
+    if assessment.get("actions"):
+        lines.append("")
+        for i, act in enumerate(assessment["actions"], 1):
+            lines.append(f"  {i}. {act}")
+    if assessment.get("caveat"):
+        lines += ["", "  CHECK THIS FIRST: " + assessment["caveat"]]
+    lines += ["", "  (Worked out from the separation date you entered. If that date",
+              "   was wrong, every deadline above moves with it.)", ""]
+    return "\n".join(lines)
+
+
 def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
                  evidence_text, buddy_letter_paths, unmapped_conditions=None,
-                 prompts_text=None):
+                 prompts_text=None, timing=None):
     contents, arcnames = [], {}
 
     for label, path in filled_forms.items():
@@ -229,6 +251,7 @@ def build_bundle(out_zip, member_name, filled_forms, worksheet_text,
         unmapped_note = "All extracted conditions were matched to a form question."
 
     readme = README.format(
+        timing_block=format_timing(timing),
         today=date.today().isoformat(),
         member_name=member_name or "(name not provided)",
         contents="\n".join(contents),

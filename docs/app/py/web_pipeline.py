@@ -250,7 +250,14 @@ def build_outputs(answers, proposals, conditions, per_file, item29,
                                      letter_conditions).items():
         out[f"buddy_letters/{name}"] = text
 
+    import timing as _timing
+    _assess = _timing.assess(answers.get("separation_date"),
+                             component=answers.get("component"),
+                             duty_status=answers.get("duty_status"))
+    _assess["caveat"] = _timing.bdd_eligibility_caveat(
+        answers.get("component"), answers.get("duty_status"))
     out["README.txt"] = package_bundle.README.format(
+        timing_block=package_bundle.format_timing(_assess),
         today=__import__("datetime").date.today().isoformat(),
         member_name=answers.get("full_name") or "(name not provided)",
         contents="\n".join(f"  {k}" for k in sorted(out)),

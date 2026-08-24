@@ -100,6 +100,8 @@
     loads and the whole thing still works.</p>
   </div>
 
+  <div id="timing-panel" hidden></div>
+
   <div class="note note--warn" id="resume-banner" hidden>
     <span class="note__title">You have saved progress on this device.</span>
     <p id="resume-detail"></p>
@@ -141,7 +143,10 @@
   <p class="lede">Drop in your health record PDFs. Everything is processed inside this
   browser tab.</p>
 
-  <div id="boot" class="status-row">
+  
+  <div id="timing-panel-2" hidden></div>
+
+<div id="boot" class="status-row">
     <span class="spinner"></span>
     <div><span class="note__title">Loading the engine…</span>
       <p class="help" id="boot-detail">This started while you were filling in the
@@ -304,23 +309,26 @@ const S = { answers:{}, perFile:null, conditions:null, proposals:[], unmapped:[]
             item29:"", shaExplains:{}, shaLabels:{}, outputs:null };
 let py = null;
 
+// <<< GENERATED QUESTIONS -- edit intake.py, not this
 const QUESTIONS = [
-  ["full_name","Full name (Last, First, Middle)","text",null,"As it appears in your service record.",true],
-  ["date_of_birth","Date of birth","date",null,null,false],
-  ["birth_sex","Birth sex","choice",["Male","Female"],"SHA Part A asks for this; it gates which sections apply.",false],
-  ["address","Home address","textarea",null,"Street, city, state, ZIP.",false],
-  ["phone","Phone number","text",null,null,false],
-  ["email","Personal email","text",null,null,false],
-  ["branch","Service branch","choice",["Army","Navy","Marine Corps","Air Force","Space Force","Coast Guard","USPHS","NOAA"],null,true],
-  ["component","Component","choice",["Regular","Reserve","National Guard"],null,true],
-  ["duty_status","Current duty status","choice",["Active Component","Active Duty  Active Guard Reserve","Active Duty  Non-Active Guard Reserve","Not on active duty"],"SHA Part A only.",false],
-  ["purpose","Purpose of this exam","choice",["Separation","Retirement","Medical Board","Retention"],null,true],
-  ["position","Position (title, grade, component)","text",null,null,false],
-  ["occupation","Usual occupation / day-to-day job","text",null,null,false],
-  ["exam_location","Examining location and address","textarea",null,"Leave blank if you don't know it yet.",false],
-  ["medications","Current medications","textarea",null,"Prescription and over-the-counter. Write 'None' if none.",false],
-  ["allergies","Allergies","textarea",null,"Insect bites/stings, foods, medicines. Write 'None' if none.",false],
+  ["full_name", "Full name (Last, First, Middle)", "text", null, "As it appears in your service record.", true],
+  ["date_of_birth", "Date of birth", "date", null, null, false],
+  ["birth_sex", "Birth sex", "choice", ["Male", "Female"], "SHA Part A asks for this; it gates which sections apply.", false],
+  ["address", "Home address", "textarea", null, "Street, city, state, ZIP.", false],
+  ["phone", "Phone number", "text", null, null, false],
+  ["email", "Personal email", "text", null, null, false],
+  ["branch", "Service branch", "choice", ["Army", "Navy", "Marine Corps", "Air Force", "Space Force", "Coast Guard", "USPHS", "NOAA"], null, true],
+  ["component", "Component", "choice", ["Regular", "Reserve", "National Guard"], null, true],
+  ["duty_status", "Current duty status", "choice", ["Active Component", "Active Duty  Active Guard Reserve", "Active Duty  Non-Active Guard Reserve", "Not on active duty"], "SHA Part A only.", false],
+  ["purpose", "Purpose of this exam", "choice", ["Separation", "Retirement", "Medical Board", "Retention"], null, true],
+  ["separation_date", "Separation or retirement date", "date", null, "Your actual or expected date. If you are already out, the date you separated. Approximate is fine — it is used to work out which filing deadlines apply to you, and is not written to either form.", false],
+  ["position", "Position (title, grade, component)", "text", null, null, false],
+  ["occupation", "Usual occupation / day-to-day job", "text", null, null, false],
+  ["exam_location", "Examining location and address", "textarea", null, "Leave blank if you don't know it yet.", false],
+  ["medications", "Current medications", "textarea", null, "Prescription and over-the-counter. Write 'None' if none.", false],
+  ["allergies", "Allergies", "textarea", null, "Insect bites/stings, foods, medicines. Write 'None' if none.", false]
 ];
+// >>> END GENERATED QUESTIONS
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s==null?"":s).replace(/[&<>"']/g,
@@ -468,7 +476,8 @@ $("to-upload").addEventListener("click", ()=>{
   }
   box.classList.add("hidden");
   S.answers = a;
-  show(2); boot();
+  show(2);
+  boot().then(renderTiming);
 });
 
 // Start the 15MB runtime download immediately, while the member is still
@@ -550,11 +559,49 @@ function updateItem29Todo(){
      finished until they are gone.</p>`;
 }
 
+// Where the calendar puts them. Computed in Python so the rules live in one
+// place (timing.py) rather than being restated in JS and drifting from it.
+async function renderTiming(){
+  if (!py) return;
+  py.globals.set("js_sep", S.answers.separation_date || null);
+  py.globals.set("js_component", S.answers.component || null);
+  py.globals.set("js_duty", S.answers.duty_status || null);
+  let a;
+  try {
+    a = JSON.parse(await py.runPythonAsync(`
+import json, timing
+_t = timing.assess(js_sep, component=js_component, duty_status=js_duty)
+_t["caveat"] = timing.bdd_eligibility_caveat(js_component, js_duty)
+json.dumps(_t)
+`));
+  } catch (e) { return; }
+  S.timing = a;
+  const cls = a.urgency === "critical" ? "note--warn"
+            : a.urgency === "warn" ? "note--warn" : "";
+  const html =
+    `<div class="note ${cls}">
+       <span class="note__title">${esc(a.headline)}</span>
+       <p>${esc(a.detail)}</p>
+       ${a.actions.length ? "<ul class='stack'>" + a.actions.map(x=>
+          `<li>${esc(x)}</li>`).join("") + "</ul>" : ""}
+       ${a.caveat ? `<p class="help"><strong>Check this first:</strong> ${esc(a.caveat)}</p>` : ""}
+       ${a.state === "unknown" ? "" :
+         `<p class="help">Based on the separation date you entered. Change it on the
+          first screen if it is wrong &mdash; every deadline above moves with it.</p>`}
+     </div>`;
+  ["timing-panel","timing-panel-2"].forEach(id=>{
+    const el = $(id); if (!el) return;
+    el.innerHTML = html;
+    el.hidden = a.state === "unknown";
+  });
+}
+
 async function resumeFrom(saved){
   $("processing").classList.remove("hidden");
   $("proc-msg").textContent = "Restoring your saved progress\u2026";
   try {
     S.answers = saved.answers || S.answers;
+    renderTiming();
     S.perFile = saved.perFile;
     S.conditions = saved.conditions;
     S.unmapped = saved.unmapped || [];
