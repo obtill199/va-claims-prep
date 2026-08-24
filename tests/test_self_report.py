@@ -31,7 +31,7 @@ from proposals import build_proposals  # noqa: E402
 @pytest.fixture
 def workdir(tmp_path, monkeypatch):
     for f in ("dd2807_crosswalk.json", "field_names_sha.json"):
-        (tmp_path / f).write_text(open(os.path.join(REPO, f)).read())
+        (tmp_path / f).write_text(open(os.path.join(REPO, f), encoding="utf-8").read())
     monkeypatch.chdir(tmp_path)
     return tmp_path
 
@@ -39,7 +39,7 @@ def workdir(tmp_path, monkeypatch):
 def propose(ids, free_text=None, extra=None, birth_sex="Male"):
     clinical = sr.to_conditions(ids, free_text) + list(extra or [])
     json.dump({"clinical": clinical, "administrative": []},
-              open("conditions.json", "w"))
+              open("conditions.json", "w", encoding="utf-8"))
     return build_proposals("conditions.json", "dd2807_crosswalk.json",
                            "field_names_sha.json", birth_sex=birth_sex)
 

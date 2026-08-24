@@ -30,7 +30,7 @@ pytestmark = pytest.mark.skipif(
 
 
 def _parse_worksheet_rows():
-    text = open(WORKSHEET).read()
+    text = open(WORKSHEET, encoding="utf-8").read()
     return re.findall(
         r"^\| (\S+) \| ([^|]+) \| ([^|]+) \| (\d{4}-\d\d-\d\d) \| (\d{4}-\d\d-\d\d) "
         r"\| (\d+) \| (\w+) \| ([^|]+) \|$",

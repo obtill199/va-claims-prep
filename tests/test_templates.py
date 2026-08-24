@@ -39,7 +39,7 @@ LEAKY = ["field_map.py", "proposals.py", "extract_conditions.py",
 
 @pytest.mark.parametrize("name", TEMPLATE_NAMES)
 def test_template_shows_no_internals(name):
-    body = open(os.path.join(TEMPLATES, name)).read()
+    body = open(os.path.join(TEMPLATES, name), encoding="utf-8").read()
     found = [t for t in LEAKY if t in body]
     assert not found, f"{name} would render internal detail: {found}"
 
@@ -51,7 +51,7 @@ def test_proposal_rationales_are_human_readable():
     if not os.path.exists(path):
         pytest.skip("no proposals.json on this machine (gitignored)")
     banned = ["field_map", ".py", "target_field", "AcroForm", ".pdf", "RULES"]
-    for p in json.load(open(path)):
+    for p in json.load(open(path, encoding="utf-8")):
         for token in banned:
             assert token not in p["rationale"], (
                 f"proposal {p['id']} rationale leaks {token!r}: {p['rationale'][:80]}")

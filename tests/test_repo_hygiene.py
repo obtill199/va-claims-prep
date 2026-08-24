@@ -261,3 +261,57 @@ def test_required_files_are_actually_tracked(rel):
         f"{rel} exists but is NOT committed — almost certainly swallowed by a "
         f".gitignore rule. Check `git check-ignore -v {rel}` and add an "
         f"exception.")
+
+
+# --------------------------------------------------- portability of file I/O
+
+def test_no_text_file_is_opened_without_an_explicit_encoding():
+    """open() with no encoding uses the locale codepage, not UTF-8.
+
+    On Linux and macOS that is UTF-8 and nothing happens, which is why 38 of
+    these survived a Windows port and a full local suite. On Windows it is
+    cp1252, and the first em dash in a discharge summary -- or a provider
+    called Munoz -- raises UnicodeDecodeError partway through building
+    somebody's package.
+
+    CI caught the last two on Windows only. This catches them everywhere,
+    including for a contributor with no Windows machine.
+
+    Parsed rather than grepped: a regex for this matches the word in its own
+    docstring, which is how the first version of this test failed.
+    """
+    import ast
+    import glob
+
+    BINARY = {"rb", "wb", "ab", "xb", "r+b", "w+b", "rb+", "wb+"}
+    problems = []
+
+    roots = ["*.py", "app/*.py", "tools/*.py", "web/py/*.py",
+             "hosted/*.py", "tests/*.py"]
+    for pattern in roots:
+        for path in glob.glob(os.path.join(REPO, pattern)):
+            tree = ast.parse(open(path, encoding="utf-8").read())
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.Call):
+                    continue
+                # Builtin open() only: fitz.open, Image.open, zipfile.open
+                # and friends are different functions with no encoding=.
+                if not (isinstance(node.func, ast.Name)
+                        and node.func.id == "open"):
+                    continue
+                if any(k.arg == "encoding" for k in node.keywords):
+                    continue
+                mode = None
+                if len(node.args) > 1 and isinstance(node.args[1], ast.Constant):
+                    mode = node.args[1].value
+                for k in node.keywords:
+                    if k.arg == "mode" and isinstance(k.value, ast.Constant):
+                        mode = k.value.value
+                if isinstance(mode, str) and mode.strip() in BINARY:
+                    continue
+                rel = os.path.relpath(path, REPO)
+                problems.append(f"{rel}:{node.lineno}")
+
+    assert not problems, (
+        "these calls open text with no encoding= and will use cp1252 on "
+        "Windows: " + ", ".join(sorted(problems)))

@@ -87,7 +87,7 @@ def test_every_sha_slug_resolves_against_the_live_form():
     loudly rather than silently dropping the mapping."""
     import json
     path = os.path.join(REPO, "field_names_sha.json")
-    names = list(json.load(open(path)).keys())
+    names = list(json.load(open(path, encoding="utf-8")).keys())
     resolved, unresolved = cl.resolve_sha_fields(names)
     assert not unresolved, f"unresolved SHA slugs: {unresolved}"
     assert len(resolved) == len(cl.SHA_SLUGS)
@@ -112,7 +112,7 @@ def test_prechecked_tier_has_no_false_positives_on_real_records():
     if not os.path.exists(path):
         pytest.skip("real records not present (gitignored, by design)")
 
-    conditions = json.load(open(path))["clinical"]
+    conditions = json.load(open(path, encoding="utf-8"))["clinical"]
     strong = set()
     for c in conditions:
         strong |= items(c["icd10"], "Male", tiers=("high", "medium"))
