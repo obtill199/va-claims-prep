@@ -11,7 +11,7 @@ the project owner under the same terms as the project ([PolyForm
 Noncommercial 1.0.0](LICENSE)), **and** that you grant the owner permission
 to license your contribution commercially as part of the project.
 
-That second half is what makes it possible to offer a commercial licence at
+That second half is what makes it possible to offer a commercial license at
 all. Without it, every contributor would hold a veto over the project's
 own licensing. It is the same arrangement most dual-licensed projects use.
 

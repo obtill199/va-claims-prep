@@ -4,7 +4,7 @@ The software is available under the [PolyForm Noncommercial
 License 1.0.0](LICENSE), which covers every noncommercial use — see
 [NOTICE.md](NOTICE.md) for the plain-English version.
 
-Commercial use needs a separate licence from the copyright holder.
+Commercial use needs a separate license from the copyright holder.
 
 ## What counts as commercial
 
@@ -25,7 +25,7 @@ payment.
 ## Before you ask
 
 **38 U.S.C. § 5901 restricts who may charge for preparing or presenting a VA
-claim.** A commercial licence to this software is not accreditation, does not
+claim.** A commercial license to this software is not accreditation, does not
 confer it, and does not make an unaccredited paid claims service lawful. Any
 commercial arrangement will assume you have taken your own legal advice on
 that.

@@ -1,10 +1,10 @@
-# Licence history
+# License history
 
-This project changed licence. Both states are recorded here because a
-licence change that is not written down is a licence dispute waiting to
+This project changed license. Both states are recorded here because a
+license change that is not written down is a license dispute waiting to
 happen.
 
-| Period | Licence |
+| Period | License |
 |---|---|
 | 21 August 2026 – 23 August 2026 | MIT |
 | 24 August 2026 onward | [PolyForm Noncommercial 1.0.0](LICENSE) |

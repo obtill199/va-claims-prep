@@ -186,17 +186,17 @@ genuinely useful — open an issue.
 
 Do not attach your health records, or anyone's, to an issue.
 
-## Licence
+## License
 
 [PolyForm Noncommercial 1.0.0](LICENSE). In plain English
 ([NOTICE.md](NOTICE.md)):
 
 - **Veterans and service members** — free, forever, for your own claim.
 - **Accredited VSOs, nonprofits, schools, clinics, government** — free, named
-  explicitly in the licence, regardless of funding.
+  explicitly in the license, regardless of funding.
 - **Reading, forking, fixing, learning from the code** — go ahead.
 - **Selling it, or charging for a service built on it** — needs a separate
-  licence. See [COMMERCIAL.md](COMMERCIAL.md).
+  license. See [COMMERCIAL.md](COMMERCIAL.md).
 
 Versions published before 24 August 2026 were MIT and remain so; see
 [LICENSE-HISTORY.md](LICENSE-HISTORY.md).

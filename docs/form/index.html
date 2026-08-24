@@ -207,11 +207,11 @@
 
   <div class="note note--warn">
     <span class="note__title">Nothing here checks a box on its own.</span>
-    <p>Whatever you tick becomes a <em>proposal</em> on the next screen, worded the
-    way the form words it, and you confirm it there like everything else. Ticking
-    &ldquo;ringing in my ears&rdquo; is not the same statement as
-    &ldquo;a hearing loss&rdquo; &mdash; you should see the sentence you are
-    actually signing.</p>
+    <p>Anything you tick shows up on the next screen as a <em>suggested answer</em>.
+    You decide there whether to use it.</p>
+    <p>It will be worded the way the form words it. &ldquo;Ringing in my ears&rdquo;
+    is not the same as &ldquo;a hearing loss&rdquo;, and you should see the exact
+    sentence before you agree to it.</p>
   </div>
 
   <p class="help">Tick anything that is true for you, whether or not you ever
@@ -233,34 +233,35 @@
 
 <!-- ---------------------------------------------------------- step 4 -->
 <section id="step-4" class="hidden">
-  <h1>Review each proposed answer</h1>
-  <p class="lede">Each of these is a <em>proposal</em> drawn from your records — not an
-  answer yet. Nothing is written to a form until you confirm it here.</p>
+  <h1>Check each answer</h1>
+  <p class="lede">We found these in your records. None of them go on a form until
+  you say so.</p>
 
   <div class="note note--warn">
     <span class="note__title">Read these carefully.</span>
-    <p>DD Form 2807-1 is an official statement carrying federal penalties for a false
-    statement (up to 5 years confinement or a $10,000 fine). Your records may contain
-    entries you've never seen. Confirm only what you know to be true.</p>
+    <p>DD Form 2807-1 is a sworn statement. Getting it wrong on purpose is a
+    federal offense &mdash; up to 5 years in prison or a $10,000 fine.</p>
+    <p>Your records may hold things you have never seen. Say yes only to what you
+    know is true.</p>
   </div>
 
   <h2>What was read from your files</h2>
   <div id="file-table"></div>
 
-  <h2 id="prop-heading">Proposed answers</h2>
-  <p class="help">Sorted strongest first. Items marked <span class="badge badge--err">low</span>
-  have no diagnosis behind them — just words appearing near that question in your
-  records — so they start as <strong>Leave blank</strong>. Skipping one leaves the box
-  empty rather than making a claim.</p>
+  <h2 id="prop-heading">What we found</h2>
+  <p class="help">Strongest first. Ones marked <span class="badge badge--err">low</span>
+  have no diagnosis behind them &mdash; just words that showed up near that question.
+  Those start on <strong>Leave blank</strong>. If you skip one, the box stays empty.
+  Nothing is claimed for you.</p>
   <div id="proposals"></div>
   <div id="unmapped"></div>
 
   <div class="note">
     <span class="note__title" id="saved-note">Progress saves automatically on this device</span>
-    <p class="help">Your decisions, the conditions found, and the dates attached to them
-    are kept in this browser&rsquo;s storage on this computer only &mdash; nothing is
-    uploaded, and your record files themselves are never stored. Close the tab and you
-    can pick up here without uploading again. Saved progress is discarded after 14 days.
+    <p class="help">Your answers and the conditions we found stay in this browser, on
+    this computer. Nothing is uploaded. Your record files are never saved.</p>
+    <p class="help">Close the tab and you can come back without uploading again. Saved
+    progress is deleted after 14 days.
     <button type="button" class="linkbtn" id="clear-saved">Clear saved progress now</button></p>
   </div>
 
@@ -270,9 +271,9 @@
 <!-- ---------------------------------------------------------- step 5 -->
 <section id="step-5" class="hidden">
   <h1>Explain your “Yes” answers</h1>
-  <p class="lede">DD Form 2807-1 requires every “Yes” to be explained in Item 29, and
-  SHA Part A has an explanation box for each one. These drafts state only what your
-  records document — edit them freely, in your own words.</p>
+  <p class="lede">Every &ldquo;Yes&rdquo; needs an explanation. We have drafted one
+  for each, using only what your records show.</p>
+  <p class="lede">Change any of it. Your own words are better than ours.</p>
   <div class="note">
     <p>These were generated from your records, so read them before they go on the form.
     They deliberately don't characterise severity, cause, or service connection — that's
@@ -300,19 +301,19 @@
   <ol class="stack" style="padding-left:var(--s5)">
     <li><strong>Do not sign anything yet.</strong> Both forms are unsigned on purpose.
       Sign them after your VSO has read them, not before.</li>
-    <li><strong>Fill in your SSN and DoD ID by hand.</strong> This tool never collects
-      them, so both are blank in eight boxes across four places: DD 2807-1 items 2a and
-      2b on page 1, the header of page 2, the header of page 3, and section 1 of
-      SHA Part A.</li>
+    <li><strong>Write in your SSN and DoD ID by hand.</strong> We never ask for them,
+      so eight boxes are blank. They are in four places: DD 2807-1 items 2a and 2b on
+      page 1, the top of page 2, the top of page 3, and section 1 of SHA Part A.</li>
     <li id="next-item29" hidden><strong>Finish Item 29.</strong> <span id="next-item29-detail"></span></li>
     <li><strong>Book a free accredited VSO.</strong> They are free, they do this daily,
       and they are the ones accredited to advise on what to claim.
       <a href="https://www.va.gov/get-help-from-accredited-representative/" target="_blank" rel="noopener">Find one at VA&rsquo;s directory</a>.</li>
     <li><strong>Bring:</strong> this whole package, your DD-214, your complete service
       treatment records, and any private medical records VA does not already hold.</li>
-    <li><strong>Ask them:</strong> which conditions are worth claiming, whether any are
-      presumptive for your service, whether anything is missing, and — if you are still
-      serving — whether you are inside the 180-to-90-day BDD window.</li>
+    <li><strong>Ask them four things:</strong> which conditions are worth claiming.
+      Whether any are <em>presumptive</em> &mdash; that means VA accepts the link to
+      your service without you having to prove it. Whether anything is missing. And if
+      you are still serving, whether you are inside the BDD window.</li>
   </ol>
   <div id="presumptive-panel" hidden></div>
   <div id="secondary-panel" hidden></div>
@@ -923,7 +924,7 @@ async function renderSelfReport(){
   const sum = await py.runPythonAsync(`
 import json, self_report
 json.dumps({"catalog": self_report.catalog(),
-            "summary": self_report.summarise(_state["conditions"])})
+            "summary": self_report.summarize(_state["conditions"])})
 `);
   const {catalog, summary} = JSON.parse(sum);
   S.srCatalog = catalog;
