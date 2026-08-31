@@ -68,13 +68,24 @@ def plan(conditions, ratings):
     Returns the sections a member acts on, in the order they should read
     them.
     """
-    capped, actionable, unrated = [], [], []
+    capped, actionable, unrated, general = [], [], [], []
 
     for cond in conditions or []:
         code = cond.get("icd10") or ""
         rated_at = ratings.get(code, ratings.get(cond.get("condition")))
         entries = rc.for_condition(code)
+
+        # No specific criteria. Part 4 runs to hundreds of diagnostic codes
+        # and no summary holds all of them -- but silence is the wrong
+        # answer, so fall back to the section that governs it, the right
+        # questionnaire, and what that section generally turns on.
         if not entries:
+            info = rc.system_for(code)
+            if info and rated_at is not None:
+                general.append({
+                    "condition": cond.get("condition"), "icd10": code,
+                    "current": rated_at, "evidence": _evidence(cond),
+                    "page": cond.get("source_page"), **info})
             continue
 
         for entry in entries:
@@ -102,7 +113,8 @@ def plan(conditions, ratings):
                 item["next"] = {"percent": nxt[0], "requires": nxt[1]} if nxt else None
                 actionable.append(item)
 
-    return {"capped": capped, "actionable": actionable, "unrated": unrated}
+    return {"capped": capped, "actionable": actionable,
+            "unrated": unrated, "general": general}
 
 
 def worksheet(conditions, ratings, member_name=None):
@@ -164,6 +176,31 @@ def worksheet(conditions, ratings, member_name=None):
                 out.append("")
             if i.get("note"):
                 out += [i["note"], ""]
+
+    if result["general"]:
+        out += ["## Rated, but not in our criteria list yet", "",
+                "The schedule runs to hundreds of diagnostic codes and this "
+                "tool carries plain-language criteria for the ones claimed "
+                "most often. These are not among them &mdash; which says "
+                "nothing about your claim, only about the list. Here is the "
+                "part of the schedule that governs each, and the "
+                "questionnaire that captures it. The criteria themselves are "
+                "public.", ""]
+        for i in result["general"]:
+            out.append(f"### {i['condition']}")
+            out.append("")
+            out.append(f"Currently rated **{i['current']}%**. Governed by "
+                       f"{i['section']} ({i['system']}).")
+            out.append("")
+            out.append(f"**In your records:** {i['evidence']['line']}")
+            out.append("")
+            out.append(i["guidance"])
+            out.append("")
+            out.append(f"**Ask about this questionnaire:** {i['dbq']}.")
+            out.append("")
+            out.append(f"Read the criteria at {rc.CFR_PART_4} and take them to "
+                       f"your VSO.")
+            out.append("")
 
     if result["unrated"]:
         out += ["## Documented, but you did not list a rating for them", "",

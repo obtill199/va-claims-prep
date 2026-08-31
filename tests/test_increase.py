@@ -153,6 +153,11 @@ def test_the_criteria_carry_their_own_age_and_a_source():
 @pytest.mark.parametrize("entry", rc.CRITERIA, ids=lambda e: e["id"])
 def test_every_criterion_is_well_formed(entry):
     assert entry["name"] and entry["dc"] and entry["dbq"]
+    if entry.get("pointer"):
+        # Some conditions are decided by a test or a scoring process where a
+        # summary would mislead. Those carry prose instead of levels.
+        assert entry.get("text"), f"{entry['id']} is a pointer with no text"
+        return
     assert entry["measures"], f"{entry['id']} does not say what to measure"
     assert entry["levels"], f"{entry['id']} lists no levels"
     percents = [p for p, _ in entry["levels"]]
@@ -164,5 +169,52 @@ def test_every_criterion_is_well_formed(entry):
 
 
 def test_nothing_fires_on_an_empty_record():
-    assert increase.plan([], {}) == {"capped": [], "actionable": [], "unrated": []}
+    assert increase.plan([], {}) == {"capped": [], "actionable": [],
+                                     "unrated": [], "general": []}
     assert increase.worksheet([], {}) == ""
+
+
+# ------------------------------------------- coverage for everything else
+
+@pytest.mark.parametrize("code,system", [
+    ("C50.911", "Cancer"),
+    ("N18.3", "Genitourinary"),
+    ("D50.9", "Blood and lymphatic"),
+    ("H40.11X1", "Eyes"),
+    ("B20", "Infectious disease"),
+    ("E03.9", "Endocrine"),
+    ("K02.9", "Digestive"),
+    ("M79.7", "Musculoskeletal"),
+    ("F60.3", "Mental health"),
+    ("G35", "Neurological"),
+    ("L40.0", "Skin"),
+    ("I48.0", "Cardiovascular"),
+])
+def test_a_condition_with_no_specific_criteria_still_gets_direction(code, system):
+    """Part 4 runs to hundreds of diagnostic codes and this tool carries
+    plain-language criteria for the most-claimed ones. Everything else must
+    still get the governing section, the right questionnaire, and the fact
+    that criteria exist and are public. Silence is the failure mode."""
+    info = rc.system_for(code)
+    assert info, f"{code} falls through every body system"
+    assert info["system"] == system
+    assert info["section"].startswith("\u00a7")
+    assert info["dbq"] and info["guidance"]
+
+
+def test_the_worksheet_covers_a_condition_outside_the_criteria_list():
+    kidney = cond("N18.3", "Chronic kidney disease, stage 3")
+    result = increase.plan([kidney], {"N18.3": 30})
+    assert result["general"], "a rated condition produced nothing at all"
+    text = increase.worksheet([kidney], {"N18.3": 30})
+    assert "not in our criteria list yet" in text
+    assert "Genitourinary" in text
+    assert rc.CFR_PART_4 in text
+    # It must not read as a dead end.
+    assert "says nothing about your claim" in text
+
+
+def test_coverage_is_broad_enough_to_be_worth_claiming():
+    """A sanity floor. If someone trims the tables, this should notice."""
+    assert len(rc.CRITERIA) >= 30
+    assert len(rc.SYSTEMS) >= 15
