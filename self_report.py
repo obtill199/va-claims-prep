@@ -226,7 +226,7 @@ def is_self_reported(condition):
         condition.get("source_document") == SOURCE_LABEL
 
 
-def summarise(conditions):
+def summarize(conditions):
     """What the records turned up, so the member can see the gap they are
     being asked to fill. A checklist with no context is a quiz; a checklist
     after 'your records show 21 conditions' is a prompt."""

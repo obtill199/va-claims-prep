@@ -98,3 +98,49 @@ def test_the_browser_page_references_a_python_build_id():
     assert m, "PY_BUILD marker is gone; module fetches are uncached"
     assert m.group(1) not in ("", "dev", "unknown"), \
         "PY_BUILD was never stamped — run tools/build_web.py"
+
+
+def test_every_python_call_in_the_page_resolves_to_a_real_function():
+    """The page drives Python by name, inside template literals. Nothing in
+    JavaScript checks those names, so a rename on one side is invisible until
+    a user reaches that screen.
+
+    This is not hypothetical. A British-to-American spelling pass rewrote
+    `self_report.summarise(...)` to `summarize` in the HTML and left the
+    module defining `summarise`. Step 3 threw AttributeError and rendered an
+    empty checklist, in production, and every one of the 365 tests passed --
+    because nothing else calls it and the browser test never reached that
+    screen with content.
+    """
+    import ast
+    import re
+
+    from conftest import FORM_HTML, FORM_PY, read
+
+    html = read(FORM_HTML)
+
+    # module.function( ... ) inside the runPythonAsync template literals
+    calls = set(re.findall(r"\b([a-z_][a-z0-9_]*)\.([a-z_][a-z0-9_]*)\s*\(", html))
+
+    shipped = {}
+    for name in os.listdir(FORM_PY):
+        if not name.endswith(".py"):
+            continue
+        tree = ast.parse(read(os.path.join(FORM_PY, name)))
+        shipped[name[:-3]] = {
+            n.name for n in tree.body
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+        } | {
+            n.name for n in tree.body if isinstance(n, ast.ClassDef)
+        }
+
+    missing = []
+    for module, func in sorted(calls):
+        if module not in shipped:
+            continue                      # a JS object, not one of our modules
+        if func not in shipped[module]:
+            missing.append(f"{module}.{func}()")
+
+    assert not missing, (
+        "the page calls Python that does not exist: " + ", ".join(missing)
+        + ". A rename on one side of the boundary broke the other.")
