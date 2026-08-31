@@ -72,7 +72,10 @@ def test_no_file_still_claims_to_be_mit():
     allowed = {"LICENSE-HISTORY.md", "NOTICE.md", "README.md",
                "requirements.txt"}
     offenders = []
-    for pattern in SOURCE_GLOBS + ["*.md"]:
+    # The published pages were not in this list, which is how a footer went
+    # on saying "MIT licensed" for a week after the relicense -- on the one
+    # surface a member actually reads.
+    for pattern in SOURCE_GLOBS + ["*.md", "docs/*/index.html", "docs/*.html"]:
         for path in glob.glob(os.path.join(REPO, pattern)):
             rel = os.path.relpath(path, REPO)
             if rel in allowed:
