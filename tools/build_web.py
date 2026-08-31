@@ -43,6 +43,8 @@ SHARED_MODULES = [
     "secondary.py",
     "presumptives.py",
     "report_html.py",
+    "rating_criteria.py",
+    "increase.py",
 ]
 
 DATA = [

@@ -315,6 +315,26 @@
       your service without you having to prove it. Whether anything is missing. And if
       you are still serving, whether you are inside the BDD window.</li>
   </ol>
+  <details class="tier-group" id="increase-block" style="margin:var(--s5) 0">
+    <summary>Already rated for one of these? Ask about a higher rating</summary>
+    <div>
+      <p class="help">If VA already rates you for a condition and it has got
+      worse, that is an <strong>increase claim</strong> &mdash; a different thing
+      from a new one. Enter what you are rated now and we will tell you what the
+      next level asks for, and what has to be measured to show it.</p>
+      <div class="note note--warn">
+        <span class="note__title">Know this before you file.</span>
+        <p>Asking for an increase usually means a new examination. If that exam
+        shows the condition improved, VA can <strong>lower</strong> the rating you
+        already have. It is uncommon for a well-documented condition, but you
+        should hear it from us and not afterwards.</p>
+      </div>
+      <div id="increase-rows"></div>
+      <button class="btn" id="increase-go" type="button">Build my increase plan</button>
+      <p class="help" id="increase-status"></p>
+    </div>
+  </details>
+
   <div id="presumptive-panel" hidden></div>
   <div id="secondary-panel" hidden></div>
 
@@ -425,7 +445,7 @@ const PYPDF_WHEEL = "pypdf-6.16.2-py3-none-any.whl";
 // Set by tools/build_web.py from a hash of the shipped modules. Without it
 // a returning visitor boots this page against whatever Python their browser
 // cached last time.
-const PY_BUILD = "a6a8a679d9";
+const PY_BUILD = "a5f23e6b09";
 
 function saveSession(){
   try {
@@ -706,6 +726,63 @@ json.dumps(_t)
 // sits above the secondary questions. Whether one applies is VA's call on
 // the full record -- this only reports that what they ticked and what the
 // records contain line up.
+// An increase claim is a different problem: service connection is settled
+// and the question is severity, which 38 CFR Part 4 decides on a specific
+// measurement. Opt-in, because most people here are filing a first claim
+// and a panel about existing ratings would be noise to them.
+function renderIncreaseRows(){
+  const box = $("increase-rows");
+  if (!box || !S.conditions) return;
+  const rated = (S.conditions.clinical || []).filter(c => c.icd10);
+  if (!rated.length) { $("increase-block").hidden = true; return; }
+
+  box.innerHTML = rated.map(c => `
+    <div class="field" style="display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap">
+      <label style="flex:1 1 18rem" for="rate-${esc(c.icd10)}">${esc(c.condition)}</label>
+      <select id="rate-${esc(c.icd10)}" style="width:auto">
+        <option value="">not rated</option>
+        ${[0,10,20,30,40,50,60,70,80,90,100].map(p =>
+          `<option value="${p}">${p}%</option>`).join("")}
+      </select>
+    </div>`).join("");
+}
+
+async function buildIncreasePlan(){
+  const ratings = {};
+  (S.conditions.clinical || []).forEach(c => {
+    const el = c.icd10 && $("rate-" + c.icd10);
+    if (el && el.value !== "") ratings[c.icd10] = parseInt(el.value, 10);
+  });
+  if (!Object.keys(ratings).length) {
+    $("increase-status").textContent =
+      "Set a rating on at least one condition first.";
+    return;
+  }
+  $("increase-status").textContent = "Working\u2026";
+  try {
+    py.globals.set("js_ratings", py.toPy(ratings));
+    py.globals.set("js_member", S.answers.full_name || "");
+    const html = await py.runPythonAsync(`
+import increase, report_html
+_md = increase.worksheet(_state["conditions"]["clinical"],
+                         dict(js_ratings), js_member or None)
+report_html.to_html(_md, "Asking for a higher rating", js_member or None) if _md else ""
+`);
+    if (!String(html)) {
+      $("increase-status").textContent =
+        "None of the conditions you rated have criteria in the tool yet.";
+      return;
+    }
+    const url = URL.createObjectURL(
+      new Blob([String(html)], {type: "text/html"}));
+    $("increase-status").innerHTML =
+      `<a class="btn" href="${url}" download="increase_plan.html">Download your increase plan</a>
+       &nbsp;<a href="${url}" target="_blank" rel="noopener">open it now</a>`;
+  } catch (err) {
+    $("increase-status").textContent = "Could not build it: " + (err.message || err);
+  }
+}
+
 async function renderPresumptives(){
   const el = $("presumptive-panel");
   if (!el || !py) return;
@@ -1254,6 +1331,8 @@ json.dumps({"item29": _state["item29"],
   show(5);
 });
 
+$("increase-go").addEventListener("click", buildIncreasePlan);
+
 $("clear-saved").addEventListener("click", ()=>{
   if (!confirm("Clear your saved progress on this device? You would need to upload "
              + "your records again to get back here.")) return;
@@ -1274,6 +1353,7 @@ $("to-package").addEventListener("click", async ()=>{
   Object.keys(S.shaExplains).forEach(f=>{
     const el = $("sha-"+f); if (el) S.shaExplains[f] = el.value;
   });
+  renderIncreaseRows();
   renderPresumptives();
   renderSecondary();
   const left = (S.item29.match(/\[Add [^\]]+\]/g) || []).length;

@@ -13,4 +13,6 @@ self_report.py
 secondary.py
 presumptives.py
 report_html.py
+rating_criteria.py
+increase.py
 web_pipeline.py
