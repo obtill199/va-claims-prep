@@ -112,9 +112,15 @@ def test_spelling_is_american():
         r"\bdefence\b", r"\bcentre\b", r"\bprogramme\b", r"\bapologis",
         r"\bprioritis", r"\bminimis", r"\butilis", r"\brealis",
     ]
+    # User-facing only. Developer documentation (CLAUDE.md, ARCHITECTURE.md,
+    # CONTRIBUTING.md) legitimately quotes identifiers and the old names of
+    # renamed symbols, and a veteran never reads it.
+    USER_FACING_MD = ("README.md", "NOTICE.md", "COMMERCIAL.md",
+                      "LICENSE-HISTORY.md")
     targets = (glob.glob(os.path.join(REPO, "docs", "*.html"))
                + glob.glob(os.path.join(REPO, "docs", "*", "index.html"))
-               + glob.glob(os.path.join(REPO, "*.md")))
+               + [os.path.join(REPO, n) for n in USER_FACING_MD
+                  if os.path.exists(os.path.join(REPO, n))])
     offenders = []
     for path in targets:
         text = open(path, encoding="utf-8").read()

@@ -49,8 +49,7 @@ Every bug that has shipped here was a verification gap, not a knowledge
 gap. Specifically:
 
 **A rename on one side of the JS/Python boundary.** The page drives Python
-by name inside template literals. `self_report.summarise` was renamed to
-`summarize` in the HTML and not in the module; step 3 rendered empty in
+by name inside template literals. `self_report.summari(s|z)e` was renamed on one side only in the HTML and not in the module; step 3 rendered empty in
 production for a week and all 365 tests passed, because nothing else called
 it. There is now a test that resolves every `module.function()` call in the
 page against the shipped modules — but **if you touch anything the page
@@ -59,7 +58,7 @@ failure.
 
 **A blanket edit crossing a boundary it was not scoped to.** The spelling
 pass above targeted `docs/` and `*.md`, so it rewrote a call site and left
-the callee. Scope blanket edits by behaviour, not by file glob, and check
+the callee. Scope blanket edits by behavior, not by file glob, and check
 what fell outside the glob.
 
 **`.gitignore` swallowing a needed file.** `*.txt` is ignored to keep
