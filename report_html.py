@@ -118,7 +118,7 @@ def to_html(markdown_text, title, subtitle=None):
         if in_table:
             flush_table()
 
-        if stripped.startswith("- ") or stripped.startswith("* "):
+        if stripped.startswith(("- ", "* ")):
             if not in_list:
                 body.append("<ul>")
                 in_list = True
@@ -184,7 +184,7 @@ def to_rtf(markdown_text, title=None):
             out.append(r"\par\b\fs26 " + _rtf_escape(stripped[3:]) + r"\b0\fs22\par")
         elif stripped.startswith("# "):
             out.append(r"\par\b\fs30 " + _rtf_escape(stripped[2:]) + r"\b0\fs22\par")
-        elif stripped.startswith("- ") or stripped.startswith("* "):
+        elif stripped.startswith(("- ", "* ")):
             out.append(r"{\pntext\f0 \'b7\tab}" + _rtf_escape(stripped[2:]) + r"\par")
         elif set(stripped) <= set("-=_") and len(stripped) > 3:
             out.append(r"\par")

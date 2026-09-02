@@ -59,7 +59,7 @@ def test_retroactive_year_boundaries(days, state):
 
 
 def test_the_window_is_ninety_days_wide():
-    inside = [d for d in range(0, 400) if at(d)["state"] == "bdd_window"]
+    inside = [d for d in range(400) if at(d)["state"] == "bdd_window"]
     assert min(inside) == timing.BDD_CLOSES
     assert max(inside) == timing.BDD_OPENS
     assert len(inside) == 91  # inclusive of both ends
@@ -161,12 +161,11 @@ def test_the_browser_questionnaire_matches_intake_py():
     use, and nothing failed to say so -- which is how separation_date came
     to be asked everywhere except the browser. It is generated now; this
     fails if someone edits the generated block by hand or forgets to rebuild."""
-    import json
     import re
 
-    import intake
-
     from conftest import FORM_HTML, read
+
+    import intake
     html = read(FORM_HTML)
     block = re.search(r"const QUESTIONS = \[(.*?)\n\];", html, re.S)
     assert block, "the generated questionnaire block is gone"

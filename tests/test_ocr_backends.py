@@ -28,7 +28,6 @@ sys.path.insert(0, REPO)
 import ocr  # noqa: E402
 import ocr_backends  # noqa: E402
 
-
 # ------------------------------------------------------------- registry
 
 def test_every_backend_declares_the_same_shape():
@@ -123,7 +122,7 @@ def test_app_starts_without_any_ocr_backend(monkeypatch):
     """The whole point: no OCR must degrade, not crash."""
     monkeypatch.setattr(ocr_backends, "select", lambda: (None, None, None))
     sys.modules.pop("app.pipeline", None)
-    import app.pipeline as pipeline
+    from app import pipeline
     available, reason = pipeline.ocr_available()
     assert available is False
     assert reason
@@ -148,4 +147,4 @@ def test_live_backend_returns_the_declared_shape():
     for line in lines:
         assert isinstance(line["text"], str)
         assert line["confidence"] is None or 0.0 <= line["confidence"] <= 1.0
-    assert "DUTY" in " ".join(l["text"] for l in lines).upper()
+    assert "DUTY" in " ".join(x["text"] for x in lines).upper()

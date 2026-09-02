@@ -147,7 +147,7 @@ def test_gitignore_still_covers_the_artifacts():
     until somebody deletes a gitignore line and runs `git add -A`."""
     ignored = subprocess.run(
         ["git", "check-ignore", "-q", "conditions.json"],
-        cwd=REPO).returncode == 0
+        cwd=REPO, check=False).returncode == 0
     assert ignored, "conditions.json is no longer gitignored"
 
 
@@ -240,8 +240,8 @@ def test_the_vendored_forms_have_not_silently_changed():
         "forms/FORM_VERSIONS.txt is missing — run tools/pin_forms.py")
 
     expected = {}
-    for line in open(pinned, encoding="utf-8"):
-        line = line.strip()
+    for raw in open(pinned, encoding="utf-8"):
+        line = raw.strip()
         if line and not line.startswith("#"):
             digest, rel = line.split(None, 1)
             expected[rel] = digest
@@ -437,12 +437,12 @@ def test_no_test_id_is_long_enough_to_break_windows():
     out = subprocess.run(
         [sys.executable, "-m", "pytest", "--collect-only", "-q",
          "--no-header", "-p", "no:cacheprovider"],
-        cwd=REPO, capture_output=True, text=True)
-    ids = [l for l in out.stdout.splitlines() if "::" in l]
+        cwd=REPO, capture_output=True, text=True, check=False)
+    ids = [x for x in out.stdout.splitlines() if "::" in x]
     assert ids, "collected nothing — the id check is not actually running"
 
     # Well under the limit: the id is one part of what pytest stores.
-    too_long = [l[:90] + "…" for l in ids if len(l) > 4000]
+    too_long = [x[:90] + "…" for x in ids if len(x) > 4000]
     assert not too_long, (
         "these test ids are long enough to risk the Windows environment "
         f"variable limit; give them explicit ids: {too_long}")

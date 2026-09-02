@@ -28,22 +28,19 @@ scanned records degrade with an explicit message rather than silently
 yielding nothing.
 """
 
+import contextlib
 import io
 import json
 import os
-import schema
 
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import BooleanObject, NameObject
 
 import extract_conditions
-from explanations import (conditions_by_ref, draft_dd2807_item_29,
-                          draft_sha_explanations, sha_explain_labels)
-from field_map import build_mapping
-from proposals import build_proposals, proposals_from_prompts
+import schema
 from prompts import find_prompts
+from proposals import build_proposals, proposals_from_prompts
 from schema import confirmed_only
-
 
 # ------------------------------------------------------------- extraction
 
@@ -162,7 +159,9 @@ def build_review(conditions, corpus, birth_sex=None):
     """
     import tempfile
 
-    tmp = tempfile.NamedTemporaryFile(
+
+    # cannot be a context manager. Closed and unlinked in the finally below.
+    tmp = tempfile.NamedTemporaryFile(  # noqa: SIM115
         mode="w", suffix=".json", prefix="conditions-",
         delete=False, encoding="utf-8")
     try:
@@ -172,10 +171,8 @@ def build_review(conditions, corpus, birth_sex=None):
             tmp.name, "dd2807_crosswalk.json", "field_names_sha.json",
             birth_sex=birth_sex)
     finally:
-        try:
+        with contextlib.suppress(OSError):
             os.unlink(tmp.name)
-        except OSError:
-            pass
     with open("dd2807_crosswalk.json", encoding="utf-8") as fh:
         rows = json.load(fh)
 
@@ -343,7 +340,7 @@ def _buddy_letters(member_name, conditions):
     extension unavailable in the browser. Same content, opens anywhere."""
     def one(cond=None):
         subject = cond["condition"] if cond else "general statement"
-        lines = [f"# Buddy Letter / Lay Statement", "",
+        lines = ["# Buddy Letter / Lay Statement", "",
                  f"**Regarding:** {member_name}", f"**Subject:** {subject}", "",
                  "## Your information", "", "- Full name: ",
                  "- Relationship to the veteran: ", "- Address: ",

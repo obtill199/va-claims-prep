@@ -41,7 +41,7 @@ def run(path, truth_codes=None):
         data = fh.read()
 
     t0 = time.time()
-    per_file, conditions, corpus = web_pipeline.process_files(
+    per_file, conditions, _corpus = web_pipeline.process_files(
         [(os.path.basename(path), data)])
     elapsed = time.time() - t0
 

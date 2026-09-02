@@ -26,19 +26,16 @@ bad, and the tests say which is which.
 """
 
 import os
-import re
 import sys
 import time
 
 import pytest
-
 from conftest import REPO
 
 sys.path.insert(0, os.path.join(REPO, "tools"))
 
-import coded_records as cr  # noqa: E402
-import extract_conditions as ec  # noqa: E402
-
+import coded_records as cr
+import extract_conditions as ec
 
 # --------------------------------------------------- names must survive
 

@@ -16,7 +16,7 @@ Usage:
 
 import argparse
 
-from schema import proposals_from_json, proposals_to_json, confirmed_only
+from schema import confirmed_only, proposals_from_json, proposals_to_json
 
 PROMPT = "  [y] confirm  [n] reject  [e] edit  [q] save and quit > "
 

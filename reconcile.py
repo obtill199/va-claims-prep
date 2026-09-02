@@ -25,6 +25,7 @@ Usage:
 """
 
 import argparse
+import contextlib
 import json
 import re
 from datetime import date
@@ -81,16 +82,12 @@ def extract_dates(text):
         day, month_s, year = m.groups()
         month = MONTH_LOOKUP.get(month_s[:3].lower())
         if month:
-            try:
+            with contextlib.suppress(ValueError):
                 found.append(date(int(year), month, int(day)).isoformat())
-            except ValueError:
-                pass
     for m in DATE_RES[1].finditer(text):
         mm, dd, yyyy = m.groups()
-        try:
+        with contextlib.suppress(ValueError):
             found.append(date(int(yyyy), int(mm), int(dd)).isoformat())
-        except ValueError:
-            pass
     return sorted(set(found))
 
 

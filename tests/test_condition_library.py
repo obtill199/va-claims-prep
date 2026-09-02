@@ -26,7 +26,7 @@ import condition_library as cl  # noqa: E402
 
 
 def items(code, birth_sex="Male", tiers=("high", "medium", "low")):
-    return {f"{i}{l}" for i, l, _, _, conf in cl.match(code, birth_sex)
+    return {f"{i}{letter}" for i, letter, _, _, conf in cl.match(code, birth_sex)
             if i and conf in tiers}
 
 
@@ -104,8 +104,7 @@ def test_unknown_and_malformed_codes_do_not_crash():
 
 # ------------------------------------------------------ ground-truth check
 
-REAL_YES = set("""10j 11c 11d 11f 11g 12a 12c 12f 12g 12h 12i 12k 12l 12n 13a
-14b 14c 14d 15b 16f 17a 17c 17d 17e 17f 17g 17i 20 21 22 23 24""".split())
+REAL_YES = set(["10j", "11c", "11d", "11f", "11g", "12a", "12c", "12f", "12g", "12h", "12i", "12k", "12l", "12n", "13a", "14b", "14c", "14d", "15b", "16f", "17a", "17c", "17d", "17e", "17f", "17g", "17i", "20", "21", "22", "23", "24"])
 
 
 def test_prechecked_tier_has_no_false_positives_on_real_records():

@@ -21,12 +21,11 @@ import os
 import sys
 
 import pytest
-
 from conftest import REPO
 
 sys.path.insert(0, os.path.join(REPO, "tools"))
 
-import readability  # noqa: E402
+import readability
 
 # The step screens are what a member reads while making decisions, so they
 # are held tighter than the reference pages.

@@ -282,8 +282,8 @@ def format_timing(assessment):
         return ""
     rule = "=" * 68
     lines = ["", rule, "  " + assessment["headline"].upper(), rule, ""]
-    for chunk in assessment["detail"].split(". "):
-        chunk = chunk.strip()
+    for raw_chunk in assessment["detail"].split(". "):
+        chunk = raw_chunk.strip()
         if chunk:
             lines.append("  " + chunk.rstrip(".") + ".")
     if assessment.get("actions"):

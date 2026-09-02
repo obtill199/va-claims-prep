@@ -169,12 +169,12 @@ def test_self_reported_conditions_are_cited_as_such():
     import self_report as sr
     apnea_report = sr.to_conditions(["apnea"], None)[0]
     got = secondary.find([RHINITIS, apnea_report])
-    apnea = [i for i in got if "apnea" in i["ask"]][0]
+    apnea = next(i for i in got if "apnea" in i["ask"])
     assert apnea["both_present"]
     assert "you told us" in apnea["partner_because"]
 
 
-@pytest.mark.parametrize("link", secondary.LINKS, ids=lambda l: l["id"])
+@pytest.mark.parametrize("link", secondary.LINKS, ids=lambda rule: rule["id"])
 def test_every_rule_is_well_formed(link):
     for key in ("id", "question", "ask", "match", "partner"):
         assert link.get(key), f"{link['id']} missing {key}"

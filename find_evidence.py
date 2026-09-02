@@ -27,7 +27,7 @@ def search(ocr_results, keywords):
     hits = []
     for page in ocr_results:
         text_lower = page["text"].lower()
-        matched = [k for k, kl in zip(keywords, keywords_lower) if kl in text_lower]
+        matched = [k for k, kl in zip(keywords, keywords_lower, strict=True) if kl in text_lower]
         if matched:
             hits.append({
                 "page": page["page"],

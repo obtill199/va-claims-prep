@@ -14,7 +14,6 @@ nothing must say so, never fail silently (section 3.1).
 
 import json
 import os
-import platform
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -188,8 +187,9 @@ def build_session_proposals(conditions, work_dir, birth_sex=None):
 
 def run_reconciliation(conditions, per_file):
     """Cross-source findings, when a file went through the OCR tier."""
-    from reconcile import reconcile
     import hashlib
+
+    from reconcile import reconcile
     findings = []
     for entry in per_file:
         if entry.get("ocr_results"):

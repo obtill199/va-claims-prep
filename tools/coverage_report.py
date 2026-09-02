@@ -13,7 +13,6 @@ map answered that only for the codes one person happened to have.
     python tools/coverage_report.py <folder-of-pdfs>
 """
 
-import json
 import os
 import sys
 

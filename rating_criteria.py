@@ -844,6 +844,6 @@ def system_for(icd10):
             if icd10 and match(icd10):
                 return {"system": name, "section": section, "dbq": dbq,
                         "guidance": guidance}
-        except Exception:
-            continue
+        except Exception:   # noqa: S112 - a malformed rule must not stop
+            continue        # the remaining rules from being evaluated
     return None

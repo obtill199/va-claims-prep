@@ -20,8 +20,7 @@ import os
 import re
 
 import pytest
-
-from conftest import DISCLAIMER_HTML, FORM_HTML, HOME_HTML, REPO, read
+from conftest import DISCLAIMER_HTML, FORM_HTML, REPO, read
 
 LICENCE_NAME = "PolyForm Noncommercial License 1.0.0"
 SOURCE_GLOBS = ["*.py", "app/*.py", "tools/*.py", "web/py/*.py",
@@ -55,7 +54,7 @@ def test_the_licence_carries_a_required_notice():
     """PolyForm propagates any 'Required Notice:' line to every copy. It is
     the attribution hook, and it only works if it is there."""
     text = read(os.path.join(REPO, "LICENSE"))
-    line = [l for l in text.splitlines() if l.startswith("Required Notice:")]
+    line = [ln for ln in text.splitlines() if ln.startswith("Required Notice:")]
     assert line, "no Required Notice line, so copies carry no attribution"
     assert "Oliver Tillinghast" in line[0]
 

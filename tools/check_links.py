@@ -42,9 +42,15 @@ def links(path):
 
 
 def check(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    # S310: opening a URL is what this tool does. Every URL comes from the
+    # project's own pages, they are validated as http(s) before reaching
+    # here, and nothing from the response is executed -- only the status
+    # code is read.
+    if not url.startswith(("http://", "https://")):
+        raise ValueError(f"refusing non-http scheme: {url}")
+    req = urllib.request.Request(url, headers={"User-Agent": UA})  # noqa: S310
     try:
-        with urllib.request.urlopen(req, timeout=20) as r:
+        with urllib.request.urlopen(req, timeout=20) as r:  # noqa: S310
             return r.status
     except urllib.error.HTTPError as e:
         return e.code
@@ -67,7 +73,7 @@ def main():
             ok = (status == 200
                   or status == 429
                   or (status == 403 and url in BOT_BLOCKED))
-            print(f"  {str(status):<6} {url}")
+            print(f"  {status!s:<6} {url}")
             if not ok:
                 bad.append((url, status))
 

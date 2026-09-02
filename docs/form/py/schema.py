@@ -13,8 +13,7 @@ See BUILD_BRIEF.md section 4, decision 1.
 """
 
 import json
-from dataclasses import asdict, dataclass, field
-from typing import Optional
+from dataclasses import asdict, dataclass
 
 VALID_FORMS = ("DD2807-1", "SHA_PART_A")
 # "self-reported" is not a weaker reading of a record -- it is a different
@@ -48,7 +47,7 @@ class Proposal:
     question_text: str             # the question as printed on the form
     proposed_value: str            # "Yes" | "No" | free text
     source_document: str           # filename the value was extracted from
-    source_page: Optional[int]     # 1-indexed page in source_document; None if not page-addressable
+    source_page: int | None     # 1-indexed page in source_document; None if not page-addressable
     confidence: str                # "high" | "medium" | "low"
     extraction_method: str         # "structured" | "ocr"
     rationale: str                 # plain-English "why", shown to the member.
@@ -56,7 +55,7 @@ class Proposal:
                                    # the source file has its own field below
                                    # and renders at the foot of the card.
     status: str = "pending"        # "pending" | "confirmed" | "edited" | "rejected"
-    confirmed_value: Optional[str] = None
+    confirmed_value: str | None = None
 
     def __post_init__(self):
         if self.target_form not in VALID_FORMS:

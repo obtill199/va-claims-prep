@@ -14,11 +14,11 @@ Usage:
     python extract_conditions.py record.txt [record2.txt ...] -o conditions.json
 """
 
-import re
-import json
-import os
 import argparse
 import bisect
+import json
+import os
+import re
 from collections import defaultdict
 from datetime import datetime
 

@@ -26,12 +26,13 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
 from conftest import FORM_DIR as WEB  # noqa: E402
+
 PY_DIR = os.path.join(WEB, "py")
 
 
 def manifest():
     with open(os.path.join(PY_DIR, "MANIFEST.txt"), encoding="utf-8") as fh:
-        return [l.strip() for l in fh if l.strip()]
+        return [ln.strip() for ln in fh if ln.strip()]
 
 
 @pytest.mark.parametrize("module", manifest())

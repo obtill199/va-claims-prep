@@ -43,8 +43,8 @@ def check(label, ok, detail=""):
 
 
 def main():
+    from app import pipeline
     from app.server import app
-    import app.pipeline as pipeline
 
     app.config["TESTING"] = True
     client = app.test_client()

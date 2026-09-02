@@ -54,8 +54,8 @@ BOOT_TIMEOUT_MS = 180_000
 
 @pytest.fixture(scope="module")
 def server():
-    handler = lambda *a, **k: http.server.SimpleHTTPRequestHandler(
-        *a, directory=DOCS, **k)
+    def handler(*a, **k):
+        return http.server.SimpleHTTPRequestHandler(*a, directory=DOCS, **k)
     with socketserver.TCPServer(("127.0.0.1", 0), handler) as httpd:
         port = httpd.server_address[1]
         thread = threading.Thread(target=httpd.serve_forever, daemon=True)

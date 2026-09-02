@@ -76,6 +76,6 @@ def test_the_forms_are_pinned():
     freshness story is in one place."""
     pinned = os.path.join(REPO, "forms", "FORM_VERSIONS.txt")
     assert os.path.exists(pinned)
-    entries = [l for l in open(pinned, encoding="utf-8")
-               if l.strip() and not l.startswith("#")]
+    entries = [ln for ln in open(pinned, encoding="utf-8")
+               if ln.strip() and not ln.startswith("#")]
     assert len(entries) >= 2, "both forms should be pinned"

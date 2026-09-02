@@ -125,6 +125,7 @@ def test_both_extractors_agree_on_every_fixture():
     """The regression that classified a readable export as narrative."""
     pytest.importorskip("pypdf")
     from pypdf import PdfReader
+
     from pdf_io import extract_text_with_page_offsets
 
     for name in sorted(os.listdir(FIXTURES)):

@@ -16,7 +16,6 @@ searches the form, finds none, and hands over an incomplete DD 2807-1
 believing it is done. These tests exist to make that drift loud.
 """
 
-import json
 import os
 import re
 import sys
@@ -24,11 +23,11 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
+from conftest import FORM_HTML as APP  # noqa: E402
+
 import explanations  # noqa: E402
 import intake  # noqa: E402
 import package_bundle  # noqa: E402
-
-from conftest import FORM_HTML as APP  # noqa: E402
 
 
 def app_html():

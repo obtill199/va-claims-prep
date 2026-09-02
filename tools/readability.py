@@ -22,7 +22,6 @@ specific to this project and nothing to a member.
 
 import os
 import re
-import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

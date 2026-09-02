@@ -80,7 +80,7 @@ def provider_names(cond, limit=3):
 def _fmt(iso):
     """MMM YYYY — how dates actually read on a completed 2807-1."""
     try:
-        y, m, d = iso.split("-")
+        y, m, _d = iso.split("-")
         months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
                   "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
         return f"{months[int(m) - 1]} {y}"
@@ -182,8 +182,8 @@ def draft_sha_explanations(confirmed_props, conditions_by_ref, sha_field_names):
         explain_field = sha_explain_field_for(response_field, sha_field_names)
         if not explain_field:
             continue
-        conds = sorted(_dedupe(conds), key=_chronological)
-        drafts[explain_field] = " ".join(_condition_sentence(c) for c in conds)
+        ordered = sorted(_dedupe(conds), key=_chronological)
+        drafts[explain_field] = " ".join(_condition_sentence(c) for c in ordered)
     return drafts
 
 
@@ -229,10 +229,10 @@ def draft_dd2807_item_29(confirmed_props, conditions_by_ref, dd_crosswalk,
     lines = []
     for (label, question), conds in sorted(
             by_item.items(), key=lambda kv: (int(re.match(r"\d+", kv[0][0]).group()), kv[0][0])):
-        conds = sorted(_dedupe(conds), key=_chronological)
+        ordered = sorted(_dedupe(conds), key=_chronological)
         header = f"Item {label}" + (f" ({question})" if question else "") + ":"
         body = " ".join(_condition_sentence(c) + _onset_note(c, findings_by_ref)
-                        for c in conds)
+                        for c in ordered)
         lines.append(f"{header} {body}")
 
     return "\n\n".join(lines)

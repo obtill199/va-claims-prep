@@ -39,7 +39,6 @@ pre-checks the box:
 Nothing here is ever written to a form without confirmation.
 """
 
-import re
 
 # --------------------------------------------------------------- matching
 
@@ -338,8 +337,8 @@ def match(code, birth_sex=None):
                 out.append((item_letter[0], item_letter[1], sha_slug,
                             label, confidence))  # item may be (None, None)
                                                  # for SHA-only questions
-        except Exception:
-            continue
+        except Exception:   # noqa: S112 - one malformed rule must not stop
+            continue        # the remaining rules from being evaluated
     return out
 
 

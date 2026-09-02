@@ -191,7 +191,7 @@ def test_every_catalog_code_the_library_should_match_does():
     form question. That is allowed -- some have no item -- but it must be
     deliberate, marked by a None code rather than a code that misses."""
     for _group, items in sr.CATALOG:
-        for (ident, label, code, _hint) in items:
+        for (ident, _label, code, _hint) in items:
             if code is None:
                 continue
             assert cl.match(code, "Male") or cl.match(code, "Female"), \
@@ -244,6 +244,7 @@ def test_self_reported_conditions_get_a_letter_even_with_no_form_question():
 
 def test_the_self_reported_letter_says_why_it_matters():
     from docx import Document
+
     from buddy_letter import build_letter
     with tempfile.TemporaryDirectory() as d:
         p = os.path.join(d, "l.docx")

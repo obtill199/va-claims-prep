@@ -19,8 +19,8 @@ Usage:
 import argparse
 import hashlib
 
-from field_map import build_mapping
 import self_report
+from field_map import build_mapping
 from schema import Proposal, proposals_to_json
 
 
@@ -59,11 +59,11 @@ def _self_reported_rationale(condition):
     for something the member typed. Saying "0 encounters" would read as a
     weak finding rather than what it is: a statement from the person who
     would know."""
-    return (f"You told us about this on the previous screen. It was not "
-            f"found anywhere in the records you uploaded, so there is no "
-            f"page to cite \u2014 which does not make it less true, and this "
-            f"form asks you rather than your records. Confirm the wording "
-            f"below is a fair description of what you meant.")
+    return ("You told us about this on the previous screen. It was not "
+            "found anywhere in the records you uploaded, so there is no "
+            "page to cite \u2014 which does not make it less true, and this "
+            "form asks you rather than your records. Confirm the wording "
+            "below is a fair description of what you meant.")
 
 
 def _rationale(condition):

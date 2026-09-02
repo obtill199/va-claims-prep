@@ -120,7 +120,7 @@ def assess(separation_date, today=None, component=None, duty_status=None):
         return {
             "state": "bdd_missed", "days": delta, "urgency": "warn",
             "separation": sep.isoformat(),
-            "headline": f"BDD has closed, but filing now still protects your date.",
+            "headline": "BDD has closed, but filing now still protects your date.",
             "detail": (f"You separate in {delta} days, which is inside the 90-day "
                        f"cutoff, so BDD is no longer available. That is not a lost "
                        f"claim — it is a slower one. Your claim gets processed as "

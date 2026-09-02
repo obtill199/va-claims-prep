@@ -20,8 +20,7 @@ import pdfplumber
 
 def open_decrypted(path):
     doc = fitz.open(path)
-    if doc.needs_pass:
-        if not doc.authenticate(""):
+    if doc.needs_pass and not doc.authenticate(""):
             raise ValueError(f"{path}: encrypted with a non-empty password — "
                               f"cannot process without it")
     return doc

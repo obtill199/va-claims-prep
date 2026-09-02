@@ -108,6 +108,7 @@ def test_zero_condition_record_still_produces_usable_forms(client, blank_pdf):
     assert r.status_code == 200
 
     import zipfile
+
     from pypdf import PdfReader
     z = zipfile.ZipFile(io.BytesIO(r.data))
     f = PdfReader(io.BytesIO(z.read("dd2807-1_FILLED.pdf"))).get_fields()

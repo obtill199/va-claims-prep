@@ -167,14 +167,14 @@ def build():
     page.extend(header)
     page.append("    ===== PROBLEM LIST =====")
     page.append("")
-    for name, code, prov, dates, on_list in CONDITIONS:
+    for name, _code, _prov, _dates, on_list in CONDITIONS:
         if on_list:
             page.append(problem_block(name))
     flush()
 
     page.append("    ===== CLINICAL DIAGNOSES =====")
     page.append("")
-    for name, code, prov, dates, on_list in CONDITIONS:
+    for name, code, prov, dates, _on_list in CONDITIONS:
         for date, status in dates:
             page.append(diagnosis_block(name, code, prov, date, status))
             if len("\n".join(page)) > 2200:

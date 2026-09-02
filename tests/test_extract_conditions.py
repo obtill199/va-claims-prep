@@ -14,7 +14,6 @@ everywhere else instead of failing.
 Run: cd ~/va-claims-prep && .venv/bin/python -m pytest tests/ -v
 """
 
-import json
 import os
 import re
 import sys
@@ -50,7 +49,7 @@ def test_diagnosis_and_problem_counts():
 
 
 def test_clinical_and_administrative_counts():
-    from extract_conditions import parse_diagnoses, parse_problems, aggregate
+    from extract_conditions import aggregate, parse_diagnoses, parse_problems
     text = open(MHS_TXT, encoding="utf-8", errors="replace").read()
     records = aggregate(list(parse_diagnoses(text)), list(parse_problems(text)))
     clinical = [r for r in records if not r["administrative"]]
@@ -62,7 +61,7 @@ def test_clinical_and_administrative_counts():
 def test_every_field_matches_golden_worksheet():
     """Field-by-field diff against conditions_worksheet.md — the same check
     used to verify this pipeline against BUILD_BRIEF.md's claimed output."""
-    from extract_conditions import parse_diagnoses, parse_problems, aggregate
+    from extract_conditions import aggregate, parse_diagnoses, parse_problems
     text = open(MHS_TXT, encoding="utf-8", errors="replace").read()
     records = aggregate(list(parse_diagnoses(text)), list(parse_problems(text)))
     by_key = {(r["icd10"], r["condition"]): r for r in records}
@@ -83,7 +82,7 @@ def test_every_field_matches_golden_worksheet():
 
 
 def test_no_empty_condition_names():
-    from extract_conditions import parse_diagnoses, parse_problems, aggregate
+    from extract_conditions import aggregate, parse_diagnoses, parse_problems
     text = open(MHS_TXT, encoding="utf-8", errors="replace").read()
     records = aggregate(list(parse_diagnoses(text)), list(parse_problems(text)))
     assert all(r["condition"] for r in records)

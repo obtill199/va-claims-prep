@@ -34,8 +34,7 @@ def _decrypted_bytes(path):
     per BUILD_BRIEF.md section 6, so this is transparent.
     """
     doc = fitz.open(path)
-    if doc.needs_pass:
-        if not doc.authenticate(""):
+    if doc.needs_pass and not doc.authenticate(""):
             raise ValueError(f"{path}: encrypted with a non-empty password")
     return doc.write(encryption=fitz.PDF_ENCRYPT_NONE)
 

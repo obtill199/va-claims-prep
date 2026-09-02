@@ -15,7 +15,6 @@ with rather than taken on faith. Change a rate and the whole model moves.
     python tools/effort_model.py
 """
 
-import io
 import json
 import os
 import sys
@@ -81,7 +80,7 @@ def tool_output(record_path=None):
 
     questions = set()
     for c in clinical:
-        for item, letter, sha_slug, _, conf in cl.match(c["icd10"], "Male"):
+        for item, letter, _sha_slug, _, conf in cl.match(c["icd10"], "Male"):
             if item:
                 questions.add((item, letter, conf))
     return {"pages": len(starts), "conditions": len(clinical),
@@ -134,7 +133,7 @@ def main():
     manual.append((f"Search the record once per condition ({conditions} x "
                    f"{round(per_search)}s over {tool['pages']}p)",
                    conditions * per_search))
-    manual.append((f"Find and note a page citation per condition",
+    manual.append(("Find and note a page citation per condition",
                    conditions * RATE["find_page_citation"]))
     manual.append((f"Write an Item 29 explanation per confirmed answer (~{reached})",
                    reached * RATE["write_explanation_line"]))

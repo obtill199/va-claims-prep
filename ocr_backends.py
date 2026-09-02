@@ -161,8 +161,9 @@ def _tesseract_recognize(png_bytes):
         return [], f"{type(exc).__name__}: {exc}"
 
     lines = []
-    for text, conf in zip(data.get("text", []), data.get("conf", [])):
-        text = (text or "").strip()
+    for raw_text, conf in zip(data.get("text", []), data.get("conf", []),
+                              strict=False):   # tesseract pads unevenly
+        text = (raw_text or "").strip()
         if not text:
             continue
         try:
@@ -192,8 +193,8 @@ def select():
         try:
             if available():
                 return name, recognize, description
-        except Exception:
-            continue
+        except Exception:   # noqa: S112 - one unreadable line must not
+            continue        # discard an otherwise good page of OCR
     return None, None, None
 
 

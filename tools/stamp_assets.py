@@ -26,7 +26,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # (html file, href as written in that file, the css file it points at)
 TARGETS = [
-    
+
     ("docs/home/index.html", "../assets/base.css", "docs/assets/base.css"),
     ("docs/form/index.html", "../assets/base.css", "docs/assets/base.css"),
     ("docs/disclaimer/index.html", "../assets/base.css", "docs/assets/base.css"),

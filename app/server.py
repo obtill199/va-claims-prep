@@ -23,8 +23,7 @@ import tempfile
 import uuid
 from datetime import date
 
-from flask import (Flask, redirect, render_template, request,
-                   send_file, session, url_for)
+from flask import Flask, redirect, render_template, request, send_file, session, url_for
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -33,10 +32,9 @@ import package_bundle
 import schema
 from app import pipeline
 from buddy_letter import write_letters
-from explanations import (conditions_by_ref, draft_dd2807_item_29,
-                          draft_sha_explanations)
+from explanations import conditions_by_ref, draft_dd2807_item_29, draft_sha_explanations
 from fill_forms import fill_both
-from schema import Proposal, confirmed_only
+from schema import confirmed_only
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

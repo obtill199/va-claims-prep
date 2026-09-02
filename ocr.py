@@ -27,7 +27,6 @@ Usage:
 """
 
 import argparse
-import io
 import json
 
 import fitz  # pymupdf
@@ -72,7 +71,7 @@ def classify(lines):
     if len(lines) < MIN_OBSERVATIONS:
         return "low"
 
-    scored = [l["confidence"] for l in lines if l.get("confidence") is not None]
+    scored = [ln["confidence"] for ln in lines if ln.get("confidence") is not None]
     if not scored:
         # No confidence available. A page with a healthy amount of recognised
         # text is plausible; a nearly empty one is not.
@@ -86,7 +85,7 @@ def ocr_pdf(pdf_path, dpi=300, page_range=None):
     if doc.needs_pass and not doc.authenticate(""):
         raise ValueError(f"{pdf_path}: encrypted with a non-empty password")
 
-    _, recognize, description = ocr_backends.select()
+    _, recognize, _description = ocr_backends.select()
     if recognize is None:
         raise RuntimeError(ocr_backends.unavailable_reason())
 
@@ -96,8 +95,8 @@ def ocr_pdf(pdf_path, dpi=300, page_range=None):
         png = rasterize(doc[i], dpi=dpi)
         lines, error = ocr_image(png, recognize)
         confidence = classify(lines) if not error else "low"
-        text = "\n".join(l["text"] for l in lines)
-        scored = [l["confidence"] for l in lines if l.get("confidence") is not None]
+        text = "\n".join(ln["text"] for ln in lines)
+        scored = [ln["confidence"] for ln in lines if ln.get("confidence") is not None]
         avg_conf = (sum(scored) / len(scored)) if scored else 0.0
         results.append({
             "page": i + 1,

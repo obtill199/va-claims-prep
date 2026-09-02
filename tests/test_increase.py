@@ -133,7 +133,7 @@ def test_hearing_loss_points_at_the_test_instead_of_summarising_a_table():
     """Rated from an audiogram against a combining table. A summary would
     mislead; the action is simply to get the exam."""
     item = increase.plan([cond("H90.3", "Hearing loss")], {"H90.3": 10})
-    entry = [i for i in item["actionable"] if "Hearing" in i["name"]][0]
+    entry = next(i for i in item["actionable"] if "Hearing" in i["name"])
     assert "pointer" in entry
     assert "audiogram" in entry["pointer"].lower()
 

@@ -136,6 +136,7 @@ def stamp_pypdf_wheel():
 def stamp_presumptive_date():
     """Keep the date shown in the browser tied to the list it describes."""
     import datetime
+
     import presumptives
     y, m = presumptives.REVIEWED.split("-")
     pretty = datetime.date(int(y), int(m), 1).strftime("%B %Y")

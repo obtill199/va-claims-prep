@@ -186,7 +186,7 @@ def decoy_page(rng):
 def narrative_page(rng, facts):
     """A progress note. Carries no codes -- the honest answer for this page
     is that it is unsupported, not a guess pulled out of prose."""
-    code, name, _ = rng.choice(facts)
+    _code, name, _ = rng.choice(facts)
     body = (
         f"Veteran presents for follow-up. Reports ongoing symptoms consistent "
         f"with previously documented {name.lower()}. Describes the problem as "
@@ -202,7 +202,7 @@ def narrative_page(rng, facts):
 
 def rating_decision(rng, facts):
     out = ["RATING DECISION — NARRATIVE", ""]
-    for code, name, _ in facts[:3]:
+    for _code, name, _ in facts[:3]:
         out += wrap(f"Service connection for {name.lower()} is granted with an "
                     f"evaluation of {rng.choice([10,20,30,50])} percent effective "
                     f"{rng.choice(['2019','2021','2023'])}-"
@@ -217,7 +217,8 @@ SECTION_BUILDERS = [
 
 
 def build(pages, seed=7):
-    rng = random.Random(seed)
+    rng = random.Random(seed)   # noqa: S311 - synthetic fixture data,
+                                # deterministic by seed, never a secret
     builders = [b for b, weight in SECTION_BUILDERS for _ in range(weight)]
 
     lines, page_no = [], 1

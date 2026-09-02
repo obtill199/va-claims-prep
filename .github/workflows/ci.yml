@@ -57,7 +57,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest
+          pip install pytest ruff
+
+      # Configured deliberately in pyproject.toml, including security rules,
+      # because this project handles medical records. Every suppression in
+      # the codebase carries a written reason.
+      - name: Lint
+        run: ruff check .
 
       # Failures are echoed as ::error:: so they appear in the run's
       # Annotations, which are readable without signing in. Without this the
