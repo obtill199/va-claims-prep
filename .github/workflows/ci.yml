@@ -113,17 +113,20 @@ jobs:
           echo "Browser build matches the source."
 
   browser:
-    # The only test that touches what people actually use: a page that loads
-    # a 15MB WebAssembly runtime, writes fifteen modules into a virtual
-    # filesystem, and runs the same Python there. Three bugs have lived in
-    # that seam and all three were found by hand.
+    # The only tests that touch what people actually use: a page that boots a
+    # WebAssembly runtime, writes fifteen modules into a virtual filesystem,
+    # and runs the same Python there.
     #
-    # Written and its selectors verified against a real browser, but the
-    # Playwright plumbing itself has never run on the author's machine --
-    # Playwright does not ship Chromium for macOS 12. This job is its first
-    # real execution.
+    # This job now walks the entire flow with a synthetic record and asserts
+    # the content of every screen, because reaching a screen proves nothing.
+    # A rename that left step 3 rendering an empty checklist survived a week
+    # in production while the whole Python suite passed, and the previous
+    # version of this job stopped at "the engine boots".
+    #
+    # Verified by reintroducing that exact bug: the walk times out waiting
+    # for the checklist, which is the failure a user would have seen.
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
